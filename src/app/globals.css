@@ -1,26 +1,48 @@
-@import "tailwindcss";
+ /* src/app/globals.css */
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --holy-name-blue: #093b60;
+  --holy-name-green: #01a69c;
+  --holy-name-blue-light: #0f5a8a;
+  --holy-name-green-light: #02c4b8;
+  --holy-name-gray: #f8fafc;
+  --holy-name-text: #1e293b;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--holy-name-text);
+  background: var(--holy-name-gray);
 }
+
+/* @layer components {
+  .btn-primary {
+    @apply bg-[#093b60] hover:bg-[#0f5a8a] text-white ;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#01a69c] hover:bg-[#02c4b8] text-white ;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-[#093b60] text-[#093b60] hover:bg-[#093b60] hover:text-white ;
+  }
+  
+  .text-primary {
+    @apply text-[#093b60];
+  }
+  
+  .text-secondary {
+    @apply text-[#01a69c];
+  }
+  
+  .bg-primary {
+    @apply bg-[#093b60];
+  }
+  
+  .bg-secondary {
+    @apply bg-[#01a69c];
+  }
+} */
