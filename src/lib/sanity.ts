@@ -146,13 +146,18 @@ export const homepageQuery = `
         link
       }
     },
-    contact {
+    registerForPatientPortal {
       title,
       subtitle,
-      phone,
-      email,
-      address,
-      hours
+      contactInfo{
+        phone,
+        email,
+        address
+      },
+      signUpButton{
+        text,
+        link
+      }
     },
     footer {
       logo,
