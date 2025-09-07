@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
 import Hero from '@/components/Hero'
 import Experts from '@/components/Experts'
@@ -237,15 +238,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Header 
+        isOpen={isSidebarOpen} 
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
+      />
+      
       <Sidebar 
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
       />
       
-      <main className={`transition-all duration-300 ${isSidebarOpen ? 'ml-72' : 'ml-0'}`}>
+      <main className="pt-16">
         <Hero hero={homePageData?.hero} />
         
-        <Experts doctors={homePageData?.doctors?.featuredDoctors} />
+        {/* <Experts doctors={homePageData?.doctors?.featuredDoctors} /> */}
+        <Experts />
 
         <UnderstandTopic topic={homePageData?.topic} />
         

@@ -21,18 +21,10 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
 
   return (
     <>
-      {/* Hamburger Button */}
-      <button
-        onClick={onToggle}
-        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-colors border border-gray-200"
-      >
-        {isOpen ? <X size={24} className="text-[#093b60]" /> : <Menu size={24} className="text-[#093b60]" />}
-      </button>
-
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50"
           onClick={onToggle}
         />
       )}
