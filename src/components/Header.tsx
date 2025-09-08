@@ -25,15 +25,9 @@ export default function Header({ isOpen, onToggle }: HeaderProps) {
             
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-[#093b60] rounded-lg flex items-center justify-center">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-[#01a69c] rounded-full"></div>
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-[#093b60]">Holy Name</h1>
-                <p className="text-xs text-[#01a69c] font-medium -mt-1">Medical Center</p>
-              </div>
+              <img src="/holy_name_logo.jpg" alt="Logo" width={200} height={100} />
+                 <p className="text-lg text-gray-600 mt-1">Fibroid Care Specialists</p>
+
             </div>
           </div>
 

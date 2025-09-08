@@ -20,9 +20,9 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
   if (!topic) return null;
 
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+    <section className="py-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+      <div className="w-[90%] mx-auto px-6 lg:px-8">
+        <div className="w-full">
           {/* Section Header */}
           <motion.div
             className="text-center mb-12"
@@ -62,83 +62,86 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
               </motion.div>
             )}
 
-            {/* Common Symptoms */}
-            {topic.commonSymptoms && topic.commonSymptoms.length > 0 && (
-              <motion.div
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-[#01a69c]/10 rounded-xl flex items-center justify-center mr-4">
-                    <CheckCircle className="w-6 h-6 text-[#01a69c]" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    Common Symptoms
-                  </h3>
-                </div>
-                
-                <div className="bg-[#01a69c]/5 rounded-xl p-6">
-                  <div className="prose prose-lg max-w-none">
-                    <PortableText
-                      value={topic.commonSymptoms}
-                      components={{
-                        listItem: ({ children }) => (
-                          <li className="flex items-start mb-3">
-                            <div className="w-2 h-2 bg-[#01a69c] rounded-full mt-3 mr-3 flex-shrink-0"></div>
-                            <span className="text-gray-700">{children}</span>
-                          </li>
-                        ),
-                        list: ({ children }) => (
-                          <ul className="space-y-2">{children}</ul>
-                        ),
-                      }}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* CTA Section */}
-            {topic.doYouHaveSymptoms && (
-              <motion.div
-                className="bg-gradient-to-r from-[#093b60] to-[#01a69c] rounded-2xl p-8 text-white"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                    <AlertCircle className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-4">
-                      Experiencing Symptoms?
+            {/* Common Symptoms and CTA Section in a row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Common Symptoms */}
+              {topic.commonSymptoms && topic.commonSymptoms.length > 0 && (
+                <motion.div
+                  className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-[#01a69c]/10 rounded-xl flex items-center justify-center mr-4">
+                      <CheckCircle className="w-6 h-6 text-[#01a69c]" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      Common Symptoms
                     </h3>
-                    <p className="text-white/90 mb-6 leading-relaxed">
-                      {topic.doYouHaveSymptoms.symptomsExist}
-                    </p>
-                    {topic.doYouHaveSymptoms.link && (
-                      <Link
-                        href={topic.doYouHaveSymptoms.link}
-                        className="inline-flex items-center gap-3 bg-white text-[#093b60] px-6 py-3 rounded-xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-lg"
-                      >
-                        <span>Get Expert Help</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    )}
                   </div>
-                </div>
-              </motion.div>
-            )}
+                  
+                  <div className="bg-[#01a69c]/5 rounded-xl p-6">
+                    <div className="prose prose-lg max-w-none">
+                      <PortableText
+                        value={topic.commonSymptoms}
+                        components={{
+                          listItem: ({ children }) => (
+                            <li className="flex items-start mb-3">
+                              <div className="w-2 h-2 bg-[#01a69c] rounded-full mt-3 mr-3 flex-shrink-0"></div>
+                              <span className="text-gray-700">{children}</span>
+                            </li>
+                          ),
+                          list: ({ children }) => (
+                            <ul className="space-y-2">{children}</ul>
+                          ),
+                        }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* CTA Section */}
+              {topic.doYouHaveSymptoms && (
+                <motion.div
+                  className="bg-gradient-to-r from-[#093b60] to-[#01a69c] rounded-2xl p-8 text-white"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-start">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
+                      <AlertCircle className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-4">
+                        Experiencing Symptoms?
+                      </h3>
+                      <p className="text-white/90 mb-6 leading-relaxed">
+                        {topic.doYouHaveSymptoms.symptomsExist}
+                      </p>
+                      {topic.doYouHaveSymptoms.link && (
+                        <Link
+                          href={topic.doYouHaveSymptoms.link}
+                          className="inline-flex items-center gap-3 bg-white text-[#093b60] px-6 py-3 rounded-xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-lg"
+                        >
+                          <span>Get Expert Help</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </div>
 
           {/* Additional Info Cards */}
           <motion.div
-            className="grid md:grid-cols-2 gap-6 mt-12"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}

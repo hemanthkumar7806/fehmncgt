@@ -38,9 +38,7 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
         <div className="p-6">
           {/* Logo */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-[#093b60]">Holy Name</h1>
-            <p className="text-sm text-[#01a69c] font-medium">Medical Center</p>
-            <p className="text-xs text-gray-600 mt-1">Fibroid Care Specialists</p>
+            <img src="/holy_name_logo.jpg" alt="Logo" width={200} height={100} />
           </div>
 
           {/* Navigation Menu */}
