@@ -71,6 +71,53 @@ export async function getDocumentTypes() {
   }
 }
 
+// Query to fetch navbar data
+export const navbarQuery = `
+  *[_type == "navbar"][0] {
+    logoAlt,
+    logo {
+      asset->
+    },
+    mobileLogo {
+      asset->
+    },
+    tagline,
+    contactInfo {
+      phone,
+      emergencyText,
+      showContactInfo
+    },
+    ctaButton {
+      text,
+      mobileText,
+      showButton
+    }
+  }
+`
+
+// Query to fetch sidebar data
+export const sidebarQuery = `
+  *[_type == "sidebar"][0] {
+    logo {
+      asset->
+    },
+    menuItems[] {
+      icon,
+      label,
+      linkType,
+      internalSection,
+      externalUrl,
+      openInNewTab
+    },
+    contactInfo {
+      phone,
+      email,
+      address,
+      showContactInfo
+    },
+  }
+`
+
 // Query to fetch homepage data based on your Sanity schema
 export const homepageQuery = `
   *[_type == "homePage"][0] {
@@ -170,8 +217,75 @@ export const homepageQuery = `
 
 // Simple cache to prevent multiple identical calls
 let homepageDataCache: any = null
+let navbarDataCache: any = null
+let sidebarDataCache: any = null
 let cacheTimestamp: number = 0
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+
+// Function to fetch navbar data
+export async function getNavbarData() {
+  // Check cache first
+  const now = Date.now()
+  if (navbarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    console.log('📦 Returning cached navbar data')
+    return navbarDataCache
+  }
+
+  try {
+    console.log('🔧 Fetching navbar data...')
+    console.log('📝 Executing query:', navbarQuery)
+    
+    const data = await client.fetch(navbarQuery)
+    console.log('✅ Navbar query successful, data:', data)
+    
+    // Cache the result
+    navbarDataCache = data
+    cacheTimestamp = now
+    
+    return data
+  } catch (error) {
+    console.error('❌ Error fetching navbar data:', error)
+    console.error('❌ Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      status: (error as any)?.status,
+      statusCode: (error as any)?.statusCode
+    })
+    
+    // Return fallback data from JSON file
+    try {
+      const fallbackData = await import('@/constants/fallbackData.navbar.json')
+      return fallbackData.default || fallbackData
+    } catch (error) {
+      console.error('❌ Error loading fallback data:', error)
+      return null
+    }
+  }
+}
+
+// Function to fetch sidebar data
+export async function getSidebarData() {
+  // Check cache first
+  const now = Date.now()
+  if (sidebarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    return sidebarDataCache
+  }
+
+  try {
+    const data = await client.fetch(sidebarQuery)
+    sidebarDataCache = data
+    cacheTimestamp = now
+    return data
+  } catch (error) {
+    try {
+      console.log(error);
+      const fallbackData = await import('@/constants/fallbackData.sidebar.json')
+      return fallbackData
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+}
 
 // Function to fetch homepage data
 export async function getHomePageData() {

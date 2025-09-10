@@ -1,0 +1,303 @@
+{
+  "about": {
+    "content": [
+      {
+        "_key": "238800897e32",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "fad8e702dba5",
+            "_type": "span",
+            "marks": [],
+            "text": "We are committed to providing the highest quality healthcare services to our community. Our team of experienced medical professionals is dedicated to your health and well-being, offering personalized care in a comfortable and welcoming environment."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "stats": null,
+    "title": "About Our Medical Center"
+  },
+  "doctors": {
+    "ctaButton": {
+      "link": "http://www.google.com",
+      "text": "Appointment button"
+    },
+    "featuredDoctors": [
+      {
+        "_id": "6d0b311f-4b0f-49e2-8107-5a4b5f396e47",
+        "credentials": "MD",
+        "name": "Eric Liberman",
+        "photo": {
+          "_type": "image",
+          "asset": {
+            "_ref": "image-96f2f541f13a3a7353fda8dc19701412d0d5559e-500x750-webp",
+            "_type": "reference"
+          }
+        },
+        "slug": {
+          "_type": "slug",
+          "current": "doc"
+        },
+        "title": "Obstetrics and Gynecology"
+      }
+    ],
+    "subtitle": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
+    "title": "Meet Our Experts"
+  },
+  "footer": {
+    "description": [
+      {
+        "_key": "ae3e699f19d6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "5dd198b75d30",
+            "_type": "span",
+            "marks": [],
+            "text": "   © 2025 Holy Name Fibroid Center. All rights reserved."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "e7828a60a167",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b86ca5fa8bf6",
+            "_type": "span",
+            "marks": [],
+            "text": "123 Medical Drive, Anywhere, USA | Phone: (123) 456-7890"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "logo": {
+      "_type": "image",
+      "asset": {
+        "_ref": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
+        "_type": "reference"
+      }
+    },
+    "platform": null,
+    "socialLinks": [
+      {
+        "_key": "420cfb3578f7",
+        "platform": "facebook"
+      },
+      {
+        "_key": "dc996a17794e",
+        "platform": "twitter"
+      },
+      {
+        "_key": "3655ff9cc58d",
+        "platform": "instagram"
+      }
+    ]
+  },
+  "hero": {
+    "ctaButton": {
+      "link": "https://www.google.com",
+      "text": "Schedule Appointment"
+    },
+    "headline": "Comprehensive Fibroid Care at Holy Name",
+    "subheadline": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here."
+  },
+  "registerForPatientPortal": {
+    "contactInfo": {
+      "address": "123 Medical Drive, Anywhere, USA ",
+      "email": "hnmc@gmail.com",
+      "phone": "(123) 456-7890"
+    },
+    "signUpButton": {
+      "link": null,
+      "text": "Signup for patient portal"
+    },
+    "subtitle": "Gain secure 24/7 access to your health records, appointments, and direct communication with your care team.",
+    "title": "Register for Patient Portal Access"
+  },
+  "resources": {
+    "resourcesList": [
+      {
+        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
+        "icon": null,
+        "link": null,
+        "title": "Understanding Your Diagnosis"
+      },
+      {
+        "description": "Placeholder for comprehensive information on various fibroid treatment options, including medical, minimally invasive, and surgical approaches, with pros and cons.",
+        "icon": null,
+        "link": null,
+        "title": "Treatment Options Explained"
+      }
+    ],
+    "subtitle": "We have huge number of educational  resources",
+    "title": "In-Depth Education & Resources"
+  },
+  "seo": {
+    "description": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
+    "title": "HNMC-Fibroid Center"
+  },
+  "services": {
+    "servicesList": [
+      {
+        "description": "Our team includes gynecologists, interventional radiologists, and fertility specialists working together for comprehensive care.",
+        "icon": null,
+        "title": "Multidisciplinary Team"
+      },
+      {
+        "description": "Every treatment plan is customized to your specific needs, symptoms, and life goals.",
+        "icon": null,
+        "title": "Personalized Care"
+      },
+      {
+        "description": "View results and communicate anytime through our secure patient portal.",
+        "icon": null,
+        "title": "24/7 Access"
+      },
+      {
+        "description": "Chat with real providers, not bots, for personalized support.",
+        "icon": null,
+        "title": "Direct Communication"
+      }
+    ],
+    "subtitle": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
+    "title": "Why Choose Holy Name & Our Digital Advantage"
+  },
+  "testimonials": {
+    "subtitle": null,
+    "testimonialsList": [
+      {
+        "author": "Atul",
+        "authorTitle": "Chennai",
+        "quote": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
+        "rating": 4
+      },
+      {
+        "author": "Patient Name 1",
+        "authorTitle": "USA",
+        "quote": "\"(Placeholder: This center changed my life! The doctors were incredibly supportive and the treatment was effective.)\"",
+        "rating": 5
+      },
+      {
+        "author": "- Patient Name 2",
+        "authorTitle": "USA",
+        "quote": "\"(Placeholder: I received excellent care and felt truly heard. Highly recommend Holy Name Fibroid Center.)\"",
+        "rating": 5
+      }
+    ],
+    "title": "What Our Patients Say"
+  },
+  "topic": {
+    "commonSymptoms": [
+      {
+        "_key": "deb9776022a8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b5f81993c975",
+            "_type": "span",
+            "marks": [],
+            "text": "Heavy or prolonged menstrual bleeding"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "938533305fe4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "de015cccf041",
+            "_type": "span",
+            "marks": [],
+            "text": "Pelvic pain or pressure"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "c1abc067dfa8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c40d4289d468",
+            "_type": "span",
+            "marks": [],
+            "text": "Frequent urination"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "f514069f44d8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "0f13dfad4207",
+            "_type": "span",
+            "marks": [],
+            "text": "Difficulty emptying the bladder"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "838bf47168c6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f684376b7056",
+            "_type": "span",
+            "marks": [],
+            "text": "Constipation"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "08b01489998c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "d79ea5a51527",
+            "_type": "span",
+            "marks": [],
+            "text": "Backache or leg pains"
+          }
+        ],
+        "level": 1,
+        "listItem": "bullet",
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "doYouHaveSymptoms": {
+      "link": "https://www.google.co.in",
+      "symptomsExist": "If you're experiencing any of these symptoms, it's important to consult with a specialist. Early diagnosis and treatment can significantly improve your quality of life"
+    },
+    "subtitle": "What Are Fibroids?",
+    "title": "Understanding Fibroids",
+    "whatIsTopic": "Uterine fibroids are non-cancerous growths that develop in or around the uterus. They are very common, affecting up to 80% of women by age 50. While many women experience no symptoms, others may have significant discomfort."
+  }
+}

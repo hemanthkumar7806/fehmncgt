@@ -92,9 +92,9 @@ export default function Testimonials({
 
                 {/* Quote */}
                 <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative">
-                  <span className="text-4xl text-[#01a69c]/30 absolute -top-2 -left-2">"</span>
+                  <span className="text-4xl text-[#01a69c]/30 absolute -top-2 -left-2">&quot;</span>
                   <span className="relative z-10">{testimonial.quote}</span>
-                  <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">"</span>
+                  <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
                 {/* Author */}

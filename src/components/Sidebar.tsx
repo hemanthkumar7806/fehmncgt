@@ -1,23 +1,71 @@
-'use client'
+import * as LucideIcons from 'lucide-react'
+import Image from 'next/image'
+import { urlFor } from '@/lib/sanity'
+import fallbackData from '@/constants/fallbackData.sidebar.json'
 
-import { useState } from 'react'
-import { Menu, X, Home, User, Stethoscope, Calendar, CreditCard, UserCheck } from 'lucide-react'
+interface SidebarData {
+  logo?: {
+    asset?: any
+  }
+  menuItems?: Array<{
+    icon?: string
+    label?: string
+    linkType?: string
+    internalSection?: string
+    externalUrl?: string | null
+    openInNewTab?: boolean
+  }>
+  contactInfo?: {
+    phone?: string
+    email?: string
+    address?: string
+    showContactInfo?: boolean
+  }
+}
 
 interface SidebarProps {
   isOpen: boolean
   onToggle: () => void
+  sidebarData?: SidebarData | null
 }
 
-export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
-  const menuItems = [
-    { icon: Home, label: 'Home', href: '#home' },
-    { icon: User, label: 'About Fibroids', href: '#about-fibroids' },
-    { icon: Stethoscope, label: 'Meet Dr. Liberman', href: '#dr-liberman' },
-    { icon: Stethoscope, label: 'Our Services', href: '#services' },
-    { icon: Calendar, label: 'Book Appointment', href: '#appointment' },
-    { icon: CreditCard, label: 'Insurance & Billing', href: '#insurance' },
-    { icon: UserCheck, label: 'Patient Portal', href: '#register' },
-  ]
+export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps) {
+  // Function to get Lucide icon by name
+  const getIcon = (iconName: string) => {
+    // Convert kebab-case to PascalCase (e.g., 'credit-card' -> 'CreditCard')
+    const pascalCaseName = iconName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+    
+    // Get the icon component from LucideIcons
+    const IconComponent = (LucideIcons as any)[pascalCaseName]
+    
+    // Return the icon component or a default fallback
+    return IconComponent || LucideIcons.Home
+  }
+
+  const data = sidebarData || fallbackData
+
+  const menuItems = data?.menuItems
+  const logo = data?.logo?.asset ? urlFor(data.logo.asset).url() : '/holy_name_logo.jpg'
+  const contactInfo = data?.contactInfo
+
+  const handleLinkClick = (item: any) => {
+    if (item.linkType === 'internal' && item.internalSection) {
+      const element = document.getElementById(item.internalSection)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    } else if (item.linkType === 'external' && item.externalUrl) {
+      if (item.openInNewTab) {
+        window.open(item.externalUrl, '_blank', 'noopener,noreferrer')
+      } else {
+        window.location.href = item.externalUrl
+      }
+    }
+    onToggle()
+  }
 
   return (
     <>
@@ -38,51 +86,61 @@ export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
         <div className="p-6">
           {/* Logo */}
           <div className="mb-8 text-center">
-            <img src="/holy_name_logo.jpg" alt="Logo" width={200} height={100} />
+            <Image 
+              src={logo} 
+              alt="Holy Name Medical Center Logo" 
+              width={200} 
+              height={100}
+              className="object-contain mx-auto"
+            />
           </div>
 
           {/* Navigation Menu */}
           <nav className="space-y-2">
-            {menuItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="block p-3 rounded-lg hover:bg-[#093b60] hover:text-white transition-colors duration-200 text-[#093b60] font-medium"
-                onClick={onToggle}
-              >
-                <div className="flex items-center space-x-3">
-                  <item.icon size={20} />
-                  <span>{item.label}</span>
-                </div>
-              </a>
-            ))}
+            {menuItems?.map((item, index) => {
+              const IconComponent = getIcon(item.icon || 'home')
+              return (
+                <button
+                  key={`${item.label}-${index}`}
+                  onClick={() => handleLinkClick(item)}
+                  className="w-full text-left block p-3 rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 text-primary font-medium"
+                >
+                  <div className="flex items-center space-x-3">
+                    <IconComponent size={20} />
+                    <span>{item.label}</span>
+                  </div>
+                </button>
+              )
+            })}
           </nav>
 
           {/* Contact Info */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <h3 className="text-sm font-semibold text-[#093b60] mb-3">Contact Info</h3>
-            <div className="space-y-2 text-sm text-gray-600">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-[#01a69c] rounded-full"></div>
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-[#01a69c] rounded-full"></div>
-                <span>info@holyname.com</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-[#01a69c] rounded-full"></div>
-                <span>123 Medical Center Dr</span>
+          {contactInfo?.showContactInfo && (
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-primary mb-3">Contact Info</h3>
+              <div className="space-y-2 text-sm text-hnmc-gray-600">
+                {contactInfo.phone && (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <span>{contactInfo.phone}</span>
+                  </div>
+                )}
+                {contactInfo.email && (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <span>{contactInfo.email}</span>
+                  </div>
+                )}
+                {contactInfo.address && (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <span>{contactInfo.address}</span>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Emergency Contact */}
-          <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
-            <p className="text-xs text-red-700 font-medium text-center">
-              For emergencies, call 911
-            </p>
-          </div>
         </div>
       </div>
     </>

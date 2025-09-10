@@ -7,12 +7,56 @@ import Hero from '@/components/Hero'
 import Experts from '@/components/Experts'
 import Services from '@/components/Services'
 import About from '@/components/About'
-import Contact from '@/components/Footer'
 import UnderstandTopic from '@/components/UnderstandTopic'
 import Testimonials from "@/components/Testimonials";
-import { getHomePageData, getHomePageById } from '@/lib/sanity'
+import { getHomePageData, getHomePageById, getNavbarData, getSidebarData } from '@/lib/sanity'
 import Resources from '@/components/Resources'
 import Footer from '@/components/Footer'
+import LoadingScreen from '@/components/ui/LoadingScreen'
+import fallbackDataHome from '@/constants/fallbackData.home.json'
+import fallbackDataNavbar from '@/constants/fallbackData.navbar.json'
+import fallbackDataSidebar from '@/constants/fallbackData.sidebar.json'
+
+interface NavbarData {
+  logoAlt?: string
+  logo?: {
+    asset?: any
+  }
+  mobileLogo?: {
+    asset?: any
+  }
+  tagline?: string
+  contactInfo?: {
+    phone?: string
+    emergencyText?: string
+    showContactInfo?: boolean
+  }
+  ctaButton?: {
+    text?: string
+    mobileText?: string
+    showButton?: boolean
+  }
+}
+
+interface SidebarData {
+  logo?: {
+    asset?: any
+  }
+  menuItems?: Array<{
+    icon?: string
+    label?: string
+    linkType?: string
+    internalSection?: string
+    externalUrl?: string | null
+    openInNewTab?: boolean
+  }>
+  contactInfo?: {
+    phone?: string
+    email?: string
+    address?: string
+    showContactInfo?: boolean
+  }
+}
 
 interface HomePageData {
   seo?: any
@@ -27,8 +71,8 @@ interface HomePageData {
   topic?: {
     title?: string;
     subtitle?: string;
-    whatIsTopic?: string;
-    commonSymptoms?: string;
+    whatIsTopic?: any;
+    commonSymptoms?: any;
     doYouHaveSymptoms?: {
       link?: string;
       symptomsExist?: string;
@@ -41,6 +85,7 @@ interface HomePageData {
       number?: string
       label?: string
     }>
+    image?: string
   }
   services?: {
     title?: string
@@ -96,16 +141,25 @@ interface HomePageData {
     hours?: any
   }
   footer?: {
-    logo?: any
-    description?: string
-    links?: any
-    socialMedia?: any
+    logo?: {
+      asset?: {
+        _ref?: string
+      }
+    }
+    description?: any[]
+    socialLinks?: Array<{
+      _key: string
+      platform: string
+      url?: string
+    }>
   }
 }
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [homePageData, setHomePageData] = useState<HomePageData | null>(null)
+  const [navbarData, setNavbarData] = useState<NavbarData | null>(null)
+  const [sidebarData, setSidebarData] = useState<SidebarData | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -113,102 +167,31 @@ export default function Home() {
     
     const fetchHomePageData = async () => {
       try {
-        console.log('🔍 Starting to fetch homepage data...')
-        
-        // Try to fetch from Sanity CMS first
         console.log('🔄 Attempting to fetch from Sanity CMS...')
-        let data = await getHomePageData()
-        console.log('📊 Data from getHomePageData():', data)
+        const [homeData, navData, sideData] = await Promise.all([
+          getHomePageData(),
+          getNavbarData(),
+          getSidebarData()
+        ])
+        
+        let data = homeData
         
         // If no data from Sanity, try with the specific document ID from your URL
         if (!data) {
           console.log('⚠️ No data from general query, trying specific document ID...')
           const documentId = '5e8dcfb7-4ff2-44bd-9a84-d0b76b2a4e39'
           data = await getHomePageById(documentId)
-          console.log('📊 Data from getHomePageById():', data)
-        }
-        
-                // If still no data, use fallback mock data
-        if (!data) {
-          console.log('❌ No data from Sanity CMS, using fallback data')
-          data = {
-            hero: {
-              headline: 'Your Health, Our Priority',
-              subheadline: 'Providing exceptional healthcare services with compassion and expertise. Your wellness journey starts here.',
-              ctaButton: {
-                text: 'Book Appointment',
-                link: '/appointments'
-              }
-            },
-            services: {
-              title: 'Our Services',
-              subtitle: 'Comprehensive healthcare services for you and your family',
-              servicesList: [
-                {
-                  title: 'Primary Care',
-                  description: 'Comprehensive health care for individuals and families of all ages.',
-                  icon: 'stethoscope'
-                },
-                {
-                  title: 'Cardiology',
-                  description: 'Expert care for heart and cardiovascular conditions.',
-                  icon: 'heart'
-                },
-                {
-                  title: 'Neurology',
-                  description: 'Specialized treatment for neurological disorders and conditions.',
-                  icon: 'brain'
-                },
-                {
-                  title: 'Pediatrics',
-                  description: 'Compassionate care for children from birth through adolescence.',
-                  icon: 'baby'
-                },
-                {
-                  title: 'Ophthalmology',
-                  description: 'Complete eye care and vision services.',
-                  icon: 'eye'
-                },
-                {
-                  title: 'Dental Care',
-                  description: 'Comprehensive dental health and hygiene services.',
-                  icon: 'activity'
-                }
-              ]
-            },
-            contact: {
-              title: 'Contact Us',
-              subtitle: 'Get in touch with us for appointments and inquiries',
-              phone: '+1 (555) 123-4567',
-              email: 'info@hnmc.com',
-              address: '123 Medical Center Drive, Healthcare City, HC 12345'
-            }
-          }
         }
         
         if (isMounted) {
-          setHomePageData(data)
+          setHomePageData(data || fallbackDataHome)
+          setNavbarData(navData || fallbackDataNavbar)
+          setSidebarData(sideData || fallbackDataSidebar)
         }
       } catch (error) {
         console.error('Error fetching homepage data:', error)
-        // Use fallback data on error
         if (isMounted) {
-          setHomePageData({
-            hero: {
-              headline: 'Your Health, Our Priority',
-              subheadline: 'Providing exceptional healthcare services with compassion and expertise.'
-            },
-            services: {
-              title: 'Our Services',
-              servicesList: []
-            },
-            contact: {
-              title: 'Contact Us',
-              phone: '+1 (555) 123-4567',
-              email: 'info@hnmc.com',
-              address: '123 Medical Center Drive'
-            }
-          })
+          setSidebarData(fallbackDataSidebar)
         }
       } finally {
         if (isMounted) {
@@ -227,42 +210,67 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
+      <LoadingScreen 
+        isLoading={loading} 
+        onLoadingComplete={() => setLoading(false)} 
+      />
     )
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-hnmc-gray">
       <Header 
         isOpen={isSidebarOpen} 
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        navbarData={navbarData}
       />
       
       <Sidebar 
         isOpen={isSidebarOpen} 
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        sidebarData={sidebarData}
       />
       
       <main className="pt-16">
-        <Hero hero={homePageData?.hero} />
+        <section id="home">
+          <Hero hero={homePageData?.hero} />
+        </section>
         
-        {/* <Experts doctors={homePageData?.doctors?.featuredDoctors} /> */}
-        <Experts />
-
-        <UnderstandTopic topic={homePageData?.topic} />
+        <section id="about-fibroids">
+          <UnderstandTopic topic={homePageData?.topic} />
+        </section>
         
-        <Services services={homePageData?.services} />
-
-        <Resources resources={homePageData?.resources} />
+        <section id="dr-liberman">
+          <Experts />
+        </section>
         
-        <About about={homePageData?.about} />
+        <section id="services">
+          <Services services={homePageData?.services} />
+        </section>
 
-        <Testimonials title={homePageData?.testimonials?.title} subtitle={homePageData?.testimonials?.subtitle} testimonialsList={homePageData?.testimonials?.testimonialsList}/>
+        <section id="resources">
+          <Resources resources={homePageData?.resources} />
+        </section>
+        
+        <section id="about">
+          <About title={homePageData?.about?.title} content={homePageData?.about?.description} image={homePageData?.about?.image} />
+        </section>
+
+        <section id="testimonials">
+          <Testimonials title={homePageData?.testimonials?.title} subtitle={homePageData?.testimonials?.subtitle} testimonialsList={homePageData?.testimonials?.testimonialsList}/>
+        </section>
+        
+        <section id="appointment">
+          {/* Appointment section - can be added later */}
+        </section>
+        
+        <section id="insurance">
+          {/* Insurance section - can be added later */}
+        </section>
+        
+        <section id="register">
+          {/* Patient portal section - can be added later */}
+        </section>
       
         <Footer footer={homePageData?.footer} />
       </main>

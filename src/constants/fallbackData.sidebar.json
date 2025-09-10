@@ -1,0 +1,149 @@
+{
+  "contactInfo": {
+    "address": "123 Medical Center Dr",
+    "email": "info@holyname.com",
+    "phone": "+1 (555) 123-4567",
+    "showContactInfo": true
+  },
+  "logo": {
+    "asset": {
+      "_createdAt": "2025-08-31T08:35:04Z",
+      "_id": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
+      "_rev": "HQx5y65c3z3EDy2lMwNhHV",
+      "_type": "sanity.imageAsset",
+      "_updatedAt": "2025-08-31T08:35:04Z",
+      "assetId": "6cefeabf06e2afd980debce066ae02f67d416813",
+      "extension": "webp",
+      "metadata": {
+        "_type": "sanity.imageMetadata",
+        "blurHash": "DCRpF3xH-;tR?H~qofRkoLbG",
+        "dimensions": {
+          "_type": "sanity.imageDimensions",
+          "aspectRatio": 3.3684210526315788,
+          "height": 608,
+          "width": 2048
+        },
+        "hasAlpha": false,
+        "isOpaque": true,
+        "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAGABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIFCP/EAB8QAAICAgEFAAAAAAAAAAAAAAECAAMEEgURITFBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAAAAREx/9oADAMBAAIRAxEAPwDSmRi8i15arOVayey6eJE4vJaEWZyMPidDER6FixxUsShRbZu/sxEQFOP/2Q==",
+        "palette": {
+          "_type": "sanity.imagePalette",
+          "darkMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#324757",
+            "foreground": "#fff",
+            "population": 0.7,
+            "title": "#fff"
+          },
+          "darkVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0d4066",
+            "foreground": "#fff",
+            "population": 0.91,
+            "title": "#fff"
+          },
+          "dominant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0d4066",
+            "foreground": "#fff",
+            "population": 0.91,
+            "title": "#fff"
+          },
+          "lightMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#9ac8cf",
+            "foreground": "#000",
+            "population": 0.34,
+            "title": "#fff"
+          },
+          "lightVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#98f0e7",
+            "foreground": "#000",
+            "population": 0.25,
+            "title": "#000"
+          },
+          "muted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#4e7f94",
+            "foreground": "#fff",
+            "population": 0.73,
+            "title": "#fff"
+          },
+          "vibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#04a47c",
+            "foreground": "#fff",
+            "population": 0.01,
+            "title": "#fff"
+          }
+        }
+      },
+      "mimeType": "image/webp",
+      "originalFilename": "holy_name_logo_horizontal-BpwH_n47.jpg",
+      "path": "images/rl2j4kml/production/6cefeabf06e2afd980debce066ae02f67d416813-2048x608.webp",
+      "sha1hash": "6cefeabf06e2afd980debce066ae02f67d416813",
+      "size": 22476,
+      "uploadId": "5JgK5OqfSXeP7UkXoVRH9v6vHti9SKKO",
+      "url": "https://cdn.sanity.io/images/rl2j4kml/production/6cefeabf06e2afd980debce066ae02f67d416813-2048x608.webp"
+    }
+  },
+  "menuItems": [
+    {
+      "externalUrl": null,
+      "icon": "Home",
+      "internalSection": "home",
+      "label": "Home",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "User",
+      "internalSection": "about-fibroids",
+      "label": "About Fibroids",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "Stethoscope",
+      "internalSection": "dr-liberman",
+      "label": "Meet Dr. Liberman",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "AlertTriangle",
+      "internalSection": "services",
+      "label": "Our Services",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "Calendar",
+      "internalSection": "appointment",
+      "label": "Book Appointment",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "CreditCard",
+      "internalSection": "insurance",
+      "label": "Insurance & Billing",
+      "linkType": "internal",
+      "openInNewTab": true
+    },
+    {
+      "externalUrl": null,
+      "icon": "UserCheck",
+      "internalSection": "register",
+      "label": "Patient Portal",
+      "linkType": "internal",
+      "openInNewTab": true
+    }
+  ]
+}

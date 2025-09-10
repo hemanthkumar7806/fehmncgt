@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { motion } from "framer-motion";
-import { BookOpen, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
+import { CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
 
 export interface Topic {
   title?: string;

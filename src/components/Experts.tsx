@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, Star, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight, Check, X, User, Stethoscope } from 'lucide-react'
+import { Calendar, Star, Clock, ChevronLeft, ChevronRight, Check, X} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -221,16 +221,6 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
     setPatientInfo({ name: '', email: '', phone: '', reason: '' })
   }
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr)
-    return new Intl.DateTimeFormat('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(date)
-  }
-
   const getAvailableDates = () => {
     if (!selectedDoctor?.timeSlots) {
       console.log('No timeSlots for selected doctor:', selectedDoctor)
@@ -436,7 +426,6 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
                         <h4 className="text-lg font-semibold text-gray-900 mb-4">Select Appointment Date</h4>
                         <div className="space-y-3 max-h-64 overflow-y-auto">
                           {getAvailableDates().map(date => {
-                            const dateObj = new Date(date)
                             const availableSlots = selectedDoctor.timeSlots?.[date]?.filter(slot => slot.available).length || 0
                             
                             return (

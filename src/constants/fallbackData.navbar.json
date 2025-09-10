@@ -1,0 +1,180 @@
+{
+  "contactInfo": {
+    "emergencyText": "24/7 Emergency",
+    "phone": "(555) 123-4567",
+    "showContactInfo": true
+  },
+  "ctaButton": {
+    "mobileText": "Book",
+    "showButton": true,
+    "text": "Book Appointment"
+  },
+  "logo": {
+    "asset": {
+      "_createdAt": "2025-08-31T08:35:04Z",
+      "_id": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
+      "_rev": "HQx5y65c3z3EDy2lMwNhHV",
+      "_type": "sanity.imageAsset",
+      "_updatedAt": "2025-08-31T08:35:04Z",
+      "assetId": "6cefeabf06e2afd980debce066ae02f67d416813",
+      "extension": "webp",
+      "metadata": {
+        "_type": "sanity.imageMetadata",
+        "blurHash": "DCRpF3xH-;tR?H~qofRkoLbG",
+        "dimensions": {
+          "_type": "sanity.imageDimensions",
+          "aspectRatio": 3.3684210526315788,
+          "height": 608,
+          "width": 2048
+        },
+        "hasAlpha": false,
+        "isOpaque": true,
+        "lqip": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAGABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIFCP/EAB8QAAICAgEFAAAAAAAAAAAAAAECAAMEEgURITFBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAAAAREx/9oADAMBAAIRAxEAPwDSmRi8i15arOVayey6eJE4vJaEWZyMPidDER6FixxUsShRbZu/sxEQFOP/2Q==",
+        "palette": {
+          "_type": "sanity.imagePalette",
+          "darkMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#324757",
+            "foreground": "#fff",
+            "population": 0.7,
+            "title": "#fff"
+          },
+          "darkVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0d4066",
+            "foreground": "#fff",
+            "population": 0.91,
+            "title": "#fff"
+          },
+          "dominant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0d4066",
+            "foreground": "#fff",
+            "population": 0.91,
+            "title": "#fff"
+          },
+          "lightMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#9ac8cf",
+            "foreground": "#000",
+            "population": 0.34,
+            "title": "#fff"
+          },
+          "lightVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#98f0e7",
+            "foreground": "#000",
+            "population": 0.25,
+            "title": "#000"
+          },
+          "muted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#4e7f94",
+            "foreground": "#fff",
+            "population": 0.73,
+            "title": "#fff"
+          },
+          "vibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#04a47c",
+            "foreground": "#fff",
+            "population": 0.01,
+            "title": "#fff"
+          }
+        }
+      },
+      "mimeType": "image/webp",
+      "originalFilename": "holy_name_logo_horizontal-BpwH_n47.jpg",
+      "path": "images/rl2j4kml/production/6cefeabf06e2afd980debce066ae02f67d416813-2048x608.webp",
+      "sha1hash": "6cefeabf06e2afd980debce066ae02f67d416813",
+      "size": 22476,
+      "uploadId": "5JgK5OqfSXeP7UkXoVRH9v6vHti9SKKO",
+      "url": "https://cdn.sanity.io/images/rl2j4kml/production/6cefeabf06e2afd980debce066ae02f67d416813-2048x608.webp"
+    }
+  },
+  "logoAlt": null,
+  "mobileLogo": {
+    "asset": {
+      "_createdAt": "2025-09-09T10:58:28Z",
+      "_id": "image-1f9f2962b9f1d599ea37d3c35aae64bce7523113-422x354-png",
+      "_rev": "JL8xVPBAr0mSXryLh71MFf",
+      "_type": "sanity.imageAsset",
+      "_updatedAt": "2025-09-09T10:58:28Z",
+      "assetId": "1f9f2962b9f1d599ea37d3c35aae64bce7523113",
+      "extension": "png",
+      "metadata": {
+        "_type": "sanity.imageMetadata",
+        "blurHash": "eDQmVJD%~W^+.7t7nP9FM{NG?b56IU=|IU?HR*?HIoNG?bSeIUM{=}",
+        "dimensions": {
+          "_type": "sanity.imageDimensions",
+          "aspectRatio": 1.192090395480226,
+          "height": 354,
+          "width": 422
+        },
+        "hasAlpha": true,
+        "isOpaque": true,
+        "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAAAsTAAALEwEAmpwYAAADeUlEQVR4nIWUiU8bVxjE91+vqiooJClpKanUggg0QGug5QzGNuBzfWDjY32tr7VZGxu8XvCF71/lBVeoStMnPT1pnzQ7b2a+EeTSDWI0jVK5pT8Y0h0OSd/riLdVCu0m3dGI0WTCZDLha2vyfAqucIr3G8dsmj2klAp3zRah+h0bhQyH5SJhXaPUadEaDBh/AXQy2893BuDrj/vMre6xduTEFpCwJmS24gl28xn2SgX2rhVC2h3NwYDJM5cpwHiCwf5xNELv93gY9BEissJvRw62rV5MVh/Le+f8/KeNpf0zNh1+TpIyO/kspmKOTPOe4XhsMB2NxnSGQyrdDleNOrYblbBeR8irNXasIhZvhLRSIZopYvXFWD9y8uOWmbXPTk7iafaUPL67GvVOh/KdTkopE1FUjgt5fkjGWEjGsFVVBO2+hdkTZu3QQTCZR291jF2q1nFHZDbNbkwXAY4SaexllXilhj2UZNvmZcsqsnTm5pUosiIn8ddvEQbDkWHG6oGdX/864yKYMP5+Xa1zU9eJ56458UQ48EVw5RQk9YZIpohPymCyeXm7Y2bVEyB6d0uj10OYitvu9rhM5AzAJZOFPyxeHMEE+XKN+1YHtaYRy12TVqsoDR25ruFI5Vg5dbHu8CEqRfTeo6GtMHOs8dDGHUmxc+bH4o0RkYsGy+n3ZruL1uqQaTSw31TYkFO8szn5cOrksqii9R7pj0dPsZkBTkOdU6scua4MhtPTfhknIGXJqlWSdY2dQpbFaJh5UeTN8RmnoThas/MU/FmwZwEdjyc0O11i2RL79qDh8u9mD+d+iXBB5UApMBe65I3DzXvzBcunTpJKmakHL/P+D+B0TS+rdR2flOXEEzbcd4XT2FJZlqIRXrlFXu9bWTCdcOi5oqY9GLq9nB/hJVit8YAYk1k/dvLTroUPuxZ+ObQzb7HzjeWc7z9fsLBtZsPsRi5WDJkm/xpHYTaH0+cm8ipmMcLKoZ13+zYWjy9YsjiZd3lY9YewXEp4ozL58i3dXv+LJSFM3bnv9yg2dGLXFYLZIgeBKItOLwuij8VgEFMuQ6qu0Xho0en2jLH7r/IRpnVVbDcJ3FaxV8rYrkt8kiS+83n5NuTnYyZJTNfojoZPev1PjQnDyRit30PSGxyrRZYzKd5KYeakEJ/yMpKu0R4OGL/ovK8B/g0p1MZ3KWx5zAAAAABJRU5ErkJggg==",
+        "palette": {
+          "_type": "sanity.imagePalette",
+          "darkMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#29455b",
+            "foreground": "#fff",
+            "population": 0.59,
+            "title": "#fff"
+          },
+          "darkVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0a395b",
+            "foreground": "#fff",
+            "population": 6.03,
+            "title": "#fff"
+          },
+          "dominant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#0a395b",
+            "foreground": "#fff",
+            "population": 6.03,
+            "title": "#fff"
+          },
+          "lightMuted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#85bac0",
+            "foreground": "#000",
+            "population": 1.83,
+            "title": "#fff"
+          },
+          "lightVibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#d5f1f7",
+            "foreground": "#000",
+            "population": 1.25,
+            "title": "#000"
+          },
+          "muted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#4a6986",
+            "foreground": "#fff",
+            "population": 0.1,
+            "title": "#fff"
+          },
+          "vibrant": {
+            "_type": "sanity.imagePaletteSwatch",
+            "background": "#12ab9e",
+            "foreground": "#fff",
+            "population": 4.01,
+            "title": "#fff"
+          }
+        }
+      },
+      "mimeType": "image/png",
+      "originalFilename": "Screenshot 2025-09-07 at 3.20.17 PM.png",
+      "path": "images/rl2j4kml/production/1f9f2962b9f1d599ea37d3c35aae64bce7523113-422x354.png",
+      "sha1hash": "1f9f2962b9f1d599ea37d3c35aae64bce7523113",
+      "size": 121228,
+      "uploadId": "EZdFoQaCzGOLkAGFctapt90P032oL33r",
+      "url": "https://cdn.sanity.io/images/rl2j4kml/production/1f9f2962b9f1d599ea37d3c35aae64bce7523113-422x354.png"
+    }
+  },
+  "tagline": "Fibroid Care Specialists"
+}
