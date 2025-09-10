@@ -20,7 +20,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
   if (!topic) return null;
 
   return (
-    <section className="py-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <section className="py-16">
       <div className="w-[90%] mx-auto px-6 lg:px-8">
         <div className="w-full">
           {/* Section Header */}

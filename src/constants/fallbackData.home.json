@@ -101,12 +101,65 @@
     ]
   },
   "hero": {
-    "ctaButton": {
-      "link": "https://www.google.com",
-      "text": "Schedule Appointment"
+    "headline": "Expert Medical Care at Holy Name Medical Center",
+    "subheadline": "Experience compassionate, comprehensive healthcare with our team of specialists. From routine care to complex treatments, we're here for your health journey.",
+    "badge": {
+      "text": "Trusted Healthcare Since 1925",
+      "showBadge": true
     },
-    "headline": "Comprehensive Fibroid Care at Holy Name",
-    "subheadline": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here."
+    "ctaButton": {
+      "text": "Schedule Appointment",
+      "link": "#appointment"
+    },
+    "secondaryButton": {
+      "text": "Learn More",
+      "link": "#about",
+      "showButton": true
+    },
+    "stats": [
+      {
+        "number": "25+",
+        "label": "Years of Excellence"
+      },
+      {
+        "number": "50+",
+        "label": "Medical Specialists"
+      },
+      {
+        "number": "24/7",
+        "label": "Emergency Care"
+      }
+    ],
+    "rightContent": {
+      "title": "Award-Winning Healthcare",
+      "description": "Recognized for excellence in patient care, safety, and medical innovation. Our commitment to quality healthcare has earned us multiple accreditations and awards.",
+      "achievements": [
+        {
+          "text": "Joint Commission Accredited"
+        },
+        {
+          "text": "Magnet® Recognition for Nursing"
+        },
+        {
+          "text": "Top 100 Hospital Award"
+        }
+      ]
+    },
+    "floatingCards": [
+      {
+        "title": "Online Now",
+        "subtitle": "Book appointments 24/7",
+        "position": "top-right",
+        "showCard": true
+      },
+      {
+        "title": "Next Available",
+        "subtitle": "Today at 2:30 PM",
+        "position": "bottom-left",
+        "showCard": true
+      }
+    ],
+    "backgroundImage": null
   },
   "registerForPatientPortal": {
     "contactInfo": {

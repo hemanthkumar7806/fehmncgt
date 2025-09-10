@@ -63,9 +63,38 @@ interface HomePageData {
   hero?: {
     headline?: string
     subheadline?: string
+    badge?: {
+      text?: string
+      showBadge?: boolean
+    }
     ctaButton?: {
       text?: string
       link?: string
+    }
+    secondaryButton?: {
+      text?: string
+      link?: string
+      showButton?: boolean
+    }
+    stats?: Array<{
+      number?: string
+      label?: string
+    }>
+    rightContent?: {
+      title?: string
+      description?: string
+      achievements?: Array<{
+        text?: string
+      }>
+    }
+    floatingCards?: Array<{
+      title?: string
+      subtitle?: string
+      position?: string
+      showCard?: boolean
+    }>
+    backgroundImage?: {
+      asset?: any
     }
   }
   topic?: {

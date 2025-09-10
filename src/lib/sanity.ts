@@ -125,9 +125,41 @@ export const homepageQuery = `
     hero {
       headline,
       subheadline,
+      badge {
+        text,
+        showBadge
+      },
       ctaButton {
         text,
         link
+      },
+      secondaryButton {
+        text,
+        link,
+        showButton
+      },
+      stats[] {
+        number,
+        label
+      },
+      rightContent {
+        title,
+        description,
+        achievements[] {
+          text
+        }
+      },
+      floatingCards[] {
+        title,
+        subtitle,
+        position,
+        showCard
+      },
+      backgroundImage {
+        asset-> {
+          _id,
+          url
+        }
       }
     },
     topic {
