@@ -50,7 +50,12 @@ export default function Hero({ hero }: HeroProps) {
   const [isVisible, setIsVisible] = useState(false)
   
   useEffect(() => {
-    setIsVisible(true)
+    // Add 0.4 second delay before hero animations start
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 300)
+    
+    return () => clearTimeout(timer)
   }, [])
 
   // Fallback data
