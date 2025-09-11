@@ -98,7 +98,7 @@ export default function Hero({ hero }: HeroProps) {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-primary/80" />
+          <div className="absolute inset-0 bg-primary/90" />
         </div>
       )}
 
