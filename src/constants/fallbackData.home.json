@@ -197,26 +197,35 @@
     "title": "HNMC-Fibroid Center"
   },
   "services": {
+    "ctaButton": {
+      "link": "#appointment",
+      "showButton": true,
+      "text": "Schedule an Appointment"
+    },
     "servicesList": [
       {
         "description": "Our team includes gynecologists, interventional radiologists, and fertility specialists working together for comprehensive care.",
-        "icon": null,
-        "title": "Multidisciplinary Team"
+        "icon": "Users",
+        "title": "Multidisciplinary Team",
+        "link": "#about"
       },
       {
         "description": "Every treatment plan is customized to your specific needs, symptoms, and life goals.",
-        "icon": null,
-        "title": "Personalized Care"
+        "icon": "Heart",
+        "title": "Personalized Care",
+        "link": "#services"
       },
       {
         "description": "View results and communicate anytime through our secure patient portal.",
-        "icon": null,
-        "title": "24/7 Access"
+        "icon": "Clock",
+        "title": "24/7 Access",
+        "link": "#register"
       },
       {
         "description": "Chat with real providers, not bots, for personalized support.",
-        "icon": null,
-        "title": "Direct Communication"
+        "icon": "MessageCircle",
+        "title": "Direct Communication",
+        "link": "#appointment"
       }
     ],
     "subtitle": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",

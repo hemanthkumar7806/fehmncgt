@@ -137,7 +137,13 @@ interface HomePageData {
       title?: string;
       description?: string;
       icon?: string;
+      link?: string;
     }>;
+    ctaButton?: {
+      text?: string;
+      link?: string;
+      showButton?: boolean;
+    };
   };
   resources?: {
     title?: string;

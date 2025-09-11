@@ -236,7 +236,7 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
   }
 
   return (
-    <section id="experts" className="py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <section id="experts" className="py-20">
       <div className="container mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
