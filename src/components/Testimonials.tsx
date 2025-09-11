@@ -35,12 +35,10 @@ export default function Testimonials({
           viewport={{ once: true }}
         >
           {title && (
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Heart className="w-8 h-8 text-[#01a69c]" />
+            <div className="flex items-center justify-center gap-3 mb-4"> 
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
                 {title}
-              </h2>
-              <Heart className="w-8 h-8 text-[#01a69c]" />
+              </h2> 
             </div>
           )}
           {subtitle && (
@@ -55,7 +53,7 @@ export default function Testimonials({
           {testimonialsList.map((testimonial, idx) => (
             <motion.div
               key={idx}
-              className="group bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition-all duration-500 border border-gray-100 relative overflow-hidden"
+              className="group bg-white rounded-3xl shadow-lg p-8  transition-all duration-500 border border-gray-100 relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
@@ -67,7 +65,7 @@ export default function Testimonials({
               
               {/* Quote Icon */}
               <div className="relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
                   <Quote className="w-8 h-8 text-white" />
                 </div>
 
