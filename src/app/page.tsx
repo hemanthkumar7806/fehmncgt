@@ -105,12 +105,21 @@ interface HomePageData {
   topic?: {
     title?: string;
     subtitle?: string;
-    whatIsTopic?: any;
-    commonSymptoms?: any;
+    whatIsTopic?: any[];
+    commonSymptomsHeading?: string;
+    commonSymptoms?: any[];
     doYouHaveSymptoms?: {
+      heading?: string;
       link?: string;
-      symptomsExist?: string;
+      symptomsExist?: any[];
+      buttonText?: string;
     };
+    additionalInfo?: Array<{
+      title?: string;
+      description?: string;
+      icon?: string;
+      showCard?: boolean;
+    }>;
   };
   about?: {
     title?: string;

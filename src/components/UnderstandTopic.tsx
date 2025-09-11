@@ -1,173 +1,253 @@
 "use client";
 
-import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { motion } from "framer-motion";
-import { CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
+import { CheckCircle, ArrowRight, AlertCircle, Heart } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
 export interface Topic {
   title?: string;
   subtitle?: string;
-  whatIsTopic?: string;
-  commonSymptoms?: any[]; // Portable Text array
+  whatIsTopic?: any[];
+  commonSymptomsHeading?: string;
+  commonSymptoms?: any[];
   doYouHaveSymptoms?: {
+    heading?: string;
     link?: string;
-    symptomsExist?: string;
+    symptomsExist?: any[];
+    buttonText?: string;
   };
+  additionalInfo?: Array<{
+    title?: string;
+    description?: string;
+    icon?: string;
+    showCard?: boolean;
+  }>;
 }
 
 export default function UnderstandTopic({ topic }: { topic?: Topic }) {
   if (!topic) return null;
 
-  return (
-    <section className="py-16">
-      <div className="w-[90%] mx-auto px-6 lg:px-8">
-        <div className="w-full">
-          {/* Section Header */}
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-          >
-            
-            {topic.title && (
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-                {topic.title}
-              </h2>
-            )}
-            {topic.subtitle && (
-              <p className="text-xl text-[#01a69c] font-medium">
-                {topic.subtitle}
-              </p>
-            )}
-          </motion.div>
+  const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
+    if (link && !link.startsWith("http")) {
+      e.preventDefault();
+      const element = document.getElementById(link.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }
+    }
+  };
 
-          <div className="grid gap-8 lg:gap-12">
-            {/* What is Topic */}
-            {topic.whatIsTopic && (
+  const getIcon = (iconName?: string) => {
+    if (!iconName) return Heart;
+    const IconComponent = (LucideIcons as any)[
+      iconName.charAt(0).toUpperCase() + iconName.slice(1)
+    ];
+    return IconComponent || Heart;
+  };
+
+  return (
+    <section className="container mx-auto px-6 lg:px-8 py-20">
+      {/* Section Header */}
+      <motion.div
+        className="text-center mb-10"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+      >
+        {topic.title && (
+          <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
+            {topic.title}
+          </h2>
+        )}
+        {topic.subtitle && (
+          <p className="text-xl text-primary font-medium max-w-3xl mx-auto">
+            {topic.subtitle}
+          </p>
+        )}
+      </motion.div>
+
+      <div className="container mx-auto">
+        <div className="grid gap-10">
+          {/* What is Topic */}
+          {topic.whatIsTopic && (
+            <motion.div
+              className="bg-white rounded-3xl p-8 shadow-lg border border-hnmc-gray-100"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <div className="max-w-5xl mx-auto text-center">
+                <div className="prose prose-lg max-w-none">
+                  <div className="text-hnmc-gray-700 leading-relaxed text-xl">
+                    <PortableText
+                      value={topic.whatIsTopic}
+                      components={{
+                        block: {
+                          normal: ({ children }) => (
+                            <p className="mb-4">{children}</p>
+                          ),
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Common Symptoms and CTA Section in a row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Common Symptoms */}
+            {topic.commonSymptoms && topic.commonSymptoms.length > 0 && (
               <motion.div
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
+                className="bg-white rounded-3xl p-8 lg:p-10 shadow-lg border border-hnmc-gray-100"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="prose prose-lg max-w-none">
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    {topic.whatIsTopic}
-                  </p>
+                <div className="flex items-center mb-4">
+                  <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mr-4">
+                    <CheckCircle className="w-7 h-7 text-secondary" />
+                  </div>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-hnmc-gray-800">
+                    {topic.commonSymptomsHeading || "Common Symptoms"}
+                  </h3>
+                </div>
+
+                <div className="bg-secondary/5 rounded-2xl p-6">
+                  <div className="prose prose-lg max-w-none">
+                    <PortableText
+                      value={topic.commonSymptoms}
+                      components={{
+                        listItem: ({ children }) => (
+                          <li className="flex items-start mb-4">
+                            <div className="w-3 h-3 bg-secondary rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                            <span className="text-hnmc-gray-700 text-lg leading-relaxed">
+                              {children}
+                            </span>
+                          </li>
+                        ),
+                        list: ({ children }) => (
+                          <ul className="space-y-3">{children}</ul>
+                        ),
+                      }}
+                    />
+                  </div>
                 </div>
               </motion.div>
             )}
 
-            {/* Common Symptoms and CTA Section in a row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Common Symptoms */}
-              {topic.commonSymptoms && topic.commonSymptoms.length > 0 && (
-                <motion.div
-                  className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-[#01a69c]/10 rounded-xl flex items-center justify-center mr-4">
-                      <CheckCircle className="w-6 h-6 text-[#01a69c]" />
+            {/* CTA Section */}
+            {topic.doYouHaveSymptoms && (
+              <motion.div
+                className="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 lg:p-10 text-white relative overflow-hidden"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative z-10">
+                  <div className="flex items-center mb-8">
+                    <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mr-4">
+                      <AlertCircle className="w-7 h-7 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      Common Symptoms
+                    <h3 className="text-2xl lg:text-3xl font-bold text-white">
+                      {topic.doYouHaveSymptoms?.heading ||
+                        "Experiencing Symptoms?"}
                     </h3>
                   </div>
-                  
-                  <div className="bg-[#01a69c]/5 rounded-xl p-6">
-                    <div className="prose prose-lg max-w-none">
-                      <PortableText
-                        value={topic.commonSymptoms}
-                        components={{
-                          listItem: ({ children }) => (
-                            <li className="flex items-start mb-3">
-                              <div className="w-2 h-2 bg-[#01a69c] rounded-full mt-3 mr-3 flex-shrink-0"></div>
-                              <span className="text-gray-700">{children}</span>
-                            </li>
-                          ),
-                          list: ({ children }) => (
-                            <ul className="space-y-2">{children}</ul>
-                          ),
-                        }}
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              )}
 
-              {/* CTA Section */}
-              {topic.doYouHaveSymptoms && (
-                <motion.div
-                  className="bg-gradient-to-r from-[#093b60] to-[#01a69c] rounded-2xl p-8 text-white"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-start">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                      <AlertCircle className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-4">
-                        Experiencing Symptoms?
-                      </h3>
-                      <p className="text-white/90 mb-6 leading-relaxed">
-                        {topic.doYouHaveSymptoms.symptomsExist}
-                      </p>
-                      {topic.doYouHaveSymptoms.link && (
-                        <Link
-                          href={topic.doYouHaveSymptoms.link}
-                          className="inline-flex items-center gap-3 bg-white text-[#093b60] px-6 py-3 rounded-xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-lg"
-                        >
-                          <span>Get Expert Help</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      )}
-                    </div>
+                  <div className="text-white mb-8 leading-relaxed text-lg">
+                    <PortableText
+                      value={topic.doYouHaveSymptoms.symptomsExist}
+                      components={{
+                        block: {
+                          normal: ({ children }) => (
+                            <p className="mb-4">{children}</p>
+                          ),
+                        },
+                      }}
+                    />
                   </div>
-                </motion.div>
-              )}
-            </div>
+                  {topic.doYouHaveSymptoms.link && (
+                    <a
+                      href={topic.doYouHaveSymptoms.link}
+                      className="inline-flex items-center gap-3 bg-white text-primary px-8 py-4 rounded-2xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                      {...(topic.doYouHaveSymptoms.link?.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      onClick={(e) =>
+                        handleSmoothScroll(
+                          topic.doYouHaveSymptoms?.link || "",
+                          e
+                        )
+                      }
+                    >
+                      <span>
+                        {topic.doYouHaveSymptoms.buttonText ||
+                          "Get Expert Help"}
+                      </span>
+                      <ArrowRight className="w-5 h-5" />
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            )}
           </div>
+        </div>
 
-          {/* Additional Info Cards */}
+        {/* Additional Info Cards */}
+        {topic.additionalInfo && topic.additionalInfo.length > 0 && (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                Why Choose Our Care?
-              </h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Our team of specialists provides comprehensive, personalized treatment plans 
-                using the latest medical technologies and evidence-based approaches.
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-              <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                Schedule a Consultation
-              </h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Take the first step towards better health. Our medical experts are here 
-                to provide the care and guidance you need.
-              </p>
-            </div>
+            {topic.additionalInfo.map((card, index) => {
+              if (!card.showCard) return null;
+
+              const IconComponent = getIcon(card.icon);
+              const isEven = index % 2 === 0;
+
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl p-8 shadow-lg border border-hnmc-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="flex items-center mb-4">
+                    <div
+                      className={`w-12 h-12 ${
+                        isEven ? "bg-primary/10" : "bg-secondary/10"
+                      } rounded-xl flex items-center justify-center mr-4`}
+                    >
+                      <IconComponent
+                        className={`w-6 h-6 ${
+                          isEven ? "text-primary" : "text-secondary"
+                        }`}
+                      />
+                    </div>
+                    <h4 className="text-xl font-bold text-hnmc-gray-800">
+                      {card.title}
+                    </h4>
+                  </div>
+                  <p className="text-hnmc-gray-600 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+              );
+            })}
           </motion.div>
-        </div>
+        )}
       </div>
     </section>
   );

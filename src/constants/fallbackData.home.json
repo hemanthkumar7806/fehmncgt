@@ -346,11 +346,58 @@
       }
     ],
     "doYouHaveSymptoms": {
-      "link": "https://www.google.co.in",
-      "symptomsExist": "If you're experiencing any of these symptoms, it's important to consult with a specialist. Early diagnosis and treatment can significantly improve your quality of life"
+      "heading": "Experiencing Symptoms?",
+      "link": "/appointment",
+      "symptomsExist": [
+        {
+          "_key": "symptoms1",
+          "_type": "block",
+          "children": [
+            {
+              "_key": "symptoms1_span",
+              "_type": "span",
+              "marks": [],
+              "text": "If you're experiencing any of these symptoms, it's important to consult with a specialist. Early diagnosis and treatment can significantly improve your quality of life and prevent complications."
+            }
+          ],
+          "markDefs": [],
+          "style": "normal"
+        }
+      ],
+      "buttonText": "Schedule Consultation"
     },
-    "subtitle": "What Are Fibroids?",
-    "title": "Understanding Fibroids",
-    "whatIsTopic": "Uterine fibroids are non-cancerous growths that develop in or around the uterus. They are very common, affecting up to 80% of women by age 50. While many women experience no symptoms, others may have significant discomfort."
+    "subtitle": "Understanding Uterine Fibroids",
+    "title": "What Are Fibroids?",
+    "commonSymptomsHeading": "Common Symptoms",
+    "whatIsTopic": [
+      {
+        "_key": "whatis1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "whatis1_span",
+            "_type": "span",
+            "marks": [],
+            "text": "Uterine fibroids are non-cancerous growths that develop in or around the uterus. They are very common, affecting up to 80% of women by age 50. While many women experience no symptoms, others may have significant discomfort that impacts their daily lives."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "additionalInfo": [
+      {
+        "title": "Why Choose Our Care?",
+        "description": "Our team of specialists provides comprehensive, personalized treatment plans using the latest medical technologies and evidence-based approaches to ensure the best outcomes for our patients.",
+        "icon": "shield",
+        "showCard": true
+      },
+      {
+        "title": "Schedule a Consultation",
+        "description": "Take the first step towards better health. Our medical experts are here to provide the care and guidance you need with compassionate, personalized attention.",
+        "icon": "users",
+        "showCard": true
+      }
+    ]
   }
 }

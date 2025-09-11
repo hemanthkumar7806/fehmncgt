@@ -49,6 +49,20 @@ interface HeroProps {
 export default function Hero({ hero }: HeroProps) {
   const [isVisible, setIsVisible] = useState(false)
   
+  const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
+    if (link && !link.startsWith('http')) {
+      e.preventDefault()
+      const element = document.getElementById(link.replace('#', ''))
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        })
+      }
+    }
+  }
+  
   useEffect(() => {
     // Add 0.4 second delay before hero animations start
     const timer = setTimeout(() => {
@@ -93,7 +107,7 @@ export default function Hero({ hero }: HeroProps) {
         <div className="grid lg:grid-cols-2 gap-20 items-center w-full">
           {/* Left Content */}
           <motion.div 
-            className="space-y-6"
+            className="space-y-6 xl:space-y-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -112,7 +126,7 @@ export default function Hero({ hero }: HeroProps) {
             )}
 
             <motion.div 
-              className="space-y-4"
+              className="space-y-4 xl:space-y-6"
               initial={{ opacity: 0 }}
               animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -136,6 +150,7 @@ export default function Hero({ hero }: HeroProps) {
                   href={ctaButton.link}
                   className="inline-flex items-center justify-center px-4 py-3 bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   {...(ctaButton.link?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  onClick={(e) => handleSmoothScroll(ctaButton.link || '', e)}
                 >
                   <Calendar size={20} className="mr-2" />
                   <span>{ctaButton.text}</span>
@@ -146,6 +161,7 @@ export default function Hero({ hero }: HeroProps) {
                   href={secondaryButton.link || '#'}
                   className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-primary font-semibold rounded-xl transition-all duration-300"
                   {...(secondaryButton.link?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  onClick={(e) => handleSmoothScroll(secondaryButton.link || '', e)}
                 >
                   <span>{secondaryButton.text}</span>
                   <ArrowRight size={20} className="ml-2" />
@@ -156,7 +172,7 @@ export default function Hero({ hero }: HeroProps) {
             {/* Stats */}
             {stats.length > 0 && (
               <motion.div 
-                className="grid grid-cols-3 gap-8 pt-4 border-t border-white/20"
+                className="grid grid-cols-3 gap-8 pt-4 xl:pt-6 border-t border-white/20"
                 initial={{ opacity: 0 }}
                 animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}

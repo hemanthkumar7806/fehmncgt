@@ -166,10 +166,19 @@ export const homepageQuery = `
       title,
       subtitle,
       whatIsTopic,
+      commonSymptomsHeading,
       commonSymptoms,
       doYouHaveSymptoms {
+        heading,
         link,
-        symptomsExist
+        symptomsExist,
+        buttonText
+      },
+      additionalInfo[] {
+        title,
+        description,
+        icon,
+        showCard
       }
     },
     about {
@@ -263,12 +272,8 @@ export async function getNavbarData() {
     return navbarDataCache
   }
 
-  try {
-    console.log('🔧 Fetching navbar data...')
-    console.log('📝 Executing query:', navbarQuery)
-    
+  try {    
     const data = await client.fetch(navbarQuery)
-    console.log('✅ Navbar query successful, data:', data)
     
     // Cache the result
     navbarDataCache = data
@@ -277,12 +282,6 @@ export async function getNavbarData() {
     return data
   } catch (error) {
     console.error('❌ Error fetching navbar data:', error)
-    console.error('❌ Error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      status: (error as any)?.status,
-      statusCode: (error as any)?.statusCode
-    })
-    
     // Return fallback data from JSON file
     try {
       const fallbackData = await import('@/constants/fallbackData.navbar.json')
@@ -329,15 +328,7 @@ export async function getHomePageData() {
   }
 
   try {
-    console.log('🔧 Sanity client config:', {
-      projectId: client.config().projectId,
-      dataset: client.config().dataset,
-      useCdn: client.config().useCdn
-    })
-    console.log('📝 Executing query:', homepageQuery)
-    
     const data = await client.fetch(homepageQuery)
-    console.log('✅ Query successful, data:', data)
     
     // Cache the result
     homepageDataCache = data
@@ -346,12 +337,6 @@ export async function getHomePageData() {
     return data
   } catch (error) {
     console.error('❌ Error fetching homepage data:', error)
-    console.error('❌ Error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      status: (error as any)?.status,
-      statusCode: (error as any)?.statusCode
-    })
-    
     // Fallback: Try using our server-side API route
     try {
       console.log('🔄 Trying server-side API route as fallback...')
@@ -365,7 +350,6 @@ export async function getHomePageData() {
       
       if (response.ok) {
         const result = await response.json()
-        console.log('✅ Server-side API route successful:', result.data)
         return result.data
       }
     } catch (fallbackError) {
@@ -379,7 +363,6 @@ export async function getHomePageData() {
 // Function to fetch data by document ID (for your specific URL)
 export async function getHomePageById(id: string) {
   try {
-    console.log('🔧 Fetching by document ID:', id)
     const query = `*[_id == $id][0] {
       seo,
       hero {
@@ -449,10 +432,7 @@ export async function getHomePageById(id: string) {
         socialMedia
       }
     }`
-    
-    console.log('📝 Executing ID query:', query)
     const data = await client.fetch(query, { id })
-    console.log('✅ ID query successful, data:', data)
     return data
   } catch (error) {
     console.error('❌ Error fetching homepage data by ID:', error)
