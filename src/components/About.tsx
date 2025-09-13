@@ -57,7 +57,7 @@ export default function About({ about }: AboutProps) {
   return (
     <section className="py-20 bg-hnmc-gray-50">
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-16 items-start">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -113,7 +113,7 @@ export default function About({ about }: AboutProps) {
                 <div className="relative">
                   <video
                     ref={videoRef}
-                    className="w-full h-[400px] object-cover"
+                    className="w-full h-auto sm:h-[400px] object-cover"
                     poster={aboutData?.image?.asset ? urlFor(aboutData.image.asset).url() : undefined}
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
@@ -169,7 +169,7 @@ export default function About({ about }: AboutProps) {
         {/* Stats */}
         {aboutData?.stats && aboutData.stats.length > 0 && (
           <motion.div
-            className="flex justify-between items-center mt-20 pt-12 border-t border-hnmc-gray-200"
+            className="flex justify-between mt-20 pt-12 border-t border-hnmc-gray-200"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
