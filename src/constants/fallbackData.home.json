@@ -1,23 +1,68 @@
 {
   "about": {
-    "content": [
+    "title": "About Holy Name Fibroid Center",
+    "subtitle": "Leading the way in comprehensive fibroid care",
+    "description": [
       {
-        "_key": "238800897e32",
+        "_key": "about_desc_1",
         "_type": "block",
         "children": [
           {
-            "_key": "fad8e702dba5",
+            "_key": "about_desc_1_span",
             "_type": "span",
             "marks": [],
-            "text": "We are committed to providing the highest quality healthcare services to our community. Our team of experienced medical professionals is dedicated to your health and well-being, offering personalized care in a comfortable and welcoming environment."
+            "text": "At Holy Name Medical Center's Fibroid Center, we are dedicated to providing world-class care for women experiencing uterine fibroids. Our multidisciplinary team combines cutting-edge medical technology with compassionate, personalized treatment approaches."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "about_desc_2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "about_desc_2_span",
+            "_type": "span",
+            "marks": [],
+            "text": "We understand that every woman's experience with fibroids is unique. That's why we offer a comprehensive range of treatment options, from minimally invasive procedures to advanced surgical techniques, all delivered in a supportive environment that prioritizes your comfort and well-being."
           }
         ],
         "markDefs": [],
         "style": "normal"
       }
     ],
-    "stats": null,
-    "title": "About Our Medical Center"
+    "mediaType": "image",
+    "image": {
+      "_type": "image",
+      "asset": {
+        "_ref": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
+        "_type": "reference"
+      }
+    },
+    "video": null,
+    "stats": [
+      {
+        "number": "25+",
+        "label": "Years of Excellence",
+        "icon": "Award"
+      },
+      {
+        "number": "50+",
+        "label": "Medical Specialists",
+        "icon": "Users"
+      },
+      {
+        "number": "1000+",
+        "label": "Successful Procedures",
+        "icon": "Heart"
+      },
+      {
+        "number": "24/7",
+        "label": "Patient Support",
+        "icon": "Clock"
+      }
+    ]
   },
   "doctors": {
     "ctaButton": {

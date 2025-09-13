@@ -183,10 +183,25 @@ export const homepageQuery = `
     },
     about {
       title,
-      content,
+      subtitle,
+      description,
+      mediaType,
+      image {
+        asset-> {
+          _id,
+          url
+        }
+      },
+      video {
+        asset-> {
+          _id,
+          url
+        }
+      },
       stats[] {
         number,
-        label
+        label,
+        icon
       }
     },
     services {
@@ -195,7 +210,13 @@ export const homepageQuery = `
       servicesList[] {
         title,
         description,
-        icon
+        icon,
+        link
+      },
+      ctaButton {
+        text,
+        link,
+        showButton
       }
     },
     doctors {

@@ -123,12 +123,20 @@ interface HomePageData {
   };
   about?: {
     title?: string;
-    description?: string;
+    subtitle?: string;
+    description?: any[];
+    mediaType?: string;
+    image?: {
+      asset?: any;
+    };
+    video?: {
+      asset?: any;
+    };
     stats?: Array<{
       number?: string;
       label?: string;
+      icon?: string;
     }>;
-    image?: string;
   };
   services?: {
     title?: string;
@@ -302,11 +310,7 @@ export default function Home() {
           </section>
 
           <section id="about">
-            <About
-              title={homePageData?.about?.title}
-              content={homePageData?.about?.description}
-              image={homePageData?.about?.image}
-            />
+            <About about={homePageData?.about} />
           </section>
 
           <section id="testimonials">
