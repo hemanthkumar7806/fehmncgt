@@ -152,6 +152,8 @@ interface HomePageData {
       title?: string;
       description?: string;
       icon?: string;
+      link?: string;
+      showCard?: boolean;
     }>;
   };
   doctors?: {

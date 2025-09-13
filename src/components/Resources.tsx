@@ -1,13 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { BookOpen, FileText, ArrowRight, Sparkles, Download } from "lucide-react";
+import { motion } from "framer-motion";
+import { BookOpen } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { GlowingEffect } from "@/components/ui/GlowingCards";
 
 interface Resource {
   title?: string;
   description?: string;
-  icon?: string | null;
-  link?: string | null;
+  icon?: string;
+  link?: string;
+  showCard?: boolean;
 }
 
 interface ResourcesProps {
@@ -18,99 +21,156 @@ interface ResourcesProps {
   };
 }
 
-const iconMap: Record<string, any> = {
-  book: BookOpen,
-  file: FileText,
-};
-
 export default function Resources({ resources }: ResourcesProps) {
   const resourcesList = resources?.resourcesList || [];
-  const title = resources?.title || "Resources";
-  const subtitle = resources?.subtitle || "Learn more with our curated resources";
+  const title = resources?.title || "Educational Resources";
+  const subtitle = resources?.subtitle || "Comprehensive educational resources to guide you through your fibroid treatment journey";
+
+  const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
+    if (link && !link.startsWith("http")) {
+      e.preventDefault();
+      const element = document.getElementById(link.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }
+    }
+  };
+
+  const getIcon = (iconName?: string) => {
+    if (!iconName) return BookOpen;
+    const IconComponent = (LucideIcons as any)[
+      iconName.charAt(0).toUpperCase() + iconName.slice(1)
+    ];
+    return IconComponent || BookOpen;
+  };
+
+  const isOddRow = (index: number) => {
+    const rowIndex = Math.floor(index / 2);
+    const isOddRow = rowIndex % 2 === 0;
+    
+    return isOddRow ? true : false;
+  };
+
+  const filteredResources = resourcesList.filter(resource => resource.showCard !== false);
 
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#093b60]/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#01a69c]/5 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        {/* Enhanced Section heading */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-[#01a69c]/10 text-[#01a69c] rounded-full text-sm font-medium mb-6">
-            <Sparkles size={16} className="mr-2" />
-            {title}
-          </div>
-          <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+    <section className="py-20 bg-hnmc-gray-50 relative overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-8 relative z-1">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight">
             {title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
-        </div>
+          <p className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed">
+            {subtitle}
+          </p>
+        </motion.div>
 
-        {/* Enhanced Resources grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {resourcesList.map((resource, idx) => {
-            const IconComponent = resource.icon
-              ? iconMap[resource.icon as keyof typeof iconMap]
-              : BookOpen;
-
-            return (
-              <div
-                key={idx}
-                className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col border border-gray-100/50 hover:-translate-y-2 relative overflow-hidden"
-              >
-                {/* Background gradient on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#01a69c]/5 to-[#093b60]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center gap-6 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-r from-[#01a69c] to-[#093b60] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <IconComponent className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[#093b60] transition-colors duration-300">
-                      {resource.title}
-                    </h3>
-                  </div>
-                  
-                  <p className="text-gray-600 flex-grow text-lg leading-relaxed mb-8">
-                    {resource.description}
-                  </p>
-
-                  {resource.link && (
-                    <Link
-                      href={resource.link}
-                      className="group/link inline-flex items-center gap-3 text-[#01a69c] font-semibold hover:text-[#093b60] transition-colors text-lg"
-                    >
-                      <span>Learn More</span>
-                      <ArrowRight className="w-5 h-5 group-hover/link:translate-x-1 transition-transform duration-300" />
-                    </Link>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Additional CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-[#093b60] to-[#01a69c] rounded-3xl p-12 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
-            <div className="absolute top-8 right-8 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-            <div className="absolute bottom-8 left-8 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
-            
-            <div className="relative z-10">
-              <h3 className="text-3xl font-bold mb-4">Need More Information?</h3>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                Download our comprehensive patient guide and stay informed about your health journey.
-              </p>
-              <button className="group inline-flex items-center gap-3 bg-white text-[#093b60] px-8 py-4 rounded-xl font-semibold hover:bg-white/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                <Download className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                <span>Download Patient Guide</span>
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Resources Grid */}
+        {filteredResources.length > 0 && (
+          <motion.ul
+            className="grid grid-cols-1 gap-6 md:grid-cols-4 lg:gap-6"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            {filteredResources.map((resource, index) => {
+              const IconComponent = getIcon(resource.icon);
+              
+              return (
+                  <GridItem
+                    key={index}
+                    area={isOddRow(index) ? "md:col-span-2" : "md:col-span-4"}
+                    icon={<IconComponent className={`h-5 w-5 ${isOddRow(index) ? "text-hnmc-gray-600" : "text-white"}`} />}
+                    title={resource.title || "Resource"}
+                    description={resource.description || ""}
+                    link={resource.link}
+                    isOddRow={isOddRow(index)}
+                    onSmoothScroll={handleSmoothScroll}
+                  />
+              );
+            })}
+          </motion.ul>
+        )}
       </div>
     </section>
   );
 }
+
+interface GridItemProps {
+  area: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  link?: string;
+  onSmoothScroll: (link: string, e: React.MouseEvent) => void;
+  isOddRow: boolean;
+}
+
+const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScroll }: GridItemProps) => {
+  const content = (
+    <div className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3">
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
+      <div className={`relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl md:rounded-2xl p-6
+       border border-hnmc-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 ${isOddRow ? "bg-white" : "bg-secondary"}`}>
+        <div className="relative flex flex-1 flex-col justify-between gap-4">
+          <div className={`w-fit rounded-lg border border-hnmc-gray-200 bg-primary/10 p-3`}>
+            {icon}
+          </div>
+          <div className="space-y-4">
+            <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
+              {title}
+            </h3>
+            <p className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}>
+              {description}
+            </p>
+          </div>
+          {link && (
+            <div className="mt-auto pt-4">
+              <span className={`inline-flex items-center gap-2 font-medium transition-all duration-300 text-sm cursor-pointer ${isOddRow ? "text-secondary hover:text-secondary-light" : "text-white hover:text-white/80"}`}>
+                <span>Learn More</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <li className={`min-h-[14rem] list-none ${area}`}>
+      {link ? (
+        <a
+          href={link}
+          className="block h-full"
+          {...(link?.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          onClick={(e) => onSmoothScroll(link, e)}
+        >
+          {content}
+        </a>
+      ) : (
+        content
+      )}
+    </li>
+  );
+};

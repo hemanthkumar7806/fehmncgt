@@ -70,7 +70,7 @@ export default function Services({ services }: ServicesProps) {
   };
 
   return (
-    <section className="py-20">
+    <section className="py-10">
       <div className="container mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -90,7 +90,7 @@ export default function Services({ services }: ServicesProps) {
 
         {/* Services Grid */}
         {servicesList && servicesList.length && (
-          <div className="relative mb-8">
+          <div className="relative mb-4">
             <Swiper
               modules={[Navigation]}
               spaceBetween={24}
@@ -114,14 +114,10 @@ export default function Services({ services }: ServicesProps) {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1, duration: 0.6 }}
                       viewport={{ once: true }}
-                      className="h-full"
+                      className="h-full pb-4"
                     >
                       <div
-                        className="group bg-white rounded-2xl p-6 shadow-lg border border-hnmc-gray-100 hover:shadow-xl transition-all duration-300 h-full flex flex-col hover:-translate-y-1"
-                        style={{
-                          boxShadow:
-                            "0 10px 25px -3px rgba(1, 166, 156, 0.1), 0 4px 6px -2px rgba(1, 166, 156, 0.05)",
-                        }}
+                        className="group shadow-md bg-white rounded-2xl p-6 border border-hnmc-gray-100 hover:shadow-lg transition-all duration-300 h-full flex flex-col hover:-translate-y-1"
                       >
                         {/* Icon */}
                         <div className="mb-4">

@@ -177,20 +177,43 @@
   "resources": {
     "resourcesList": [
       {
-        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
-        "icon": null,
-        "link": null,
-        "title": "Understanding Your Diagnosis"
+        "description": "Comprehensive guide covering fibroid types, symptoms, causes, and how they affect your health and quality of life.",
+        "icon": "BookOpen",
+        "link": "#about-fibroids",
+        "title": "Understanding Fibroids",
+        "showCard": true
       },
       {
-        "description": "Placeholder for comprehensive information on various fibroid treatment options, including medical, minimally invasive, and surgical approaches, with pros and cons.",
-        "icon": null,
-        "link": null,
-        "title": "Treatment Options Explained"
+        "description": "Detailed information on all available treatment options from medication to minimally invasive procedures.",
+        "icon": "FileText",
+        "link": "#services",
+        "title": "Treatment Options",
+        "showCard": true
+      },
+      {
+        "description": "Access our patient portal for secure communication, appointment scheduling, test results, and health records management.",
+        "icon": "Shield",
+        "link": "#register",
+        "title": "Patient Portal Access",
+        "showCard": true
+      },
+      {
+        "description": "Download our comprehensive patient guide with preparation instructions, FAQ, and post-procedure care information.",
+        "icon": "Download",
+        "link": "https://example.com/patient-guide.pdf",
+        "title": "Patient Guide",
+        "showCard": true
+      },
+      {
+        "description": "Connect with our support community and access additional educational resources for your journey.",
+        "icon": "Heart",
+        "link": "#testimonials",
+        "title": "Support & Community",
+        "showCard": true
       }
     ],
-    "subtitle": "We have huge number of educational  resources",
-    "title": "In-Depth Education & Resources"
+    "subtitle": "Comprehensive educational resources to guide you through your fibroid treatment journey",
+    "title": "Educational Resources"
   },
   "seo": {
     "description": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",

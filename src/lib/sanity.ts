@@ -231,7 +231,8 @@ export const homepageQuery = `
         title,
         icon,
         description,
-        link
+        link,
+        showCard
       }
     },
     registerForPatientPortal {
