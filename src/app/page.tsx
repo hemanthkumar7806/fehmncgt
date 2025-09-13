@@ -121,6 +121,25 @@ interface HomePageData {
       showCard?: boolean;
     }>;
   };
+  insurance?: {
+    title?: string;
+    subtitle?: string;
+    whatIsInsurance?: any[];
+    coverageDetailsHeading?: string;
+    coverageDetails?: any[];
+    contactForInsurance?: {
+      heading?: string;
+      link?: string;
+      insuranceDescription?: any[];
+      buttonText?: string;
+    };
+    additionalInfo?: Array<{
+      title?: string;
+      description?: string;
+      icon?: string;
+      showCard?: boolean;
+    }>;
+  };
   about?: {
     title?: string;
     subtitle?: string;
@@ -313,6 +332,10 @@ export default function Home() {
             <About about={homePageData?.about} />
           </section>
 
+          <section id="insurance">
+            <UnderstandTopic topic={homePageData?.insurance} />
+          </section>
+
           <section id="testimonials">
             <Testimonials
               title={homePageData?.testimonials?.title}
@@ -323,10 +346,6 @@ export default function Home() {
 
           <section id="appointment">
             {/* Appointment section - can be added later */}
-          </section>
-
-          <section id="insurance">
-            {/* Insurance section - can be added later */}
           </section>
 
           <section id="register">

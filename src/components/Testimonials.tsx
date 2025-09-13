@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Quote, Heart, Award } from "lucide-react";
+import { Star, Quote, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
 export interface TestimonialItem {

@@ -8,16 +8,16 @@ import * as LucideIcons from "lucide-react";
 export interface Topic {
   title?: string;
   subtitle?: string;
-  whatIsTopic?: any[];
-  commonSymptomsHeading?: string;
-  commonSymptoms?: any[];
-  doYouHaveSymptoms?: {
+  mainContent?: any[];
+  detailsHeading?: string;
+  detailsList?: any[];
+  callToAction?: {
     heading?: string;
     link?: string;
-    symptomsExist?: any[];
+    description?: any[];
     buttonText?: string;
   };
-  additionalInfo?: Array<{
+  infoCards?: Array<{
     title?: string;
     description?: string;
     icon?: string;
@@ -74,8 +74,8 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
 
       <div className="container mx-auto">
         <div className="grid gap-10">
-          {/* What is Topic */}
-          {topic.whatIsTopic && (
+          {/* Main Content */}
+          {topic.mainContent && (
             <motion.div
               className="bg-white rounded-3xl p-8 shadow-lg border border-hnmc-gray-100"
               initial={{ opacity: 0, y: 40 }}
@@ -87,7 +87,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                 <div className="prose prose-lg max-w-none">
                   <div className="text-hnmc-gray-700 leading-relaxed text-xl">
                     <PortableText
-                      value={topic.whatIsTopic}
+                      value={topic.mainContent}
                       components={{
                         block: {
                           normal: ({ children }) => (
@@ -102,10 +102,10 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
             </motion.div>
           )}
 
-          {/* Common Symptoms and CTA Section in a row */}
+          {/* Details and CTA Section in a row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Common Symptoms */}
-            {topic.commonSymptoms && topic.commonSymptoms.length > 0 && (
+            {/* Details List */}
+            {topic.detailsList && topic.detailsList.length > 0 && (
               <motion.div
                 className="bg-white rounded-3xl p-8 lg:p-10 shadow-lg border border-hnmc-gray-100"
                 initial={{ opacity: 0, y: 40 }}
@@ -118,14 +118,14 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                     <CheckCircle className="w-7 h-7 text-secondary" />
                   </div>
                   <h3 className="text-2xl lg:text-3xl font-bold text-hnmc-gray-800">
-                    {topic.commonSymptomsHeading || "Common Symptoms"}
+                    {topic.detailsHeading || "Details"}
                   </h3>
                 </div>
 
                 <div className="bg-secondary/5 rounded-2xl p-6">
                   <div className="prose prose-lg max-w-none">
                     <PortableText
-                      value={topic.commonSymptoms}
+                      value={topic.detailsList}
                       components={{
                         listItem: ({ children }) => (
                           <li className="flex items-start mb-4">
@@ -146,7 +146,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
             )}
 
             {/* CTA Section */}
-            {topic.doYouHaveSymptoms && (
+            {topic.callToAction && (
               <motion.div
                 className="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 lg:p-10 text-white relative overflow-hidden"
                 initial={{ opacity: 0, y: 40 }}
@@ -160,14 +160,14 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       <AlertCircle className="w-7 h-7 text-white" />
                     </div>
                     <h3 className="text-2xl lg:text-3xl font-bold text-white">
-                      {topic.doYouHaveSymptoms?.heading ||
-                        "Experiencing Symptoms?"}
+                      {topic.callToAction?.heading ||
+                        "Experiencing Symptoms"}
                     </h3>
                   </div>
 
                   <div className="text-white mb-8 leading-relaxed text-lg">
                     <PortableText
-                      value={topic.doYouHaveSymptoms.symptomsExist}
+                      value={topic.callToAction.description}
                       components={{
                         block: {
                           normal: ({ children }) => (
@@ -177,22 +177,22 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       }}
                     />
                   </div>
-                  {topic.doYouHaveSymptoms.link && (
+                  {topic.callToAction.link && (
                     <a
-                      href={topic.doYouHaveSymptoms.link}
+                      href={topic.callToAction.link}
                       className="inline-flex items-center gap-3 bg-white text-primary px-8 py-4 rounded-2xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                      {...(topic.doYouHaveSymptoms.link?.startsWith("http")
+                      {...(topic.callToAction.link?.startsWith("http")
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                       onClick={(e) =>
                         handleSmoothScroll(
-                          topic.doYouHaveSymptoms?.link || "",
+                          topic.callToAction?.link || "",
                           e
                         )
                       }
                     >
                       <span>
-                        {topic.doYouHaveSymptoms.buttonText ||
+                        {topic.callToAction.buttonText ||
                           "Get Expert Help"}
                       </span>
                       <ArrowRight className="w-5 h-5" />
@@ -204,8 +204,8 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
           </div>
         </div>
 
-        {/* Additional Info Cards */}
-        {topic.additionalInfo && topic.additionalInfo.length > 0 && (
+        {/* Info Cards */}
+        {topic.infoCards && topic.infoCards.length > 0 && (
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16"
             initial={{ opacity: 0, y: 40 }}
@@ -213,7 +213,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            {topic.additionalInfo.map((card, index) => {
+            {topic.infoCards.map((card, index) => {
               if (!card.showCard) return null;
 
               const IconComponent = getIcon(card.icon);

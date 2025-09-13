@@ -62,7 +62,7 @@ export function urlFor(source: any) {
 export async function getDocumentTypes() {
   try {
     console.log('🔍 Checking available document types...')
-    const result = await client.fetch('*[_type in ["homePage", "doctor", "service", "testimonial"]] | order(_type)')
+    const result = await client.fetch('*[_type in ["homePage", "service", "testimonial"]] | order(_type)')
     console.log('📋 Available documents:', result)
     return result
   } catch (error) {
@@ -165,16 +165,35 @@ export const homepageQuery = `
     topic {
       title,
       subtitle,
-      whatIsTopic,
-      commonSymptomsHeading,
-      commonSymptoms,
-      doYouHaveSymptoms {
+      mainContent,
+      detailsHeading,
+      detailsList,
+      callToAction {
         heading,
         link,
-        symptomsExist,
+        description,
         buttonText
       },
-      additionalInfo[] {
+      infoCards[] {
+        title,
+        description,
+        icon,
+        showCard
+      }
+    },
+    insurance {
+      title,
+      subtitle,
+      mainContent,
+      detailsHeading,
+      detailsList,
+      callToAction {
+        heading,
+        link,
+        description,
+        buttonText
+      },
+      infoCards[] {
         title,
         description,
         icon,
@@ -219,25 +238,8 @@ export const homepageQuery = `
         showButton
       }
     },
-    doctors {
-      title,
-      subtitle,
-      featuredDoctors[]-> {
-        _id,
-        name,
-        title,
-        credentials,
-        photo,
-        slug
-      },
-      ctaButton {
-        text,
-        link
-      }
-    },
     testimonials {
       title,
-      subtitle,
       testimonialsList[] {
         quote,
         author,
@@ -270,10 +272,18 @@ export const homepageQuery = `
       }
     },
     footer {
-      logo,
+      logo {
+        asset->
+      },
       description,
-      platform,
-      socialLinks
+      socialLinks[] {
+        platform,
+        url
+      },
+      footerLinks[] {
+        title,
+        url
+      }
     }
   }
 `
@@ -386,21 +396,112 @@ export async function getHomePageData() {
 export async function getHomePageById(id: string) {
   try {
     const query = `*[_id == $id][0] {
-      seo,
+      seo {
+        title,
+        description,
+        ogImage {
+          asset->
+        }
+      },
       hero {
         headline,
         subheadline,
+        badge {
+          text,
+          showBadge
+        },
         ctaButton {
           text,
           link
+        },
+        secondaryButton {
+          text,
+          link,
+          showButton
+        },
+        stats[] {
+          number,
+          label
+        },
+        rightContent {
+          title,
+          description,
+          achievements[] {
+            text
+          }
+        },
+        floatingCards[] {
+          title,
+          subtitle,
+          position,
+          showCard
+        },
+        backgroundImage {
+          asset-> {
+            _id,
+            url
+          }
+        }
+      },
+      topic {
+        title,
+        subtitle,
+        mainContent,
+        detailsHeading,
+        detailsList,
+        callToAction {
+          heading,
+          link,
+          description,
+          buttonText
+        },
+        infoCards[] {
+          title,
+          description,
+          icon,
+          showCard
+        }
+      },
+      insurance {
+        title,
+        subtitle,
+        mainContent,
+        detailsHeading,
+        detailsList,
+        callToAction {
+          heading,
+          link,
+          description,
+          buttonText
+        },
+        infoCards[] {
+          title,
+          description,
+          icon,
+          showCard
         }
       },
       about {
         title,
+        subtitle,
         description,
+        mediaType,
+        image {
+          asset-> {
+            _id,
+            url
+          }
+        },
+        video {
+          asset-> {
+            _id,
+            url
+          }
+        },
         stats[] {
           number,
-          label
+          label,
+          icon
         }
       },
       services {
@@ -409,49 +510,61 @@ export async function getHomePageById(id: string) {
         servicesList[] {
           title,
           description,
-          icon
-        }
-      },
-      doctors {
-        title,
-        subtitle,
-        featuredDoctors[]-> {
-          _id,
-          name,
-          title,
-          credentials,
-          photo,
-          slug
+          icon,
+          link
         },
         ctaButton {
           text,
-          link
+          link,
+          showButton
+        }
+      },
+      resources {
+        title,
+        subtitle,
+        resourcesList[] {
+          title,
+          icon,
+          description,
+          link,
+          showCard
         }
       },
       testimonials {
         title,
-        subtitle,
         testimonialsList[] {
-          name,
-          role,
-          content,
-          rating,
-          photo
+          quote,
+          author,
+          authorTitle,
+          rating
         }
       },
-      contact {
+      registerForPatientPortal {
         title,
         subtitle,
-        phone,
-        email,
-        address,
-        hours
+        contactInfo {
+          phone,
+          email,
+          address
+        },
+        signUpButton {
+          text,
+          link
+        }
       },
       footer {
-        logo,
+        logo {
+          asset->
+        },
         description,
-        links,
-        socialMedia
+        socialLinks[] {
+          platform,
+          url
+        },
+        footerLinks[] {
+          title,
+          url
+        }
       }
     }`
     const data = await client.fetch(query, { id })
