@@ -244,6 +244,12 @@ export const homepageQuery = `
         quote,
         author,
         authorTitle,
+        profilePhoto {
+          asset-> {
+            _id,
+            url
+          }
+        },
         rating,
       }
     },
@@ -536,6 +542,12 @@ export async function getHomePageById(id: string) {
           quote,
           author,
           authorTitle,
+          profilePhoto {
+            asset-> {
+              _id,
+              url
+            }
+          },
           rating
         }
       },

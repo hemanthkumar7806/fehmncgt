@@ -1,13 +1,21 @@
 "use client";
 
-import { Star, Quote, Award } from "lucide-react";
+import { Star, Quote, User } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { urlFor } from "@/lib/sanity";
 
 export interface TestimonialItem {
   author?: string;
   authorTitle?: string;
   quote?: string;
   rating?: number;
+  profilePhoto?: {
+    asset?: {
+      _id?: string;
+      url?: string;
+    };
+  };
 }
 
 export interface TestimonialsProps {
@@ -53,7 +61,7 @@ export default function Testimonials({
           {testimonialsList.map((testimonial, idx) => (
             <motion.div
               key={idx}
-              className="group bg-white rounded-3xl shadow-lg p-8  transition-all duration-500 border border-gray-100 relative overflow-hidden"
+              className="group bg-white rounded-3xl shadow-lg p-8 transition-all duration-500 border border-gray-100 relative overflow-hidden h-full flex flex-col"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
@@ -63,8 +71,8 @@ export default function Testimonials({
               {/* Background accent */}
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#01a69c]/10 to-[#093b60]/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              {/* Quote Icon */}
-              <div className="relative z-10">
+              <div className="relative z-1 flex flex-col h-full">
+                {/* Quote Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
                   <Quote className="w-8 h-8 text-white" />
                 </div>
@@ -89,16 +97,27 @@ export default function Testimonials({
                 )}
 
                 {/* Quote */}
-                <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative">
+                <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative flex-1">
                   <span className="text-4xl text-[#01a69c]/30 absolute -top-2 -left-2">&quot;</span>
                   <span className="relative z-10">{testimonial.quote}</span>
                   <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
-                {/* Author */}
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-full flex items-center justify-center mr-4">
-                    <Award className="w-6 h-6 text-white" />
+                <div className="flex items-center mt-auto">
+                  <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                    {testimonial.profilePhoto?.asset?.url ? (
+                      <Image
+                        src={urlFor(testimonial.profilePhoto.asset).url()}
+                        alt={testimonial.author || "Profile"}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                    )}
                   </div>
                   <div className="text-left">
                     <p className="font-bold text-gray-900 text-lg">

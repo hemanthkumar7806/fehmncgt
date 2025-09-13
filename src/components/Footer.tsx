@@ -47,12 +47,12 @@ export default function Footer({ footer }: FooterProps) {
         {/* Social Links */}
         {footer.socialLinks && footer.socialLinks.length > 0 && (
           <div className="flex gap-6 justify-center">
-            {footer.socialLinks.map((social) => {
+            {footer.socialLinks.map((social, index) => {
               const IconComponent =
                 socialIconMap[social.platform.toLowerCase()] || Facebook;
               return (
                 <Link
-                  key={social._key}
+                  key={social._key || `social-${index}`}
                   href={social.url || "#"}
                   aria-label={social.platform}
                   target="_blank"

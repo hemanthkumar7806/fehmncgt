@@ -306,19 +306,22 @@
         "author": "Atul",
         "authorTitle": "Chennai",
         "quote": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
-        "rating": 4
+        "rating": 4,
+        "profilePhoto": null
       },
       {
         "author": "Patient Name 1",
         "authorTitle": "USA",
         "quote": "\"(Placeholder: This center changed my life! The doctors were incredibly supportive and the treatment was effective.)\"",
-        "rating": 5
+        "rating": 5,
+        "profilePhoto": null
       },
       {
         "author": "- Patient Name 2",
         "authorTitle": "USA",
         "quote": "\"(Placeholder: I received excellent care and felt truly heard. Highly recommend Holy Name Fibroid Center.)\"",
-        "rating": 5
+        "rating": 5,
+        "profilePhoto": null
       }
     ],
     "title": "What Our Patients Say"
