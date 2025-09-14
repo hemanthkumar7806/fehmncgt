@@ -14,6 +14,7 @@ import {
   getHomePageById,
   getNavbarData,
   getSidebarData,
+  getFooterData,
 } from "@/lib/sanity";
 import Resources from "@/components/Resources";
 import Footer from "@/components/Footer";
@@ -22,6 +23,7 @@ import SEO from "@/components/SEO";
 import fallbackDataHome from "@/constants/fallbackData.home.json";
 import fallbackDataNavbar from "@/constants/fallbackData.navbar.json";
 import fallbackDataSidebar from "@/constants/fallbackData.sidebar.json";
+import fallbackDataFooter from "@/constants/fallbackData.footer.json";
 
 interface NavbarData {
   logoAlt?: string;
@@ -62,6 +64,31 @@ interface SidebarData {
     address?: string;
     showContactInfo?: boolean;
   };
+}
+
+interface FooterData {
+  logo?: {
+    asset?: any;
+  };
+  description?: any[];
+  socialLinks?: Array<{
+    platform?: string;
+    url?: string;
+    showLink?: boolean;
+  }>;
+  footerLinks?: Array<{
+    title?: string;
+    url?: string;
+    openInNewTab?: boolean;
+    showLink?: boolean;
+  }>;
+  contactInfo?: {
+    phone?: string;
+    email?: string;
+    address?: string;
+    showContactInfo?: boolean;
+  };
+  copyright?: string;
 }
 
 interface SeoData {
@@ -268,6 +295,7 @@ export default function Home() {
   const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
   const [navbarData, setNavbarData] = useState<NavbarData | null>(null);
   const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
+  const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -276,10 +304,11 @@ export default function Home() {
     const fetchHomePageData = async () => {
       try {
         console.log("🔄 Attempting to fetch from Sanity CMS...");
-        const [homeData, navData, sideData] = await Promise.all([
+        const [homeData, navData, sideData, footData] = await Promise.all([
           getHomePageData(),
           getNavbarData(),
           getSidebarData(),
+          getFooterData(),
         ]);
 
         let data = homeData;
@@ -295,12 +324,14 @@ export default function Home() {
           setHomePageData(data || fallbackDataHome);
           setNavbarData(navData || fallbackDataNavbar);
           setSidebarData(sideData || fallbackDataSidebar);
+          setFooterData(footData || fallbackDataFooter);
         }
       } catch (error) {
         console.error("Error fetching homepage data:", error);
         setHomePageData(fallbackDataHome as any);
         setNavbarData(fallbackDataNavbar as any);
         setSidebarData(fallbackDataSidebar as any);
+        setFooterData(fallbackDataFooter as any);
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -383,7 +414,7 @@ export default function Home() {
             {/* Patient portal section - can be added later */}
           </section>
 
-          <Footer footer={homePageData?.footer} />
+          <Footer footer={footerData} />
         </main>
       </div>
       }

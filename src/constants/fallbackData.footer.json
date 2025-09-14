@@ -1,0 +1,128 @@
+{
+    "contactInfo": {
+      "address": "123, Test State",
+      "email": "atul@gt.com",
+      "phone": "(555) 123-4567",
+      "showContactInfo": true
+    },
+    "copyright": "© 2025 HNMC Healthcare. All rights reserved.",
+    "description": [
+      {
+        "_key": "bfeb730ef9fe",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "59edf01d0c59",
+            "_type": "span",
+            "marks": [],
+            "text": "Copyright 2025 HNMC. All rights reserved"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "footerLinks": [
+      {
+        "openInNewTab": false,
+        "showLink": true,
+        "title": "Test",
+        "url": "https://main.d18il6sr3z7ps.amplifyapp.com"
+      }
+    ],
+    "logo": {
+      "asset": {
+        "_createdAt": "2025-09-11T06:15:10Z",
+        "_id": "image-6eb2186238a8db470d019b805c7128ee7754db47-186x40-webp",
+        "_rev": "VDxyHOxBnCAznIdV7DzXJt",
+        "_type": "sanity.imageAsset",
+        "_updatedAt": "2025-09-11T06:15:10Z",
+        "assetId": "6eb2186238a8db470d019b805c7128ee7754db47",
+        "extension": "webp",
+        "metadata": {
+          "_type": "sanity.imageMetadata",
+          "blurHash": "D7K_E~9F_3%M00009F~q9F%M",
+          "dimensions": {
+            "_type": "sanity.imageDimensions",
+            "aspectRatio": 4.65,
+            "height": 40,
+            "width": 186
+          },
+          "hasAlpha": true,
+          "isOpaque": false,
+          "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAApElEQVR4nC3PyUoDAAwE0N48KIKiqFWoCKJoqRSX1gUUF0RULD148P+/Y54EcgiTTIbJZIB9bGOjMMkBNnvewVaSdawVdr+KIR7wgjPsltcAv/hI8tiCZ9xihje8N3+Nm65LTHCFe9w1Py3DvyRL/JQxvvHZoicsel/cax/4SjIv0w5ShyvEqAzPcYLTxotOd4S9xtKMcdyaerH6SlhB6qvDJCv/mNj+LqrHma0AAAAASUVORK5CYII=",
+          "palette": {
+            "_type": "sanity.imagePalette",
+            "darkMuted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#444444",
+              "foreground": "#fff",
+              "population": 0.63,
+              "title": "#fff"
+            },
+            "darkVibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#424242",
+              "foreground": "#fff",
+              "population": 0,
+              "title": "#fff"
+            },
+            "dominant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#444444",
+              "foreground": "#fff",
+              "population": 0.63,
+              "title": "#fff"
+            },
+            "lightMuted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#bcbcbc",
+              "foreground": "#000",
+              "population": 0.62,
+              "title": "#fff"
+            },
+            "lightVibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#bcbcbc",
+              "foreground": "#000",
+              "population": 0,
+              "title": "#fff"
+            },
+            "muted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#7c7c7c",
+              "foreground": "#fff",
+              "population": 0.58,
+              "title": "#fff"
+            },
+            "vibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#7f7f7f",
+              "foreground": "#fff",
+              "population": 0,
+              "title": "#fff"
+            }
+          }
+        },
+        "mimeType": "image/webp",
+        "originalFilename": "hnmc-footer.webp",
+        "path": "images/rl2j4kml/production/6eb2186238a8db470d019b805c7128ee7754db47-186x40.webp",
+        "sha1hash": "6eb2186238a8db470d019b805c7128ee7754db47",
+        "size": 2414,
+        "uploadId": "msoDr2y18h35un6pQh39JYuMJYvtnuzz",
+        "url": "https://cdn.sanity.io/images/rl2j4kml/production/6eb2186238a8db470d019b805c7128ee7754db47-186x40.webp"
+      }
+    },
+    "socialLinks": [
+      {
+        "platform": "facebook",
+        "showLink": true,
+        "url": "https://main.d18il6sr3z7ps.amplifyapp.com"
+      },
+      {
+        "platform": "linkedin",
+        "showLink": true,
+        "url": "https://main.d18il6sr3z7ps.amplifyapp.com"
+      }
+    ]
+  }

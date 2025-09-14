@@ -119,6 +119,34 @@ export const sidebarQuery = `
   }
 `
 
+// Query to fetch footer data
+export const footerQuery = `
+  *[_type == "footer"][0] {
+    logo {
+      asset->
+    },
+    description,
+    socialLinks[] {
+      platform,
+      url,
+      showLink
+    },
+    footerLinks[] {
+      title,
+      url,
+      openInNewTab,
+      showLink
+    },
+    contactInfo {
+      phone,
+      email,
+      address,
+      showContactInfo
+    },
+    copyright
+  }
+`
+
 // Query to fetch homepage data based on your Sanity schema
 export const homepageQuery = `
   *[_type == "homePage"][0] {
@@ -304,20 +332,6 @@ export const homepageQuery = `
         text,
         link
       }
-    },
-    footer {
-      logo {
-        asset->
-      },
-      description,
-      socialLinks[] {
-        platform,
-        url
-      },
-      footerLinks[] {
-        title,
-        url
-      }
     }
   }
 `
@@ -326,6 +340,7 @@ export const homepageQuery = `
 let homepageDataCache: any = null
 let navbarDataCache: any = null
 let sidebarDataCache: any = null
+let footerDataCache: any = null
 let cacheTimestamp: number = 0
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 
@@ -379,6 +394,31 @@ export async function getSidebarData() {
       return fallbackData
     } catch (error) {
       console.log(error);
+      return null
+    }
+  }
+}
+
+// Function to fetch footer data
+export async function getFooterData() {
+  // Check cache first
+  const now = Date.now()
+  if (footerDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    return footerDataCache
+  }
+
+  try {    
+    const data = await client.fetch(footerQuery)
+    footerDataCache = data
+    cacheTimestamp = now
+    return data
+  } catch (error) {
+    try {
+      console.error('❌ Error fetching footer data:', error)
+      const fallbackData = await import('@/constants/fallbackData.footer.json')
+      return fallbackData.default || fallbackData
+    } catch (error) {
+      console.error('❌ Error loading fallback data:', error)
       return null
     }
   }
@@ -590,20 +630,6 @@ export async function getHomePageById(id: string) {
         signUpButton {
           text,
           link
-        }
-      },
-      footer {
-        logo {
-          asset->
-        },
-        description,
-        socialLinks[] {
-          platform,
-          url
-        },
-        footerLinks[] {
-          title,
-          url
         }
       }
     }`
