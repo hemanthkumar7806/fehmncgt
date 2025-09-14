@@ -106,74 +106,79 @@ export default function SEO({
     }
   };
 
-  const structuredData = seoData?.structuredData 
-    ? JSON.parse(seoData.structuredData)
-    : defaultStructuredData;
+  let structuredData = defaultStructuredData;
+  if (seoData?.structuredData) {
+    try {
+      structuredData = JSON.parse(seoData.structuredData);
+    } catch (e) {
+      console.error("Error parsing structured data:", e);
+      structuredData = defaultStructuredData;
+    }
+  }
 
   return (
     <>
-      {/* Basic Meta Tags */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywordsString} />
-      <meta name="robots" content={robotsContent} />
-      {url && <link rel="canonical" href={url} />}
-      
-      {/* Essential Meta Tags */}
-      <meta charSet="utf-8" />
-      <meta name="theme-color" content="#1e40af" />
-      <meta name="msapplication-TileColor" content="#1e40af" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <meta name="apple-mobile-web-app-title" content="HNMC Healthcare" />
+      {/* Preconnect to external domains for performance - placed first for faster resource loading */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://cdn.sanity.io" />
 
-      {/* Open Graph Tags */}
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={seoData?.ogTitle || title} />
-      <meta property="og:description" content={seoData?.ogDescription || description} />
+      {/* Dynamic Title Override (if different from default) */}
+      {seoData?.title && seoData.title !== "HNMC Healthcare Fibroid Center" && (
+        <title>{title}</title>
+      )}
+      
+      {/* Dynamic Description Override (if different from default) */}
+      {seoData?.description && (
+        <meta name="description" content={description} />
+      )}
+      
+      {/* Dynamic Keywords Override */}
+      {seoData?.keywords && (
+        <meta name="keywords" content={keywordsString} />
+      )}
+      
+      {/* Dynamic Robots Override */}
+      {seoData?.noIndex || seoData?.noFollow ? (
+        <meta name="robots" content={robotsContent} />
+      ) : null}
+      
+      {/* Dynamic Canonical URL */}
+      {url && <link rel="canonical" href={url} />}
+
+      {/* Dynamic Open Graph Content */}
+      {seoData?.ogTitle && (
+        <meta property="og:title" content={seoData.ogTitle} />
+      )}
+      {seoData?.ogDescription && (
+        <meta property="og:description" content={seoData.ogDescription} />
+      )}
       {url && <meta property="og:url" content={url} />}
       <meta property="og:image" content={ogImageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={seoData?.ogTitle || title} />
-      <meta property="og:site_name" content="HNMC Healthcare" />
-      <meta property="og:locale" content="en_US" />
 
-      {/* Twitter Card Tags */}
-      <meta name="twitter:card" content={seoData?.twitterCard || "summary_large_image"} />
-      <meta name="twitter:title" content={seoData?.ogTitle || title} />
-      <meta name="twitter:description" content={seoData?.ogDescription || description} />
+      {/* Dynamic Twitter Content */}
+      {seoData?.twitterCard && (
+        <meta name="twitter:card" content={seoData.twitterCard} />
+      )}
+      {seoData?.ogTitle && (
+        <meta name="twitter:title" content={seoData.ogTitle} />
+      )}
+      {seoData?.ogDescription && (
+        <meta name="twitter:description" content={seoData.ogDescription} />
+      )}
       <meta name="twitter:image" content={twitterImageUrl} />
       <meta name="twitter:image:alt" content={seoData?.ogTitle || title} />
 
-      {/* Additional SEO Meta Tags */}
-      <meta name="author" content="HNMC Healthcare" />
-      <meta name="language" content="English" />
-      <meta name="revisit-after" content="7 days" />
-      <meta name="distribution" content="global" />
-      <meta name="rating" content="general" />
-
-      {/* Healthcare Specific Meta Tags */}
-      <meta name="medical-specialty" content="Gynecology" />
-      <meta name="treatment-type" content="Fibroid Treatment" />
-      <meta name="service-area" content="United States" />
-      
-      {/* Mobile & Performance Meta Tags */}
-      <meta name="mobile-web-app-capable" content="yes" />
-      <meta name="application-name" content="HNMC Healthcare" />
-
-      {/* Structured Data */}
+      {/* Dynamic Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(structuredData)
         }}
       />
-
-      {/* Preconnect to external domains for performance */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://cdn.sanity.io" />
     </>
   );
 }
