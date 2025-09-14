@@ -1,8 +1,4 @@
-"use client";
-
-import Head from "next/head";
 import { urlFor } from "@/lib/sanity";
-
 interface SeoData {
   title?: string;
   description?: string;
@@ -66,11 +62,13 @@ export default function SEO({
     "@context": "https://schema.org",
     "@type": "MedicalOrganization",
     "name": "HNMC - Fibroid Center",
+    "alternateName": "Holy Name Medical Center Fibroid Center",
     "description": description,
     "url": url,
     "logo": ogImageUrl,
     "image": ogImageUrl,
     "telephone": "+1-555-0123",
+    "email": "info@hnmchealthcare.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "123 Healthcare Drive",
@@ -80,6 +78,10 @@ export default function SEO({
       "addressCountry": "US"
     },
     "medicalSpecialty": "Gynecology",
+    "areaServed": {
+      "@type": "State",
+      "name": "New Jersey"
+    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Fibroid Treatment Services",
@@ -88,14 +90,16 @@ export default function SEO({
           "@type": "Offer",
           "itemOffered": {
             "@type": "MedicalProcedure",
-            "name": "Fibroid Removal Surgery"
+            "name": "Fibroid Removal Surgery",
+            "description": "Surgical removal of uterine fibroids"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "MedicalProcedure",
-            "name": "Minimally Invasive Fibroid Treatment"
+            "name": "Minimally Invasive Fibroid Treatment",
+            "description": "Non-surgical treatment options for fibroids"
           }
         }
       ]
@@ -107,34 +111,43 @@ export default function SEO({
     : defaultStructuredData;
 
   return (
-    <Head>
+    <>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywordsString} />
       <meta name="robots" content={robotsContent} />
-      <link rel="canonical" href={url} />
+      {url && <link rel="canonical" href={url} />}
+      
+      {/* Essential Meta Tags */}
+      <meta charSet="utf-8" />
+      <meta name="theme-color" content="#1e40af" />
+      <meta name="msapplication-TileColor" content="#1e40af" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content="HNMC Healthcare" />
 
       {/* Open Graph Tags */}
       <meta property="og:type" content="website" />
       <meta property="og:title" content={seoData?.ogTitle || title} />
       <meta property="og:description" content={seoData?.ogDescription || description} />
-      <meta property="og:url" content={url} />
+      {url && <meta property="og:url" content={url} />}
       <meta property="og:image" content={ogImageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={seoData?.ogTitle || title} />
       <meta property="og:site_name" content="HNMC Healthcare" />
+      <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content={seoData?.twitterCard || "summary_large_image"} />
       <meta name="twitter:title" content={seoData?.ogTitle || title} />
       <meta name="twitter:description" content={seoData?.ogDescription || description} />
       <meta name="twitter:image" content={twitterImageUrl} />
+      <meta name="twitter:image:alt" content={seoData?.ogTitle || title} />
 
       {/* Additional SEO Meta Tags */}
       <meta name="author" content="HNMC Healthcare" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="English" />
       <meta name="revisit-after" content="7 days" />
       <meta name="distribution" content="global" />
@@ -144,6 +157,10 @@ export default function SEO({
       <meta name="medical-specialty" content="Gynecology" />
       <meta name="treatment-type" content="Fibroid Treatment" />
       <meta name="service-area" content="United States" />
+      
+      {/* Mobile & Performance Meta Tags */}
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="application-name" content="HNMC Healthcare" />
 
       {/* Structured Data */}
       <script
@@ -157,6 +174,6 @@ export default function SEO({
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://cdn.sanity.io" />
-    </Head>
+    </>
   );
 }
