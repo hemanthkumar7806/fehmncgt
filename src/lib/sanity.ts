@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
+import fallbackDataHome from '@/constants/fallbackData.home.json'
 
 // Only log environment variables once in development
 if (process.env.NODE_ENV === 'development' && typeof window === 'undefined') {
@@ -121,7 +122,34 @@ export const sidebarQuery = `
 // Query to fetch homepage data based on your Sanity schema
 export const homepageQuery = `
   *[_type == "homePage"][0] {
-    seo,
+    seo-> {
+      title,
+      description,
+      keywords,
+      ogImage {
+        asset-> {
+          _id,
+          url
+        }
+      },
+      ogTitle,
+      ogDescription,
+      twitterCard,
+      twitterImage {
+        asset-> {
+          _id,
+          url
+        }
+      },
+      canonicalUrl,
+      noIndex,
+      noFollow,
+      structuredData,
+      robotsTxt {
+        allow,
+        disallow
+      }
+    },
     hero {
       headline,
       subheadline,
@@ -394,7 +422,7 @@ export async function getHomePageData() {
       console.error('❌ Server-side API route also failed:', fallbackError)
     }
     
-    return null
+    return null;
   }
 }
 
@@ -583,6 +611,6 @@ export async function getHomePageById(id: string) {
     return data
   } catch (error) {
     console.error('❌ Error fetching homepage data by ID:', error)
-    return null
+    return fallbackDataHome
   }
 }

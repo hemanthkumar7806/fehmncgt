@@ -1,95 +1,48 @@
 {
   "about": {
-    "title": "About Holy Name Fibroid Center",
-    "subtitle": "Leading the way in comprehensive fibroid care",
     "description": [
       {
-        "_key": "about_desc_1",
+        "_key": "a09dee1b5116",
         "_type": "block",
         "children": [
           {
-            "_key": "about_desc_1_span",
+            "_key": "fd6f9295568b",
             "_type": "span",
             "marks": [],
-            "text": "At Holy Name Medical Center's Fibroid Center, we are dedicated to providing world-class care for women experiencing uterine fibroids. Our multidisciplinary team combines cutting-edge medical technology with compassionate, personalized treatment approaches."
-          }
-        ],
-        "markDefs": [],
-        "style": "normal"
-      },
-      {
-        "_key": "about_desc_2",
-        "_type": "block",
-        "children": [
-          {
-            "_key": "about_desc_2_span",
-            "_type": "span",
-            "marks": [],
-            "text": "We understand that every woman's experience with fibroids is unique. That's why we offer a comprehensive range of treatment options, from minimally invasive procedures to advanced surgical techniques, all delivered in a supportive environment that prioritizes your comfort and well-being."
+            "text": "(Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.)"
           }
         ],
         "markDefs": [],
         "style": "normal"
       }
     ],
-    "mediaType": "image",
-    "image": {
-      "_type": "image",
-      "asset": {
-        "_ref": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
-        "_type": "reference"
-      }
-    },
-    "video": null,
+    "image": null,
+    "mediaType": "video",
     "stats": [
       {
-        "number": "25+",
-        "label": "Years of Excellence",
-        "icon": "Award"
+        "icon": "Users",
+        "label": "Expert Doctors",
+        "number": "50+"
       },
       {
-        "number": "50+",
-        "label": "Medical Specialists",
-        "icon": "Users"
+        "icon": "Award",
+        "label": "Years Experience",
+        "number": "25+"
       },
       {
-        "number": "1000+",
-        "label": "Successful Procedures",
-        "icon": "Heart"
-      },
-      {
-        "number": "24/7",
-        "label": "Patient Support",
-        "icon": "Clock"
-      }
-    ]
-  },
-  "doctors": {
-    "ctaButton": {
-      "link": "http://www.google.com",
-      "text": "Appointment button"
-    },
-    "featuredDoctors": [
-      {
-        "_id": "6d0b311f-4b0f-49e2-8107-5a4b5f396e47",
-        "credentials": "MD",
-        "name": "Eric Liberman",
-        "photo": {
-          "_type": "image",
-          "asset": {
-            "_ref": "image-96f2f541f13a3a7353fda8dc19701412d0d5559e-500x750-webp",
-            "_type": "reference"
-          }
-        },
-        "slug": {
-          "_type": "slug",
-          "current": "doc"
-        },
-        "title": "Obstetrics and Gynecology"
+        "icon": "Clock",
+        "label": "Emergency Care",
+        "number": "24/7"
       }
     ],
-    "subtitle": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
-    "title": "Meet Our Experts"
+    "subtitle": "Gain secure 24/7 access",
+    "title": "Patient Stories & Video Resources",
+    "video": {
+      "asset": {
+        "_id": "file-d45ab4971a4784c21d93b1a9833f3dba89e7c150-mp4",
+        "url": "https://cdn.sanity.io/files/rl2j4kml/production/d45ab4971a4784c21d93b1a9833f3dba89e7c150.mp4"
+      }
+    }
   },
   "footer": {
     "description": [
@@ -122,89 +75,228 @@
         "style": "normal"
       }
     ],
+    "footerLinks": null,
     "logo": {
-      "_type": "image",
       "asset": {
-        "_ref": "image-6cefeabf06e2afd980debce066ae02f67d416813-2048x608-webp",
-        "_type": "reference"
+        "_createdAt": "2025-09-11T06:15:10Z",
+        "_id": "image-6eb2186238a8db470d019b805c7128ee7754db47-186x40-webp",
+        "_rev": "VDxyHOxBnCAznIdV7DzXJt",
+        "_type": "sanity.imageAsset",
+        "_updatedAt": "2025-09-11T06:15:10Z",
+        "assetId": "6eb2186238a8db470d019b805c7128ee7754db47",
+        "extension": "webp",
+        "metadata": {
+          "_type": "sanity.imageMetadata",
+          "blurHash": "D7K_E~9F_3%M00009F~q9F%M",
+          "dimensions": {
+            "_type": "sanity.imageDimensions",
+            "aspectRatio": 4.65,
+            "height": 40,
+            "width": 186
+          },
+          "hasAlpha": true,
+          "isOpaque": false,
+          "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAApElEQVR4nC3PyUoDAAwE0N48KIKiqFWoCKJoqRSX1gUUF0RULD148P+/Y54EcgiTTIbJZIB9bGOjMMkBNnvewVaSdawVdr+KIR7wgjPsltcAv/hI8tiCZ9xihje8N3+Nm65LTHCFe9w1Py3DvyRL/JQxvvHZoicsel/cax/4SjIv0w5ShyvEqAzPcYLTxotOd4S9xtKMcdyaerH6SlhB6qvDJCv/mNj+LqrHma0AAAAASUVORK5CYII=",
+          "palette": {
+            "_type": "sanity.imagePalette",
+            "darkMuted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#444444",
+              "foreground": "#fff",
+              "population": 0.63,
+              "title": "#fff"
+            },
+            "darkVibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#424242",
+              "foreground": "#fff",
+              "population": 0,
+              "title": "#fff"
+            },
+            "dominant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#444444",
+              "foreground": "#fff",
+              "population": 0.63,
+              "title": "#fff"
+            },
+            "lightMuted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#bcbcbc",
+              "foreground": "#000",
+              "population": 0.62,
+              "title": "#fff"
+            },
+            "lightVibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#bcbcbc",
+              "foreground": "#000",
+              "population": 0,
+              "title": "#fff"
+            },
+            "muted": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#7c7c7c",
+              "foreground": "#fff",
+              "population": 0.58,
+              "title": "#fff"
+            },
+            "vibrant": {
+              "_type": "sanity.imagePaletteSwatch",
+              "background": "#7f7f7f",
+              "foreground": "#fff",
+              "population": 0,
+              "title": "#fff"
+            }
+          }
+        },
+        "mimeType": "image/webp",
+        "originalFilename": "hnmc-footer.webp",
+        "path": "images/rl2j4kml/production/6eb2186238a8db470d019b805c7128ee7754db47-186x40.webp",
+        "sha1hash": "6eb2186238a8db470d019b805c7128ee7754db47",
+        "size": 2414,
+        "uploadId": "msoDr2y18h35un6pQh39JYuMJYvtnuzz",
+        "url": "https://cdn.sanity.io/images/rl2j4kml/production/6eb2186238a8db470d019b805c7128ee7754db47-186x40.webp"
       }
     },
-    "platform": null,
     "socialLinks": [
       {
-        "_key": "420cfb3578f7",
-        "platform": "facebook"
+        "platform": "facebook",
+        "url": null
       },
       {
-        "_key": "dc996a17794e",
-        "platform": "twitter"
+        "platform": "twitter",
+        "url": null
       },
       {
-        "_key": "3655ff9cc58d",
-        "platform": "instagram"
+        "platform": "instagram",
+        "url": null
       }
     ]
   },
   "hero": {
-    "headline": "Expert Medical Care at Holy Name Medical Center",
-    "subheadline": "Experience compassionate, comprehensive healthcare with our team of specialists. From routine care to complex treatments, we're here for your health journey.",
+    "backgroundImage": {
+      "asset": {
+        "_id": "image-3c5578aa7c2b6c5daf5c134325129ff2e4d0a35c-1080x1080-png",
+        "url": "https://cdn.sanity.io/images/rl2j4kml/production/3c5578aa7c2b6c5daf5c134325129ff2e4d0a35c-1080x1080.png"
+      }
+    },
     "badge": {
-      "text": "Trusted Healthcare Since 1925",
-      "showBadge": true
+      "showBadge": true,
+      "text": "Trusted Healthcare Since 1925"
     },
     "ctaButton": {
-      "text": "Schedule Appointment",
-      "link": "#appointment"
+      "link": "https://www.zocdoc.com/wl/holyname/search?address=Teaneck%2C+NJ&after_5pm=false&before_10am=false&day_filter=AnyDay&dr_specialty=153&filters=%7B%7D&gender=-1&insurance_carrier=-1&insurance_plan=-1&language=-1&offset=0&parentSearchRequestId=2f0a8c4b-44d6-42f0-85cb-e05a0f442f80&reason_visit=2551&searchOriginator=SearchBar&searchQueryGuid=89fc74b0-ec9d-4dde-b352-3f1d0218fb5a&searchType=procedure&sees_children=false&sort_type=Default&visitType=inPersonAndVirtualVisits'",
+      "text": "Schedule Appointment"
     },
-    "secondaryButton": {
-      "text": "Learn More",
-      "link": "#about",
-      "showButton": true
-    },
-    "stats": [
+    "floatingCards": [
       {
-        "number": "25+",
-        "label": "Years of Excellence"
+        "position": "top-right",
+        "showCard": true,
+        "subtitle": "Book appointments 24/7",
+        "title": "Online Now"
       },
       {
-        "number": "50+",
-        "label": "Medical Specialists"
-      },
-      {
-        "number": "24/7",
-        "label": "Emergency Care"
+        "position": "bottom-left",
+        "showCard": true,
+        "subtitle": "Today at 2:30 PM",
+        "title": "Next Available"
       }
     ],
+    "headline": "Comprehensive Fibroid Care at Holy Name",
     "rightContent": {
-      "title": "Award-Winning Healthcare",
-      "description": "Recognized for excellence in patient care, safety, and medical innovation. Our commitment to quality healthcare has earned us multiple accreditations and awards.",
       "achievements": [
         {
           "text": "Joint Commission Accredited"
         },
         {
-          "text": "Magnet® Recognition for Nursing"
+          "text": "Top 100 Hospital Award"
         },
         {
           "text": "Top 100 Hospital Award"
         }
-      ]
+      ],
+      "description": "Recognized for excellence in patient care, safety, and medical innovation. Our commitment to quality healthcare has earned us multipleaccreditations  and awards.",
+      "title": "Award-Winning Healthcare"
     },
-    "floatingCards": [
+    "secondaryButton": {
+      "link": "#about",
+      "showButton": true,
+      "text": "Learn More"
+    },
+    "stats": [
       {
-        "title": "Online Now",
-        "subtitle": "Book appointments 24/7",
-        "position": "top-right",
-        "showCard": true
+        "label": "Years of Excellence",
+        "number": "25+"
       },
       {
-        "title": "Next Available",
-        "subtitle": "Today at 2:30 PM",
-        "position": "bottom-left",
-        "showCard": true
+        "label": "Medical Specialists",
+        "number": "50+"
+      },
+      {
+        "label": "Emergency Care",
+        "number": "24/7"
       }
     ],
-    "backgroundImage": null
+    "subheadline": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here."
+  },
+  "insurance": {
+    "callToAction": {
+      "buttonText": "View Accepted Plans",
+      "description": [
+        {
+          "_key": "bc51fd44e04e",
+          "_type": "block",
+          "children": [
+            {
+              "_key": "dea21160d717",
+              "_type": "span",
+              "marks": [],
+              "text": "We accept a wide range of insurance plans. Please contact our office to verify your coverage."
+            }
+          ],
+          "markDefs": [],
+          "style": "normal"
+        }
+      ],
+      "heading": "Accepted Insurance Plans",
+      "link": "https://xmfsmixi.manus.space/#register"
+    },
+    "detailsHeading": "Billing & Financial Assistance",
+    "detailsList": [
+      {
+        "_key": "47978c620331",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "586172604445",
+            "_type": "span",
+            "marks": [],
+            "text": "Our financial counselors are available to discuss billing and payment options, including financial assistance programs.\n\n"
+          },
+          {
+            "_key": "c7832c3cb36b",
+            "_type": "span",
+            "marks": [
+              "6c3fbd7413c0"
+            ],
+            "text": "Learn More"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "6c3fbd7413c0",
+            "_type": "link",
+            "href": "https://xmfsmixi.manus.space/#register"
+          }
+        ],
+        "style": "normal"
+      }
+    ],
+    "infoCards": null,
+    "mainContent": null,
+    "subtitle": null,
+    "title": "Insurance & Billing"
   },
   "registerForPatientPortal": {
     "contactInfo": {
@@ -222,118 +314,149 @@
   "resources": {
     "resourcesList": [
       {
-        "description": "Comprehensive guide covering fibroid types, symptoms, causes, and how they affect your health and quality of life.",
+        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
         "icon": "BookOpen",
-        "link": "#about-fibroids",
-        "title": "Understanding Fibroids",
-        "showCard": true
+        "link": null,
+        "showCard": true,
+        "title": "Understanding Your Diagnosis"
       },
       {
-        "description": "Detailed information on all available treatment options from medication to minimally invasive procedures.",
+        "description": "Placeholder for comprehensive information on various fibroid treatment options, including medical, minimally invasive, and surgical approaches, with pros and cons.",
         "icon": "FileText",
-        "link": "#services",
-        "title": "Treatment Options",
-        "showCard": true
+        "link": null,
+        "showCard": true,
+        "title": "Treatment Options Explained"
       },
       {
-        "description": "Access our patient portal for secure communication, appointment scheduling, test results, and health records management.",
-        "icon": "Shield",
-        "link": "#register",
-        "title": "Patient Portal Access",
-        "showCard": true
-      },
-      {
-        "description": "Download our comprehensive patient guide with preparation instructions, FAQ, and post-procedure care information.",
+        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
         "icon": "Download",
-        "link": "https://example.com/patient-guide.pdf",
-        "title": "Patient Guide",
-        "showCard": true
-      },
-      {
-        "description": "Connect with our support community and access additional educational resources for your journey.",
-        "icon": "Heart",
-        "link": "#testimonials",
-        "title": "Support & Community",
-        "showCard": true
+        "link": "#resources",
+        "showCard": true,
+        "title": "Understanding Your Diagnosis"
       }
     ],
-    "subtitle": "Comprehensive educational resources to guide you through your fibroid treatment journey",
-    "title": "Educational Resources"
+    "subtitle": "We have huge number of educational  resources",
+    "title": "In-Depth Education & Resources"
   },
-  "seo": {
-    "description": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
-    "title": "HNMC-Fibroid Center"
-  },
+  "seo": null,
   "services": {
     "ctaButton": {
-      "link": "#appointment",
+      "link": "https://www.zocdoc.com/wl/holyname/search?address=Teaneck%2C+NJ&after_5pm=false&before_10am=false&day_filter=AnyDay&dr_specialty=153&filters=%7B%7D&gender=-1&insurance_carrier=-1&insurance_plan=-1&language=-1&offset=0&parentSearchRequestId=2f0a8c4b-44d6-42f0-85cb-e05a0f442f80&reason_visit=2551&searchOriginator=SearchBar&searchQueryGuid=89fc74b0-ec9d-4dde-b352-3f1d0218fb5a&searchType=procedure&sees_children=false&sort_type=Default&visitType=inPersonAndVirtualVisits",
       "showButton": true,
       "text": "Schedule an Appointment"
     },
     "servicesList": [
       {
         "description": "Our team includes gynecologists, interventional radiologists, and fertility specialists working together for comprehensive care.",
-        "icon": "Users",
-        "title": "Multidisciplinary Team",
-        "link": "#about"
+        "icon": "Stethoscope",
+        "link": null,
+        "title": "Multidisciplinary Team"
       },
       {
         "description": "Every treatment plan is customized to your specific needs, symptoms, and life goals.",
         "icon": "Heart",
-        "title": "Personalized Care",
-        "link": "#services"
+        "link": null,
+        "title": "Personalized Care"
       },
       {
         "description": "View results and communicate anytime through our secure patient portal.",
-        "icon": "Clock",
-        "title": "24/7 Access",
-        "link": "#register"
+        "icon": "Stethoscope",
+        "link": null,
+        "title": "24/7 Access"
       },
       {
         "description": "Chat with real providers, not bots, for personalized support.",
-        "icon": "MessageCircle",
-        "title": "Direct Communication",
-        "link": "#appointment"
+        "icon": "Brain",
+        "link": null,
+        "title": "Direct Communication"
       }
     ],
     "subtitle": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
     "title": "Why Choose Holy Name & Our Digital Advantage"
   },
   "testimonials": {
-    "subtitle": null,
     "testimonialsList": [
       {
         "author": "Atul",
         "authorTitle": "Chennai",
+        "profilePhoto": null,
         "quote": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
-        "rating": 4,
-        "profilePhoto": null
+        "rating": 4
       },
       {
         "author": "Patient Name 1",
         "authorTitle": "USA",
+        "profilePhoto": {
+          "asset": {
+            "_id": "image-10d76323a9dd99bbc12a887a9d547a03e8dc7553-380x380-png",
+            "url": "https://cdn.sanity.io/images/rl2j4kml/production/10d76323a9dd99bbc12a887a9d547a03e8dc7553-380x380.png"
+          }
+        },
         "quote": "\"(Placeholder: This center changed my life! The doctors were incredibly supportive and the treatment was effective.)\"",
-        "rating": 5,
-        "profilePhoto": null
+        "rating": 5
       },
       {
         "author": "- Patient Name 2",
         "authorTitle": "USA",
+        "profilePhoto": null,
         "quote": "\"(Placeholder: I received excellent care and felt truly heard. Highly recommend Holy Name Fibroid Center.)\"",
-        "rating": 5,
-        "profilePhoto": null
+        "rating": 5
       }
     ],
     "title": "What Our Patients Say"
   },
   "topic": {
-    "commonSymptoms": [
+    "callToAction": {
+      "buttonText": "Get Expert Consultation",
+      "description": [
+        {
+          "_key": "b3237532c4d6",
+          "_type": "block",
+          "children": [
+            {
+              "_key": "dda567bf4bb4",
+              "_type": "span",
+              "marks": [],
+              "text": "If you're experiencing any of these symptoms, it's "
+            },
+            {
+              "_key": "7b38fc2adf2e",
+              "_type": "span",
+              "marks": [
+                "strong"
+              ],
+              "text": "important to consult with a specialist"
+            },
+            {
+              "_key": "0b2d321cf8b4",
+              "_type": "span",
+              "marks": [],
+              "text": ". Early diagnosis and treatment can significantly "
+            },
+            {
+              "_key": "91b34873ae4c",
+              "_type": "span",
+              "marks": [
+                "strong"
+              ],
+              "text": "improve your quality of life"
+            }
+          ],
+          "markDefs": [],
+          "style": "normal"
+        }
+      ],
+      "heading": "Experiencing Symptoms?",
+      "link": "https://www.zocdoc.com/wl/holyname/search?address=Teaneck%2C+NJ&after_5pm=false&before_10am=false&day_filter=AnyDay&dr_specialty=153&filters=%7B%7D&gender=-1&insurance_carrier=-1&insurance_plan=-1&language=-1&offset=0&parentSearchRequestId=2f0a8c4b-44d6-42f0-85cb-e05a0f442f80&reason_visit=2551&searchOriginator=SearchBar&searchQueryGuid=89fc74b0-ec9d-4dde-b352-3f1d0218fb5a&searchType=procedure&sees_children=false&sort_type=Default&visitType=inPersonAndVirtualVisits"
+    },
+    "detailsHeading": "Common Symptoms",
+    "detailsList": [
       {
-        "_key": "deb9776022a8",
+        "_key": "1a88d0c120a9",
         "_type": "block",
         "children": [
           {
-            "_key": "b5f81993c975",
+            "_key": "876c8b349371",
             "_type": "span",
             "marks": [],
             "text": "Heavy or prolonged menstrual bleeding"
@@ -345,11 +468,11 @@
         "style": "normal"
       },
       {
-        "_key": "938533305fe4",
+        "_key": "a4e6e219bedf",
         "_type": "block",
         "children": [
           {
-            "_key": "de015cccf041",
+            "_key": "eb2d45c00a4e",
             "_type": "span",
             "marks": [],
             "text": "Pelvic pain or pressure"
@@ -361,11 +484,11 @@
         "style": "normal"
       },
       {
-        "_key": "c1abc067dfa8",
+        "_key": "7f6c8e69bf3d",
         "_type": "block",
         "children": [
           {
-            "_key": "c40d4289d468",
+            "_key": "2be88a6ae011",
             "_type": "span",
             "marks": [],
             "text": "Frequent urination"
@@ -377,11 +500,11 @@
         "style": "normal"
       },
       {
-        "_key": "f514069f44d8",
+        "_key": "0eaa18afdcdf",
         "_type": "block",
         "children": [
           {
-            "_key": "0f13dfad4207",
+            "_key": "1d711a36171d",
             "_type": "span",
             "marks": [],
             "text": "Difficulty emptying the bladder"
@@ -393,11 +516,11 @@
         "style": "normal"
       },
       {
-        "_key": "838bf47168c6",
+        "_key": "ab547b6eeb83",
         "_type": "block",
         "children": [
           {
-            "_key": "f684376b7056",
+            "_key": "0dddef17c769",
             "_type": "span",
             "marks": [],
             "text": "Constipation"
@@ -409,11 +532,11 @@
         "style": "normal"
       },
       {
-        "_key": "08b01489998c",
+        "_key": "3ebf71f57602",
         "_type": "block",
         "children": [
           {
-            "_key": "d79ea5a51527",
+            "_key": "19fd7a774821",
             "_type": "span",
             "marks": [],
             "text": "Backache or leg pains"
@@ -425,59 +548,65 @@
         "style": "normal"
       }
     ],
-    "doYouHaveSymptoms": {
-      "heading": "Experiencing Symptoms?",
-      "link": "/appointment",
-      "symptomsExist": [
-        {
-          "_key": "symptoms1",
-          "_type": "block",
-          "children": [
-            {
-              "_key": "symptoms1_span",
-              "_type": "span",
-              "marks": [],
-              "text": "If you're experiencing any of these symptoms, it's important to consult with a specialist. Early diagnosis and treatment can significantly improve your quality of life and prevent complications."
-            }
-          ],
-          "markDefs": [],
-          "style": "normal"
-        }
-      ],
-      "buttonText": "Schedule Consultation"
-    },
-    "subtitle": "Understanding Uterine Fibroids",
-    "title": "What Are Fibroids?",
-    "commonSymptomsHeading": "Common Symptoms",
-    "whatIsTopic": [
+    "infoCards": [
       {
-        "_key": "whatis1",
+        "description": "Our team of specialists provides comprehensive, personalized treatment plans using the latest medical technologies and evidence-based approaches.",
+        "icon": "Users",
+        "showCard": true,
+        "title": "Why Choose Our Care?"
+      },
+      {
+        "description": "If you're experiencing any of these symptoms, it's important to consult with a specialist. Early diagnosis and treatment can significantly improve your quality of life",
+        "icon": "Shield",
+        "showCard": true,
+        "title": "Schedule a Consultation"
+      }
+    ],
+    "mainContent": [
+      {
+        "_key": "79ef53c1f7d1",
         "_type": "block",
         "children": [
           {
-            "_key": "whatis1_span",
+            "_key": "b41716f98df0",
             "_type": "span",
             "marks": [],
-            "text": "Uterine fibroids are non-cancerous growths that develop in or around the uterus. They are very common, affecting up to 80% of women by age 50. While many women experience no symptoms, others may have significant discomfort that impacts their daily lives."
+            "text": "Uterine fibroids are "
+          },
+          {
+            "_key": "56255af0b1cf",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "non-cancerous growths"
+          },
+          {
+            "_key": "941b321dd703",
+            "_type": "span",
+            "marks": [],
+            "text": " that develop in or around the uterus. They are very common, affecting "
+          },
+          {
+            "_key": "23848e2878dc",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "up to 80% of women by age 50."
+          },
+          {
+            "_key": "0170c4e3b20a",
+            "_type": "span",
+            "marks": [],
+            "text": " While many women experience no symptoms, others may have significant discomfort."
           }
         ],
         "markDefs": [],
         "style": "normal"
       }
     ],
-    "additionalInfo": [
-      {
-        "title": "Why Choose Our Care?",
-        "description": "Our team of specialists provides comprehensive, personalized treatment plans using the latest medical technologies and evidence-based approaches to ensure the best outcomes for our patients.",
-        "icon": "shield",
-        "showCard": true
-      },
-      {
-        "title": "Schedule a Consultation",
-        "description": "Take the first step towards better health. Our medical experts are here to provide the care and guidance you need with compassionate, personalized attention.",
-        "icon": "users",
-        "showCard": true
-      }
-    ]
+    "subtitle": "What Are Fibroids?",
+    "title": "Understanding Fibroids"
   }
 }

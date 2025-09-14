@@ -159,9 +159,6 @@ npm run start  # Start production server
 - **Code splitting** for optimal loading
 - **SEO optimized** with proper meta tags
 
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ## 🤝 Contributing
 
