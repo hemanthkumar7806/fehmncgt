@@ -62,7 +62,7 @@ export default function About({ about }: AboutProps) {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
           >
             {aboutData?.subtitle && (
@@ -70,7 +70,7 @@ export default function About({ about }: AboutProps) {
                 className="inline-flex items-center px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm font-medium mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.4 }}
                 viewport={{ once: true }}
               >
                 {aboutData.subtitle}
@@ -81,7 +81,7 @@ export default function About({ about }: AboutProps) {
               className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
               viewport={{ once: true }}
             >
               {aboutData?.title || "About Holy Name Fibroid Center"}
@@ -91,7 +91,7 @@ export default function About({ about }: AboutProps) {
               className="text-lg text-hnmc-gray-600 leading-relaxed mb-8 space-y-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               viewport={{ once: true }}
             >
               {aboutData?.description && (
@@ -105,7 +105,7 @@ export default function About({ about }: AboutProps) {
             className="relative"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             viewport={{ once: true }}
           >
             <div className="relative overflow-hidden rounded-3xl shadow-2xl group">
@@ -172,7 +172,7 @@ export default function About({ about }: AboutProps) {
             className="flex justify-between mt-20 pt-12 border-t border-hnmc-gray-200"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             viewport={{ once: true }}
           >
             {aboutData.stats.map((stat, index) => {
@@ -184,7 +184,7 @@ export default function About({ about }: AboutProps) {
                   className="text-center group flex-1"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
                   viewport={{ once: true }}
                 >
                   <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-all duration-300">

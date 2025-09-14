@@ -9,6 +9,7 @@ import Services from "@/components/Services";
 import About from "@/components/About";
 import UnderstandTopic from "@/components/UnderstandTopic";
 import Testimonials from "@/components/Testimonials";
+import CTA from "@/components/CTA";
 import {
   getHomePageData,
   getHomePageById,
@@ -267,6 +268,15 @@ interface HomePageData {
       photo?: any;
     }>;
   };
+  cta?: {
+    title?: string;
+    description?: any[];
+    button?: {
+      text?: string;
+      link?: string;
+    };
+    showSection?: boolean;
+  };
   contact?: {
     title?: string;
     subtitle?: string;
@@ -406,12 +416,12 @@ export default function Home() {
             />
           </section>
 
-          <section id="appointment">
-            {/* Appointment section - can be added later */}
+          <section id="cta">
+            <CTA cta={homePageData?.cta} />
           </section>
 
-          <section id="register">
-            {/* Patient portal section - can be added later */}
+          <section id="appointment">
+            {/* Appointment section - can be added later */}
           </section>
 
           <Footer footer={footerData} />

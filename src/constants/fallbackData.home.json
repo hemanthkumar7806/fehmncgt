@@ -298,19 +298,6 @@
     "subtitle": null,
     "title": "Insurance & Billing"
   },
-  "registerForPatientPortal": {
-    "contactInfo": {
-      "address": "123 Medical Drive, Anywhere, USA ",
-      "email": "hnmc@gmail.com",
-      "phone": "(123) 456-7890"
-    },
-    "signUpButton": {
-      "link": null,
-      "text": "Signup for patient portal"
-    },
-    "subtitle": "Gain secure 24/7 access to your health records, appointments, and direct communication with your care team.",
-    "title": "Register for Patient Portal Access"
-  },
   "resources": {
     "resourcesList": [
       {
@@ -404,6 +391,30 @@
       }
     ],
     "title": "What Our Patients Say"
+  },
+  "cta": {
+    "title": "Join Our Community of Satisfied Patients",
+    "description": [
+      {
+        "_key": "cta-desc-1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "cta-desc-1-text",
+            "_type": "span",
+            "marks": [],
+            "text": "Experience the same exceptional care that our patients rave about. Your health journey starts here."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "button": {
+      "text": "Schedule Your Consultation",
+      "link": "#appointment"
+    },
+    "showSection": true
   },
   "topic": {
     "callToAction": {

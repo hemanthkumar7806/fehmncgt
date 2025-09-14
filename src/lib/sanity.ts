@@ -320,18 +320,14 @@ export const homepageQuery = `
         showCard
       }
     },
-    registerForPatientPortal {
+    cta {
       title,
-      subtitle,
-      contactInfo{
-        phone,
-        email,
-        address
-      },
-      signUpButton{
+      description,
+      button {
         text,
         link
-      }
+      },
+      showSection
     }
   }
 `
@@ -619,18 +615,14 @@ export async function getHomePageById(id: string) {
           rating
         }
       },
-      registerForPatientPortal {
+      cta {
         title,
-        subtitle,
-        contactInfo {
-          phone,
-          email,
-          address
-        },
-        signUpButton {
+        description,
+        button {
           text,
           link
-        }
+        },
+        showSection
       }
     }`
     const data = await client.fetch(query, { id })

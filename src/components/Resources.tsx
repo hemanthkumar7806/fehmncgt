@@ -65,7 +65,7 @@ export default function Resources({ resources }: ResourcesProps) {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight">
@@ -82,7 +82,7 @@ export default function Resources({ resources }: ResourcesProps) {
             className="grid grid-cols-1 gap-6 md:grid-cols-4 lg:gap-6"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             viewport={{ once: true }}
           >
             {filteredResources.map((resource, index) => {

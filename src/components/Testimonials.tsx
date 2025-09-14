@@ -32,7 +32,7 @@ export default function Testimonials({
   if (!testimonialsList || testimonialsList.length === 0) return null;
 
   return (
-    <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50/30 py-20 px-6 md:px-12">
+    <section className="py-20 px-6 md:px-12">
       <div className="w-[90%] mx-auto">
         {/* Header Section */}
         <motion.div 
@@ -138,26 +138,6 @@ export default function Testimonials({
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
-          <div className="bg-gradient-to-r from-[#093b60] to-[#01a69c] rounded-2xl p-8 text-white max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-3">
-              Join Our Community of Satisfied Patients
-            </h3>
-            <p className="text-white/90 mb-6">
-              Experience the same exceptional care that our patients rave about. Your health journey starts here.
-            </p>
-            <button className="bg-white text-[#093b60] px-8 py-3 rounded-xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-lg transform hover:scale-105">
-              Schedule Your Consultation
-            </button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
