@@ -35,7 +35,7 @@ interface SEOProps {
 export default function SEO({ 
   seoData
 }: SEOProps) {
-  const title = seoData?.title || "HNMC Healthcare Fibroid Center";
+  const title = seoData?.title || "Fibroid Care at Holy Name";
   const description = seoData?.description || "Leading fibroid treatment center offering expert care and minimally invasive procedures.";
   const url = seoData?.canonicalUrl;
   
@@ -124,7 +124,7 @@ export default function SEO({
       <link rel="preconnect" href="https://cdn.sanity.io" />
 
       {/* Dynamic Title Override (if different from default) */}
-      {seoData?.title && seoData.title !== "HNMC Healthcare Fibroid Center" && (
+      {seoData?.title && seoData.title !== "Fibroid Care at Holy Name" && (
         <title>{title}</title>
       )}
       
