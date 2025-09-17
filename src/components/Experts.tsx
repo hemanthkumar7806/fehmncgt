@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from 'swiper';
+import Image from 'next/image';
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -307,10 +308,20 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
                     {/* Compact Doctor Header */}
                     <div className="relative bg-[#093b60] p-4">
                       <div className="text-center">
-                        <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 mx-auto mb-3">
-                          <span className="text-xl font-bold text-white">
-                            {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('') : 'DR'}
-                          </span>
+                        <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden shadow-lg">
+                          {index === 0 ? (
+                            <Image
+                              src="/dr_eric_liberman.webp"
+                              alt={doctor.name || 'Dr. Eric Liberman'}
+                              width={96}
+                              height={96}
+                              className="w-full h-full object-cover object-top rounded-full"
+                            />
+                          ) : (
+                            <span className="text-2xl font-bold text-white">
+                              {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('') : 'DR'}
+                            </span>
+                          )}
                         </div>
                         <h3 className="text-lg font-bold text-white mb-1">{doctor.name || 'Doctor'}</h3>
                         <p className="text-white/90 text-sm mb-1">{doctor.title || 'Specialist'}</p>

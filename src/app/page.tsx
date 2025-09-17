@@ -384,12 +384,12 @@ export default function Home() {
             <Hero hero={homePageData?.hero} />
           </section>
 
-          <section id="about-fibroids">
-            <UnderstandTopic topic={homePageData?.topic} />
-          </section>
-
           <section id="dr-liberman">
             <Experts />
+          </section>
+
+          <section id="about-fibroids">
+            <UnderstandTopic topic={homePageData?.topic} />
           </section>
 
           <section id="services">
@@ -404,16 +404,16 @@ export default function Home() {
             <About about={homePageData?.about} />
           </section>
 
-          <section id="insurance">
-            <UnderstandTopic topic={homePageData?.insurance} />
-          </section>
-
           <section id="testimonials">
             <Testimonials
               title={homePageData?.testimonials?.title}
               subtitle={homePageData?.testimonials?.subtitle}
               testimonialsList={homePageData?.testimonials?.testimonialsList}
             />
+          </section>
+
+          <section id="insurance">
+            <UnderstandTopic topic={homePageData?.insurance} />
           </section>
 
           <section id="cta">
