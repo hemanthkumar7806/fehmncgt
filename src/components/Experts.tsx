@@ -326,18 +326,6 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
                         <h3 className="text-lg font-bold text-white mb-1">{doctor.name || 'Doctor'}</h3>
                         <p className="text-white/90 text-sm mb-1">{doctor.title || 'Specialist'}</p>
                         <p className="text-white/80 text-xs">{doctor.credentials || 'MD'}</p>
-                        <div className="flex items-center justify-center mt-2">
-                          <div className="flex items-center space-x-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i} 
-                                size={12} 
-                                className={i < Math.floor(doctor.rating || 0) ? 'text-yellow-300 fill-current' : 'text-white/30'} 
-                              />
-                            ))}
-                          </div>
-                          <span className="ml-2 text-xs text-white/90">{doctor.rating}</span>
-                        </div>
                       </div>
                     </div>
 
