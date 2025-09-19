@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, Star, Clock, ChevronLeft, ChevronRight, Check, X} from 'lucide-react'
+import { Calendar, Star, Clock, ChevronLeft, ChevronRight, Check, X, RefreshCw} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from 'swiper';
 import Image from 'next/image';
+import { useDoctors } from '@/hooks/useDoctors';
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -25,17 +26,18 @@ interface Doctor {
   specialties?: string[]
   experience?: string
   photo?: any
-  bio?: string
-  languages?: string[]
-  availability?: string[]
+  npi?: string
   contactInfo?: {
     phone?: string
     email?: string
-    office?: string
+    addressLine1?: string
+    city?: string
+    state?: string
   }
-  rating?: number
-  appointmentLink?: string
-  timeSlots?: { [date: string]: TimeSlot[] }
+  organization?: {
+    organizationId?: string
+    organizationName?: string
+  }
 }
 
 interface ExpertsProps {
@@ -44,127 +46,31 @@ interface ExpertsProps {
   subtitle?: string
 }
 
-const generateTimeSlots = (): TimeSlot[] => {
-  const slots: TimeSlot[] = []
-  const times = [
-    '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-    '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'
-  ]
-  
-  times.forEach(time => {
-    slots.push({
-      time,
-      available: Math.random() > 0.3, // Random availability for demo
-      type: Math.random() > 0.7 ? 'follow-up' : 'consultation'
-    })
-  })
-  
-  return slots
-}
-
-const getNextDates = (count: number) => {
-  const dates = []
-  const today = new Date()
-  for (let i = 1; i <= count; i++) {
-    const date = new Date(today)
-    date.setDate(today.getDate() + i)
-    dates.push(date)
-  }
-  return dates
-}
-
+// Default doctors data (fallback)
 const defaultDoctors: Doctor[] = [
   {
     _id: '1',
     name: 'Dr. Eric Liberman',
-    title: 'Obstetrics and Gynecology',
-    credentials: 'MD, FACOG',
+    title: 'Gynecologist & Fibroid Specialist',
+    credentials: 'D.O.',
     specialties: ['Fibroid Treatment', 'Minimally Invasive Surgery', 'Women\'s Health'],
-    experience: '25+ years',
-    bio: 'Board-certified obstetrician-gynecologist specializing in minimally invasive fibroid treatments and comprehensive women\'s health care.',
-    languages: ['English', 'Spanish'],
-    availability: ['Monday-Friday', '9:00 AM - 5:00 PM'],
-    contactInfo: {
-      phone: '+1 (555) 123-4567',
-      email: 'dr.liberman@holyname.com',
-      office: 'Suite 200, Main Building'
-    },
-    rating: 4.9,
-    timeSlots: getNextDates(14).reduce((acc, date) => {
-      const dateStr = date.toISOString().split('T')[0]
-      acc[dateStr] = generateTimeSlots()
-      return acc
-    }, {} as { [date: string]: TimeSlot[] })
-  },
-  {
-    _id: '2',
-    name: 'Dr. Sarah Chen',
-    title: 'Gynecologic Oncology',
-    credentials: 'MD, PhD',
-    specialties: ['Complex Fibroid Cases', 'Cancer Screening', 'Surgical Oncology'],
     experience: '15+ years',
-    bio: 'Gynecologic oncologist with expertise in complex fibroid cases and advanced surgical techniques for optimal patient outcomes.',
-    languages: ['English', 'Mandarin'],
-    availability: ['Tuesday-Thursday', '10:00 AM - 6:00 PM'],
+    npi: '1780818146',
     contactInfo: {
-      phone: '+1 (555) 123-4568',
-      email: 'dr.chen@holyname.com',
-      office: 'Suite 201, Main Building'
-    },
-    rating: 4.8,
-    timeSlots: getNextDates(14).reduce((acc, date) => {
-      const dateStr = date.toISOString().split('T')[0]
-      acc[dateStr] = generateTimeSlots()
-      return acc
-    }, {} as { [date: string]: TimeSlot[] })
-  },
-  {
-    _id: '3',
-    name: 'Dr. Michael Rodriguez',
-    title: 'Interventional Radiology',
-    credentials: 'MD, FSIR',
-    specialties: ['UFE (Uterine Fibroid Embolization)', 'Image-Guided Procedures', 'Vascular Interventions'],
-    experience: '18+ years',
-    bio: 'Interventional radiologist specializing in non-surgical fibroid treatments including uterine fibroid embolization and other minimally invasive procedures.',
-    languages: ['English', 'Spanish', 'Portuguese'],
-    availability: ['Monday-Wednesday-Friday', '8:00 AM - 4:00 PM'],
-    contactInfo: {
-      phone: '+1 (555) 123-4569',
-      email: 'dr.rodriguez@holyname.com',
-      office: 'Suite 150, Radiology Wing'
-    },
-    rating: 4.7,
-    timeSlots: getNextDates(14).reduce((acc, date) => {
-      const dateStr = date.toISOString().split('T')[0]
-      acc[dateStr] = generateTimeSlots()
-      return acc
-    }, {} as { [date: string]: TimeSlot[] })
-  },
-  {
-    _id: '4',
-    name: 'Dr. Jennifer Thompson',
-    title: 'Reproductive Endocrinology',
-    credentials: 'MD, FACOG, REI',
-    specialties: ['Fertility Preservation', 'Fibroid Impact on Fertility', 'Reproductive Surgery'],
-    experience: '12+ years',
-    bio: 'Reproductive endocrinologist focused on helping women with fibroids achieve their fertility goals through advanced reproductive techniques and surgical interventions.',
-    languages: ['English', 'French'],
-    availability: ['Tuesday-Thursday-Saturday', '10:00 AM - 6:00 PM'],
-    contactInfo: {
-      phone: '+1 (555) 123-4570',
-      email: 'dr.thompson@holyname.com',
-      office: 'Suite 300, Fertility Center'
-    },
-    rating: 4.9,
-    timeSlots: getNextDates(14).reduce((acc, date) => {
-      const dateStr = date.toISOString().split('T')[0]
-      acc[dateStr] = generateTimeSlots()
-      return acc
-    }, {} as { [date: string]: TimeSlot[] })
+      phone: '(555) 123-4567',
+      email: 'dr.liberman@hnmc.com',
+      addressLine1: '3332 ROCHAMBEAU AVE',
+      city: 'Bronx',
+      state: 'New York'
+    }
   }
 ]
 
-export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Experts', subtitle = 'Our team of specialized physicians is dedicated to providing the highest quality fibroid care' }: ExpertsProps) {
+export default function Experts({ doctors: propDoctors, title = 'Meet Our Experts', subtitle = 'Our team of specialized physicians is dedicated to providing the highest quality fibroid care' }: ExpertsProps) {
+  // Use API data or fallback to props/default
+  const { doctors: apiDoctors, isLoading, error, refetch } = useDoctors()
+  const doctors = apiDoctors.length > 0 ? apiDoctors : (propDoctors || defaultDoctors)
+  
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
   const [showAppointmentModal, setShowAppointmentModal] = useState(false)
   const [selectedDate, setSelectedDate] = useState<string>('')
@@ -176,11 +82,19 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
     phone: '',
     reason: ''
   })
+  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([])
+  const [loadingSlots, setLoadingSlots] = useState(false)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
   const [isBeginning, setIsBeginning] = useState(true)
   const [isEnd, setIsEnd] = useState(false)
 
+  const handleSlideChange = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning)
+    setIsEnd(swiper.isEnd)
+  }
+
   const handleBookAppointment = (doctor: Doctor) => {
+    console.log('Selected doctor:', doctor)
     setSelectedDoctor(doctor)
     setShowAppointmentModal(true)
     setCurrentStep('select-date')
@@ -188,9 +102,46 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
     setSelectedSlot(null)
   }
 
-  const handleDateSelect = (date: string) => {
+  const handleDateSelect = async (date: string) => {
     setSelectedDate(date)
     setCurrentStep('select-time')
+    
+    // Fetch real slots for the selected date
+    if (selectedDoctor?.npi && selectedDoctor?.organization?.organizationId) {
+      setLoadingSlots(true)
+      try {
+        console.log('Fetching slots for:', {
+          provider_id: selectedDoctor.npi,
+          location_id: selectedDoctor.organization.organizationId,
+          date
+        })
+        const response = await fetch(`/api/doctors/slots?provider_id=${selectedDoctor.npi}&location_id=${selectedDoctor.organization.organizationId}&start_date=${date}&end_date=${date}`)
+        if (response.ok) {
+          const data = await response.json()
+          console.log('Slots API response:', data)
+          if (data.success && data.data && data.data.length > 0) {
+            setAvailableSlots(data.data)
+          } else {
+            console.log('No slots available for this date')
+            setAvailableSlots([])
+          }
+        } else {
+          console.log('Slots API error')
+          setAvailableSlots([])
+        }
+      } catch (error) {
+        console.error('Error fetching slots:', error)
+        setAvailableSlots([])
+      } finally {
+        setLoadingSlots(false)
+      }
+    } else {
+      console.log('Missing doctor data:', {
+        npi: selectedDoctor?.npi,
+        organization: selectedDoctor?.organization
+      })
+      setAvailableSlots([])
+    }
   }
 
   const handleSlotSelect = (slot: TimeSlot) => {
@@ -209,30 +160,24 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
     setCurrentStep('confirmation')
   }
 
-  const handleSlideChange = (swiper: SwiperType) => {
-    setIsBeginning(swiper.isBeginning)
-    setIsEnd(swiper.isEnd)
-  }
-
   const resetModal = () => {
     setShowAppointmentModal(false)
     setCurrentStep('select-date')
     setSelectedDate('')
     setSelectedSlot(null)
     setPatientInfo({ name: '', email: '', phone: '', reason: '' })
+    setAvailableSlots([])
   }
 
+
   const getAvailableDates = () => {
-    if (!selectedDoctor?.timeSlots) {
-      console.log('No timeSlots for selected doctor:', selectedDoctor)
-      return []
+    const dates = []
+    const today = new Date()
+    for (let i = 1; i <= 7; i++) {
+      const date = new Date(today)
+      date.setDate(today.getDate() + i)
+      dates.push(date.toISOString().split('T')[0])
     }
-    
-    const dates = Object.keys(selectedDoctor.timeSlots)
-      .sort()
-      .slice(0, 7) // Show next 7 days
-    
-    console.log('Available dates:', dates)
     return dates
   }
 
@@ -247,9 +192,31 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
         >
-           
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 tracking-tight">{title}</h2>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{title}</h2>
+            {isLoading && (
+              <RefreshCw className="w-8 h-8 text-[#01a69c] animate-spin" />
+            )}
+          </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
+          
+          {/* Error State */}
+          {error && (
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg max-w-2xl mx-auto">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-red-800 font-medium">Failed to load doctors</p>
+                  <p className="text-red-600 text-sm mt-1">{error}</p>
+                </div>
+                <button
+                  onClick={refetch}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
         </motion.div>
 
         {/* Navigation Controls */}
@@ -282,104 +249,142 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
 
         {/* Doctors Slider */}
         <div className="relative">
-          <Swiper
-            modules={[Navigation]}
-            spaceBetween={24}
-            onSwiper={setSwiper}
-            onSlideChange={handleSlideChange}
-            breakpoints={{
-              0: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
-            }}
-            className="doctors-swiper"
-          >
-            {doctors.map((doctor, index) => (
-              <SwiperSlide key={doctor._id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="h-full"
-                >
-                  <div className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-                    {/* Compact Doctor Header */}
-                    <div className="relative bg-[#093b60] p-4">
-                      <div className="text-center">
-                        <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden shadow-lg">
-                          {index === 0 ? (
-                            <Image
-                              src="/dr_eric_liberman.webp"
-                              alt={doctor.name || 'Dr. Eric Liberman'}
-                              width={96}
-                              height={96}
-                              className="w-full h-full object-cover object-top rounded-full"
-                            />
-                          ) : (
-                            <span className="text-2xl font-bold text-white">
-                              {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('') : 'DR'}
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="text-lg font-bold text-white mb-1">{doctor.name || 'Doctor'}</h3>
-                        <p className="text-white/90 text-sm mb-1">{doctor.title || 'Specialist'}</p>
-                        <p className="text-white/80 text-xs">{doctor.credentials || 'MD'}</p>
-                      </div>
-                    </div>
-
-                    {/* Compact Doctor Content */}
-                    <div className="p-4 flex-1 flex flex-col">
-                      {/* Specialties */}
-                      {doctor.specialties && doctor.specialties.length > 0 && (
-                        <div className="mb-4">
-                          <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center">
-                            <div className="w-1.5 h-1.5 bg-[#093b60] rounded-full mr-2"></div>
-                            Specialties
-                          </h4>
-                          <div className="flex flex-wrap gap-1">
-                            {doctor.specialties.slice(0, 2).map((specialty, index) => (
-                              <span key={index} className="px-2 py-1 bg-[#01a69c]/10 text-[#01a69c] rounded-full text-xs font-medium border border-[#01a69c]/20">
-                                {specialty}
-                              </span>
-                            ))}
-                            {doctor.specialties.length > 2 && (
-                              <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
-                                +{doctor.specialties.length - 2} more
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+                  <div className="bg-gray-200 h-32"></div>
+                  <div className="p-4">
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                    <div className="h-3 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                    <div className="h-10 bg-gray-200 rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={24}
+              onSwiper={setSwiper}
+              onSlideChange={handleSlideChange}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              className="doctors-swiper"
+            >
+              {doctors.map((doctor, index) => (
+                <SwiperSlide key={doctor._id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="h-full"
+                  >
+                    <div className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+                      {/* Doctor Header */}
+                      <div className="relative bg-[#093b60] p-4">
+                        <div className="text-center">
+                          <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden shadow-lg">
+                            {index === 0 ? (
+                              <Image
+                                src="/dr_eric_liberman.webp"
+                                alt={doctor.name || 'Dr. Eric Liberman'}
+                                width={96}
+                                height={96}
+                                className="w-full h-full object-cover object-top rounded-full"
+                              />
+                            ) : (
+                              <span className="text-2xl font-bold text-white">
+                                {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('') : 'DR'}
                               </span>
                             )}
                           </div>
-                        </div>
-                      )}
-
-                      {/* Experience */}
-                      <div className="mb-4">
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Clock size={12} className="mr-2 text-[#093b60]" />
-                          <span>{doctor.experience}</span>
+                          <h3 className="text-lg font-bold text-white mb-1">{doctor.name || 'Doctor'}</h3>
+                          <p className="text-white/90 text-sm mb-1">{doctor.title || 'Specialist'}</p>
+                          <p className="text-white/80 text-xs">{doctor.credentials || 'MD'}</p>
                         </div>
                       </div>
 
-                      {/* Book Appointment Button */}
-                      <div className="mt-auto">
-                        <button
-                          onClick={() => handleBookAppointment(doctor)}
-                          className="w-full bg-[#01a69c] hover:bg-[#01a69c]/90 text-white py-2.5 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm"
-                        >
-                          <Calendar size={16} />
-                          <span>Book Appointment</span>
-                        </button>
+                      {/* Doctor Content */}
+                      <div className="p-4 flex-1 flex flex-col">
+                        {/* Specialties */}
+                        {doctor.specialties && doctor.specialties.length > 0 && (
+                          <div className="mb-4">
+                            <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center">
+                              <div className="w-1.5 h-1.5 bg-[#093b60] rounded-full mr-2"></div>
+                              Specialties
+                            </h4>
+                            <div className="flex flex-wrap gap-1">
+                              {doctor.specialties.slice(0, 2).map((specialty, index) => (
+                                <span key={index} className="px-2 py-1 bg-[#01a69c]/10 text-[#01a69c] rounded-full text-xs font-medium border border-[#01a69c]/20">
+                                  {specialty}
+                                </span>
+                              ))}
+                              {doctor.specialties.length > 2 && (
+                                <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
+                                  +{doctor.specialties.length - 2} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Experience */}
+                        <div className="mb-4">
+                          <div className="flex items-center text-sm text-gray-600">
+                            <span className="w-2 h-2 bg-[#093b60] rounded-full mr-2"></span>
+                            <span>{doctor.experience}</span>
+                          </div>
+                        </div>
+
+                        {/* Contact Info */}
+                        {doctor.contactInfo && (
+                          <div className="mb-4">
+                            <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center">
+                              <div className="w-1.5 h-1.5 bg-[#093b60] rounded-full mr-2"></div>
+                              Contact
+                            </h4>
+                            <div className="text-xs text-gray-600 space-y-1">
+                              {doctor.contactInfo.phone && (
+                                <p>📞 {doctor.contactInfo.phone}</p>
+                              )}
+                              {doctor.contactInfo.email && (
+                                <p>✉️ {doctor.contactInfo.email}</p>
+                              )}
+                              {doctor.contactInfo.addressLine1 && (
+                                <p>📍 {doctor.contactInfo.addressLine1}, {doctor.contactInfo.city}, {doctor.contactInfo.state}</p>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Book Appointment Button */}
+                        <div className="mt-auto">
+                          <button
+                            onClick={() => handleBookAppointment(doctor)}
+                            className="w-full bg-[#01a69c] hover:bg-[#01a69c]/90 text-white py-2.5 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm"
+                          >
+                            <Calendar size={16} />
+                            <span>Book Appointment</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  </motion.div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
 
-        {/* Professional Appointment Modal - Based on xmfsmixi.manus.space */}
+        {/* Professional Appointment Modal */}
         <AnimatePresence>
           {showAppointmentModal && selectedDoctor && (
             <motion.div
@@ -424,34 +429,29 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
                       >
                         <h4 className="text-lg font-semibold text-gray-900 mb-4">Select Appointment Date</h4>
                         <div className="space-y-3 max-h-64 overflow-y-auto">
-                          {getAvailableDates().map(date => {
-                            const availableSlots = selectedDoctor.timeSlots?.[date]?.filter(slot => slot.available).length || 0
-                            
-                            return (
-                              <button
-                                key={date}
-                                onClick={() => handleDateSelect(date)}
-                                className="w-full p-4 border border-gray-200 rounded-lg hover:border-[#01a69c] hover:bg-[#01a69c]/5 transition-all text-left group"
-                                disabled={availableSlots === 0}
-                              >
-                                <div className="flex justify-between items-center">
-                                  <div>
-                                    <div className="font-semibold text-gray-900 group-hover:text-[#01a69c]">
-                                      {new Date(date).toLocaleDateString('en-US', { 
-                                        weekday: 'long', 
-                                        month: 'short', 
-                                        day: 'numeric' 
-                                      })}
-                                    </div>
-                                    <div className="text-sm text-gray-500">
-                                      {availableSlots > 0 ? `${availableSlots} slots available` : 'No slots available'}
-                                    </div>
+                          {getAvailableDates().map(date => (
+                            <button
+                              key={date}
+                              onClick={() => handleDateSelect(date)}
+                              className="w-full p-4 border border-gray-200 rounded-lg hover:border-[#01a69c] hover:bg-[#01a69c]/5 transition-all text-left group"
+                            >
+                              <div className="flex justify-between items-center">
+                                <div>
+                                  <div className="font-semibold text-gray-900 group-hover:text-[#01a69c]">
+                                    {new Date(date).toLocaleDateString('en-US', { 
+                                      weekday: 'long', 
+                                      month: 'short', 
+                                      day: 'numeric' 
+                                    })}
                                   </div>
-                                  <ChevronRight size={18} className="text-gray-400 group-hover:text-[#01a69c]" />
+                                  <div className="text-sm text-gray-500">
+                                    Available slots
+                                  </div>
                                 </div>
-                              </button>
-                            )
-                          })}
+                                <ChevronRight size={18} className="text-gray-400 group-hover:text-[#01a69c]" />
+                              </div>
+                            </button>
+                          ))}
                         </div>
                       </motion.div>
                     )}
@@ -482,23 +482,46 @@ export default function Experts({ doctors = defaultDoctors, title = 'Meet Our Ex
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-                          {selectedDoctor.timeSlots?.[selectedDate]?.map(slot => (
+                        {loadingSlots ? (
+                          <div className="flex items-center justify-center py-8">
+                            <RefreshCw className="w-6 h-6 animate-spin text-[#01a69c]" />
+                            <span className="ml-2 text-gray-600">Loading available slots...</span>
+                          </div>
+                        ) : availableSlots.length > 0 ? (
+                          <div className="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+                            {availableSlots.map(slot => (
+                              <button
+                                key={slot.time}
+                                onClick={() => slot.available && handleSlotSelect(slot)}
+                                disabled={!slot.available}
+                                className={`p-3 border rounded-lg text-center transition-all ${
+                                  slot.available
+                                    ? 'border-gray-200 hover:border-[#01a69c] hover:bg-[#01a69c] hover:text-white'
+                                    : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
+                                }`}
+                              >
+                                <div className="font-semibold text-sm">{slot.time}</div>
+                                <div className="text-xs opacity-75 capitalize">{slot.type}</div>
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-center py-8">
+                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Calendar className="w-8 h-8 text-gray-400" />
+                            </div>
+                            <h4 className="text-lg font-semibold text-gray-900 mb-2">No Slots Available</h4>
+                            <p className="text-gray-600 text-sm mb-4">
+                              There are no available appointment slots for this date.
+                            </p>
                             <button
-                              key={slot.time}
-                              onClick={() => slot.available && handleSlotSelect(slot)}
-                              disabled={!slot.available}
-                              className={`p-3 border rounded-lg text-center transition-all ${
-                                slot.available
-                                  ? 'border-gray-200 hover:border-[#01a69c] hover:bg-[#01a69c] hover:text-white'
-                                  : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
-                              }`}
+                              onClick={() => setCurrentStep('select-date')}
+                              className="px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors text-sm"
                             >
-                              <div className="font-semibold text-sm">{slot.time}</div>
-                              <div className="text-xs opacity-75 capitalize">{slot.type}</div>
+                              Choose Different Date
                             </button>
-                          ))}
-                        </div>
+                          </div>
+                        )}
                       </motion.div>
                     )}
 
