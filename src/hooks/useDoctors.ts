@@ -1,36 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-
-// Types for doctor data
-export interface Doctor {
-  _id: string
-  name: string
-  title: string
-  credentials: string
-  specialties: string[]
-  experience: string
-  photo?: any
-  npi?: string
-  contactInfo?: {
-    phone?: string
-    email?: string
-    addressLine1?: string
-    city?: string
-    state?: string
-  }
-  slug?: {
-    current: string
-  }
-}
-
-
-export interface DoctorsApiResponse {
-  success: boolean
-  data?: Doctor[]
-  count?: number
-  error?: string
-  code?: string
-  details?: string
-}
+import { doctorsApi, type Doctor } from '@/services/doctorsApi'
 
 export interface UseDoctorsReturn {
   doctors: Doctor[]
@@ -54,27 +23,9 @@ export function useDoctors(): UseDoctorsReturn {
     setError(null)
 
     try {
-      const response = await fetch('/api/doctors', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (!response.ok) {
-        const errorData: DoctorsApiResponse = await response.json()
-        throw new Error(errorData.error || 'Failed to fetch doctors')
-      }
-
-      const data: DoctorsApiResponse = await response.json()
-      
-      if (!data.success || !data.data) {
-        throw new Error(data.error || 'Invalid response from doctors API')
-      }
-
-      setDoctors(data.data)
-      setCount(data.count || data.data.length)
-
+      const data = await doctorsApi.getDoctors()
+      setDoctors(data)
+      setCount(data.length)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch doctors'
       setError(errorMessage)
@@ -118,28 +69,9 @@ export function useDoctor(doctorId: string): {
     setError(null)
 
     try {
-      // First get all doctors, then find the specific one
-      const response = await fetch('/api/doctors', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (!response.ok) {
-        const errorData: DoctorsApiResponse = await response.json()
-        throw new Error(errorData.error || 'Failed to fetch doctors')
-      }
-
-      const data: DoctorsApiResponse = await response.json()
-      
-      if (!data.success || !data.data) {
-        throw new Error(data.error || 'Invalid response from doctors API')
-      }
-
-      const foundDoctor = data.data.find(d => d._id === doctorId)
+      const data = await doctorsApi.getDoctors()
+      const foundDoctor = data.find(d => d._id === doctorId)
       setDoctor(foundDoctor || null)
-
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch doctor'
       setError(errorMessage)
