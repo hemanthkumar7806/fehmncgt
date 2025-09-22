@@ -83,8 +83,8 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
       {/* Sidebar */}
       <div
         className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        } ${!isOpen ? 'lg:-translate-x-full' : ''}`}
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         <div className="p-6">
           {/* Logo */}
