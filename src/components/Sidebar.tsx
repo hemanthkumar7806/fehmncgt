@@ -64,24 +64,27 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
         window.location.href = item.externalUrl
       }
     }
-    onToggle()
+    // Only close sidebar on mobile
+    if (window.innerWidth < 1024) {
+      onToggle()
+    }
   }
 
   return (
     <>
-      {/* Overlay */}
+      {/* Mobile Overlay - Only show on mobile when sidebar is open */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50"
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={onToggle}
         />
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } ${!isOpen ? 'lg:-translate-x-full' : ''}`}
       >
         <div className="p-6">
           {/* Logo */}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { authService, AuthError } from '@/lib/auth'
+import { authService } from '@/lib/auth'
 
 interface UseAuthReturn {
   token: string | null

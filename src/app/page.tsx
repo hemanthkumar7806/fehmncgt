@@ -16,6 +16,7 @@ import {
   getNavbarData,
   getSidebarData,
   getFooterData,
+  urlFor,
 } from "@/lib/sanity";
 import Resources from "@/components/Resources";
 import Footer from "@/components/Footer";
@@ -301,7 +302,7 @@ interface HomePageData {
 }
 
 export default function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
   const [navbarData, setNavbarData] = useState<NavbarData | null>(null);
   const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
@@ -379,7 +380,7 @@ export default function Home() {
           sidebarData={sidebarData}
         />
 
-        <main className="pt-16">
+        <main className={`pt-16 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-0'}`}>
           <section id="home">
             <Hero hero={homePageData?.hero} />
           </section>

@@ -45,7 +45,7 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
   const showCtaButton = data?.ctaButton?.showButton !== false
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <header className={`fixed top-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm transition-all duration-300 ${isOpen ? 'lg:left-64' : 'lg:left-0'} left-0`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left Section - Hamburger + Logo */}
@@ -58,8 +58,8 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
               {isOpen ? <X size={20} className="text-primary sm:w-6 sm:h-6" /> : <Menu size={20} className="text-primary sm:w-6 sm:h-6" />}
             </button>
             
-            {/* Logo - Desktop */}
-            <div className="hidden sm:flex items-center space-x-3">
+            {/* Logo - Desktop (hide both logo and tagline when sidebar is open) */}
+            <div className={`hidden sm:flex items-center space-x-3 transition-all duration-300 ${isOpen ? 'lg:opacity-0 lg:pointer-events-none' : 'lg:opacity-100'}`}>
               <Image 
                 src={desktopLogo} 
                 alt={logoAlt} 

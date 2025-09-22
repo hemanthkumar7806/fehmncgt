@@ -96,24 +96,6 @@ export default function Experts({ doctors: propDoctors, title = 'Meet Our Expert
             )}
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
-          
-          {/* Error State */}
-          {error && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg max-w-2xl mx-auto">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-red-800 font-medium">Failed to load doctors</p>
-                  <p className="text-red-600 text-sm mt-1">{error}</p>
-                </div>
-                <button
-                  onClick={refetch}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
-                >
-                  Retry
-                </button>
-              </div>
-            </div>
-          )}
         </motion.div>
 
 
@@ -143,7 +125,7 @@ export default function Experts({ doctors: propDoctors, title = 'Meet Our Expert
               </div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-3">Our Specialists Are Currently Unavailable</h3>
               <p className="text-gray-600 text-lg mb-6 max-w-md mx-auto">
-                We're unable to display our medical specialists at the moment. Please try again later or contact us directly.
+                We&apos;re unable to display our medical specialists at the moment. Please try again later or contact us directly.
               </p>
               <button
                 onClick={refetch}

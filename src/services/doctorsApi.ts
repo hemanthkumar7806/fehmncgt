@@ -1,4 +1,6 @@
 // Centralized API service for doctors-related endpoints
+import { shouldUseMockData, devUtils } from '@/config/development'
+import { mockDoctors, mockTimeSlots } from '@/data/mockDoctors'
 
 export interface Doctor {
   _id?: string
@@ -52,7 +54,16 @@ class DoctorsApiService {
   private baseUrl = '/api/doctors'
 
   async getDoctors(): Promise<Doctor[]> {
+    // Check if we should use mock data
+    if (shouldUseMockData()) {
+      devUtils.log('Using mock doctors data')
+      // Simulate API delay in development
+      await new Promise(resolve => setTimeout(resolve, 500))
+      return mockDoctors
+    }
+
     try {
+      devUtils.log('Fetching doctors from API')
       const response = await fetch(this.baseUrl)
       
       if (!response.ok) {
@@ -78,7 +89,16 @@ class DoctorsApiService {
     startDate: string
     endDate: string
   }): Promise<TimeSlot[]> {
+    // Check if we should use mock data
+    if (shouldUseMockData()) {
+      devUtils.log('Using mock time slots data', params)
+      // Simulate API delay in development
+      await new Promise(resolve => setTimeout(resolve, 300))
+      return mockTimeSlots
+    }
+
     try {
+      devUtils.log('Fetching slots from API', params)
       const { providerId, locationId, startDate, endDate } = params
       const url = `${this.baseUrl}/slots?provider_id=${providerId}&location_id=${locationId}&start_date=${startDate}&end_date=${endDate}`
       
@@ -116,6 +136,18 @@ class DoctorsApiService {
     }
   }): Promise<{ success: boolean; appointmentId?: string; error?: string }> {
     try {
+      if (shouldUseMockData()) {
+        devUtils.log('Mock booking appointment:', appointmentData)
+        // Simulate API call with mock success
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        return {
+          success: true,
+          appointmentId: 'MOCK-APT-' + Date.now()
+        }
+      }
+
+      devUtils.log('Booking appointment via API:', appointmentData)
       // This would be implemented when the booking endpoint is ready
       console.log('Booking appointment:', appointmentData)
       
