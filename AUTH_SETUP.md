@@ -315,5 +315,5 @@ Set `NODE_ENV=development` to see detailed error messages in the API responses.
 ## 📚 Additional Resources
 
 - [Next.js API Routes Documentation](https://nextjs.org/docs/api-routes/introduction)
-- [OAuth 2.0 Client Credentials Flow](https://tools.ietf.org/html/rfc6749#section-4.4) 
+- [OAuth 2.0 Client Credentials Flow](https://tools.ietf.org/html/rfc6749#section-4.4)
 - [Harmony EHR API Documentation](https://harmonyehr.com/api-docs)
