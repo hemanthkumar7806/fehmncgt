@@ -16,7 +16,6 @@ import {
   getNavbarData,
   getSidebarData,
   getFooterData,
-  urlFor,
 } from "@/lib/sanity";
 import Resources from "@/components/Resources";
 import Footer from "@/components/Footer";
@@ -236,7 +235,7 @@ interface HomePageData {
     subtitle?: string;
     resourcesList?: Array<{
       title?: string;
-      description?: string;
+      description?: any[];
       icon?: string;
       link?: string;
       showCard?: boolean;

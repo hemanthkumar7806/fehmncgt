@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { GlowingEffect } from "@/components/ui/GlowingCards";
+import { PortableText } from "@portabletext/react";
 
 interface Resource {
   title?: string;
-  description?: string;
+  description?: any[];
   icon?: string;
   link?: string;
   showCard?: boolean;
@@ -94,7 +95,7 @@ export default function Resources({ resources }: ResourcesProps) {
                     area={isOddRow(index) ? "md:col-span-2" : "md:col-span-4"}
                     icon={<IconComponent className={`h-5 w-5 ${isOddRow(index) ? "text-hnmc-gray-600" : "text-white"}`} />}
                     title={resource.title || "Resource"}
-                    description={resource.description || ""}
+                    description={resource.description || []}
                     link={resource.link}
                     isOddRow={isOddRow(index)}
                     onSmoothScroll={handleSmoothScroll}
@@ -112,7 +113,7 @@ interface GridItemProps {
   area: string;
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description: any[];
   link?: string;
   onSmoothScroll: (link: string, e: React.MouseEvent) => void;
   isOddRow: boolean;
@@ -138,9 +139,9 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
             <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
               {title}
             </h3>
-            <p className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}>
-              {description}
-            </p>
+            <div className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}>
+              <PortableText value={description} />
+            </div>
           </div>
           {link && (
             <div className="mt-auto pt-4">

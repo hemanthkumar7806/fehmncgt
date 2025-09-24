@@ -301,21 +301,66 @@
   "resources": {
     "resourcesList": [
       {
-        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
+        "description": [
+          {
+            "_key": "a09dee1b5116",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "fd6f9295568b",
+                "_type": "span",
+                "marks": [],
+                "text": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "icon": "BookOpen",
         "link": null,
         "showCard": true,
         "title": "Understanding Your Diagnosis"
       },
       {
-        "description": "Placeholder for comprehensive information on various fibroid treatment options, including medical, minimally invasive, and surgical approaches, with pros and cons.",
+        "description": [
+          {
+            "_key": "b09dee1b5117",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "gd6f9295568c",
+                "_type": "span",
+                "marks": [],
+                "text": "Placeholder for comprehensive information on various fibroid treatment options, including medical, minimally invasive, and surgical approaches, with pros and cons."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "icon": "FileText",
         "link": null,
         "showCard": true,
         "title": "Treatment Options Explained"
       },
       {
-        "description": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources.",
+        "description": [
+          {
+            "_key": "c09dee1b5118",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "hd6f9295568d",
+                "_type": "span",
+                "marks": [],
+                "text": "Placeholder for detailed educational content about fibroid types, causes, and impact on health. This section will include articles, FAQs, and external resources."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "icon": "Download",
         "link": "#resources",
         "showCard": true,
