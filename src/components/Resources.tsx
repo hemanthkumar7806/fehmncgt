@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { GlowingEffect } from "@/components/ui/GlowingCards";
 import { PortableText } from "@portabletext/react";
@@ -42,11 +41,11 @@ export default function Resources({ resources }: ResourcesProps) {
   };
 
   const getIcon = (iconName?: string) => {
-    if (!iconName) return BookOpen;
+    if (!iconName) return null;
     const IconComponent = (LucideIcons as any)[
       iconName.charAt(0).toUpperCase() + iconName.slice(1)
     ];
-    return IconComponent || BookOpen;
+    return IconComponent || null;
   };
 
   const isOddRow = (index: number) => {
@@ -93,7 +92,7 @@ export default function Resources({ resources }: ResourcesProps) {
                   <GridItem
                     key={index}
                     area={isOddRow(index) ? "md:col-span-2" : "md:col-span-4"}
-                    icon={<IconComponent className={`h-5 w-5 ${isOddRow(index) ? "text-hnmc-gray-600" : "text-white"}`} />}
+                    icon={IconComponent ? <IconComponent className={`h-5 w-5 ${isOddRow(index) ? "text-hnmc-gray-600" : "text-white"}`} /> : null}
                     title={resource.title || "Resource"}
                     description={resource.description || []}
                     link={resource.link}
@@ -111,7 +110,7 @@ export default function Resources({ resources }: ResourcesProps) {
 
 interface GridItemProps {
   area: string;
-  icon: React.ReactNode;
+  icon: React.ReactNode | null;
   title: string;
   description: any[];
   link?: string;
@@ -132,9 +131,11 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
       <div className={`relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl md:rounded-2xl p-6
        border border-hnmc-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 ${isOddRow ? "bg-white" : "bg-secondary"}`}>
         <div className="relative flex flex-1 flex-col justify-between gap-4">
-          <div className={`w-fit rounded-lg border border-hnmc-gray-200 bg-primary/10 p-3`}>
-            {icon}
-          </div>
+          {icon && (
+            <div className={`w-fit rounded-lg border border-hnmc-gray-200 bg-primary/10 p-3`}>
+              {icon}
+            </div>
+          )}
           <div className="space-y-4">
             <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
               {title}
