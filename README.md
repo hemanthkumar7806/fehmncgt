@@ -17,6 +17,7 @@ A modern medical website built with Next.js and Sanity CMS, featuring a responsi
 - npm or yarn
 - Sanity CMS account
 
+
 ### Installation
 
 1. **Clone the repository**
