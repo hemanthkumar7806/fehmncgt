@@ -301,7 +301,7 @@ interface HomePageData {
 }
 
 export default function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window !== "undefined" ? window.innerWidth < 600 ? false : true : false);
   const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
   const [navbarData, setNavbarData] = useState<NavbarData | null>(null);
   const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
