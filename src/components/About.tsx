@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { PortableText } from "@portabletext/react";
 import { Users, Stethoscope, Play, Pause } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { urlFor } from "@/lib/sanity";
 import { useState, useRef } from "react";
 import fallbackData from "@/constants/fallbackData.home.json";
+import TextClamp from "@/components/ui/TextClamp";
 
 interface AboutProps {
   about?: {
@@ -88,14 +88,21 @@ export default function About({ about }: AboutProps) {
             </motion.h2>
 
             <motion.div
-              className="text-lg text-hnmc-gray-600 leading-relaxed mb-8 space-y-4"
+              className="mb-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
               viewport={{ once: true }}
             >
               {aboutData?.description && (
-                <PortableText value={aboutData.description} />
+                <TextClamp
+                  content={aboutData.description}
+                  maxLines={4}
+                  isPortableText={true}
+                  className="text-lg text-hnmc-gray-600 leading-relaxed"
+                  readMoreText="Read more"
+                  title={aboutData.title || "About Us"}
+                />
               )}
             </motion.div>
           </motion.div>

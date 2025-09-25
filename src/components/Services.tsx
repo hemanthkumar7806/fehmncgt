@@ -47,6 +47,13 @@ export default function Services({ services }: ServicesProps) {
     setIsEnd(swiper.isEnd);
   };
 
+  const handleSwiperInit = (swiper: SwiperType) => {
+    setSwiper(swiper);
+    // Initialize the state based on the actual swiper state
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
+
   const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
     if (link && !link.startsWith("http")) {
       e.preventDefault();
@@ -94,7 +101,7 @@ export default function Services({ services }: ServicesProps) {
             <Swiper
               modules={[Navigation]}
               spaceBetween={24}
-              onSwiper={setSwiper}
+              onSwiper={handleSwiperInit}
               onSlideChange={handleSlideChange}
               breakpoints={{
                 0: { slidesPerView: 1 },
@@ -131,7 +138,7 @@ export default function Services({ services }: ServicesProps) {
                           <h3 className="text-lg font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
                             {service.title}
                           </h3>
-                          <p className="text-hnmc-gray-600 leading-relaxed flex-1 text-sm line-clamp-3">
+                          <p className="text-hnmc-gray-600 leading-relaxed flex-1 text-sm">
                             {service.description}
                           </p>
 
@@ -166,33 +173,35 @@ export default function Services({ services }: ServicesProps) {
           </div>
         )}
 
-        {/* Navigation Controls */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => swiper?.slidePrev()}
-              disabled={isBeginning}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-                isBeginning
-                  ? "border-hnmc-gray-200 text-hnmc-gray-300 cursor-not-allowed"
-                  : "border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg"
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => swiper?.slideNext()}
-              disabled={isEnd}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-                isEnd
-                  ? "border-hnmc-gray-200 text-hnmc-gray-300 cursor-not-allowed"
-                  : "border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg"
-              }`}
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+        {/* Navigation Controls - Only show if there are multiple services */}
+        {servicesList && servicesList.length > 1 && (
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => swiper?.slidePrev()}
+                disabled={isBeginning}
+                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                  isBeginning
+                    ? "border-hnmc-gray-200 text-hnmc-gray-300 cursor-not-allowed"
+                    : "border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg"
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => swiper?.slideNext()}
+                disabled={isEnd}
+                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                  isEnd
+                    ? "border-hnmc-gray-200 text-hnmc-gray-300 cursor-not-allowed"
+                    : "border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg"
+                }`}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Bottom CTA */}
         {services?.ctaButton?.showButton && (

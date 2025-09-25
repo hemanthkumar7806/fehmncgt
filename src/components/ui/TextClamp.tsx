@@ -55,6 +55,12 @@ export default function TextClamp({
           className={`transition-all duration-300 ${
             isExpanded ? "" : `line-clamp-${maxLines}`
           }`}
+          style={{
+            display: isExpanded ? "block" : "-webkit-box",
+            WebkitLineClamp: isExpanded ? "unset" : maxLines,
+            WebkitBoxOrient: isExpanded ? "unset" : "vertical",
+            overflow: isExpanded ? "visible" : "hidden",
+          }}
         >
           {content}
         </div>
@@ -82,9 +88,23 @@ export default function TextClamp({
         className={`transition-all duration-300 ${
           isExpanded ? "" : `line-clamp-${maxLines}`
         }`}
+        style={{
+          display: isExpanded ? "block" : "-webkit-box",
+          WebkitLineClamp: isExpanded ? "unset" : maxLines,
+          WebkitBoxOrient: isExpanded ? "unset" : "vertical",
+          overflow: isExpanded ? "visible" : "hidden",
+        }}
       >
         {isPortableText ? (
-          <PortableText value={content} />
+          <PortableText
+            value={content}
+            components={{
+              list: ({ children }) => <ul className="space-y-2">{children}</ul>,
+              block: {
+                normal: ({ children }) => <p className="mb-2">{children}</p>,
+              },
+            }}
+          />
         ) : (
           content
         )}
@@ -119,9 +139,7 @@ export default function TextClamp({
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gray-50">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  {title}
-                </h3>
+                <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
                 <button
                   onClick={handleCloseModal}
                   className="p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200"
@@ -134,7 +152,27 @@ export default function TextClamp({
               <div className="p-6 overflow-y-auto max-h-[70vh]">
                 <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed">
                   {isPortableText ? (
-                    <PortableText value={content} />
+                    <PortableText
+                      value={content}
+                      components={{
+                        listItem: ({ children }) => (
+                          <li className="flex items-start mb-4">
+                            <div className="w-3 h-3 bg-secondary rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                            <span className="text-hnmc-gray-700 text-lg leading-relaxed">
+                              {children}
+                            </span>
+                          </li>
+                        ),
+                        list: ({ children }) => (
+                          <ul className="space-y-3">{children}</ul>
+                        ),
+                        block: {
+                          normal: ({ children }) => (
+                            <p className="mb-4">{children}</p>
+                          ),
+                        },
+                      }}
+                    />
                   ) : (
                     <p className="text-gray-700 leading-relaxed">{content}</p>
                   )}
