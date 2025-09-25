@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
-import { doctorsApi, type TimeSlot } from '@/services/doctorsApi'
+import { doctorsApi, type TimeSlot, type AvailableDate } from '@/services/doctorsApi'
 import DateSelector from './DateSelector'
 import TimeSelector from './TimeSelector'
 import PatientInfoForm from './PatientInfoForm'
@@ -47,6 +47,12 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
   })
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([])
   const [loadingSlots, setLoadingSlots] = useState(false)
+  const [availableDates, setAvailableDates] = useState<AvailableDate[]>([])
+  const [loadingDates, setLoadingDates] = useState(false)
+  const [bookingAppointment, setBookingAppointment] = useState(false)
+  const [appointmentId, setAppointmentId] = useState<string | undefined>()
+  const [bookingError, setBookingError] = useState<string | null>(null)
+  const [datesError, setDatesError] = useState<string | null>(null)
 
   const resetModal = () => {
     setCurrentStep('select-date')
@@ -54,41 +60,49 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
     setSelectedSlot(null)
     setPatientInfo({ name: '', email: '', phone: '', reason: '' })
     setAvailableSlots([])
+    setAvailableDates([])
     setLoadingSlots(false)
+    setLoadingDates(false)
+    setBookingAppointment(false)
+    setAppointmentId(undefined)
+    setBookingError(null)
+    setDatesError(null)
     onClose()
   }
 
-  const getAvailableDates = () => {
-    const dates = []
-    const today = new Date()
-    for (let i = 1; i <= 12; i++) {
-      const date = new Date(today)
-      date.setDate(today.getDate() + i)
-      dates.push(date.toISOString().split('T')[0])
+  // Load available dates when modal opens and doctor is selected
+  useEffect(() => {
+    if (isOpen && selectedDoctor?.npi && currentStep === 'select-date') {
+      setLoadingDates(true)
+      setAvailableDates([])
+      
+      doctorsApi.getAvailableDates({
+        providerId: selectedDoctor.npi,
+        noOfDays: 7
+      })
+      .then(dates => {
+        setAvailableDates(dates)
+      })
+      .catch(error => {
+        console.error('Error fetching available dates:', error)
+        setAvailableDates([])
+        setDatesError('Failed to load available dates. Please try again.')
+      })
+      .finally(() => {
+        setLoadingDates(false)
+      })
     }
-    return dates
-  }
+  }, [isOpen, selectedDoctor?.npi, currentStep])
 
-  const handleDateSelect = async (date: string) => {
+
+  const handleDateSelect = (date: string) => {
     setSelectedDate(date)
     setCurrentStep('select-time')
     
-    if (selectedDoctor?.npi && selectedDoctor?.organization?.organizationId) {
-      setLoadingSlots(true)
-      try {
-        const slots = await doctorsApi.getSlots({
-          providerId: selectedDoctor.npi,
-          locationId: selectedDoctor.organization.organizationId,
-          startDate: date,
-          endDate: date
-        })
-        setAvailableSlots(slots)
-      } catch (error) {
-        console.error('Error fetching slots:', error)
-        setAvailableSlots([])
-      } finally {
-        setLoadingSlots(false)
-      }
+    // Find the selected date in our available dates and use its pre-loaded slots
+    const selectedDateInfo = availableDates.find(d => d.date === date)
+    if (selectedDateInfo && selectedDateInfo.slots) {
+      setAvailableSlots(selectedDateInfo.slots)
     } else {
       setAvailableSlots([])
     }
@@ -99,14 +113,64 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
     setCurrentStep('patient-info')
   }
 
-  const handleSubmitAppointment = () => {
-    console.log('Booking appointment:', {
-      doctor: selectedDoctor?.name,
-      date: selectedDate,
-      time: selectedSlot?.time,
-      patient: patientInfo
+  const handleSubmitAppointment = async () => {
+    if (!selectedDoctor || !selectedSlot || bookingAppointment) return
+
+    setBookingAppointment(true)
+    setBookingError(null)
+    
+    try {
+      const bookingData = {
+        doctorId: selectedDoctor._id || '',
+        providerId: selectedDoctor.npi || '',
+        locationId: selectedDoctor.organization?.organizationId || '',
+        startTime: selectedSlot.startTime || '',
+        duration: "30",
+        patientInfo: {
+          name: patientInfo.name,
+          email: patientInfo.email,
+          phone: patientInfo.phone,
+          reason: patientInfo.reason
+        }
+      }
+
+      const result = await doctorsApi.bookAppointment(bookingData)
+      
+      if (result.success) {
+        setAppointmentId(result.appointmentId)
+        setCurrentStep('confirmation')
+      } else {
+        console.error('Booking failed:', result.error)
+        setBookingError(result.error || 'Failed to book appointment. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error during booking:', error)
+      setBookingError('An error occurred while booking the appointment. Please check your connection and try again.')
+    } finally {
+      setBookingAppointment(false)
+    }
+  }
+
+  const retryLoadDates = () => {
+    setDatesError(null)
+    setLoadingDates(true)
+    setAvailableDates([])
+    
+    doctorsApi.getAvailableDates({
+      providerId: selectedDoctor?.npi || '',
+      noOfDays: 7
     })
-    setCurrentStep('confirmation')
+    .then(dates => {
+      setAvailableDates(dates)
+    })
+    .catch(error => {
+      console.error('Error fetching available dates:', error)
+      setAvailableDates([])
+      setDatesError('Failed to load available dates. Please try again.')
+    })
+    .finally(() => {
+      setLoadingDates(false)
+    })
   }
 
   if (!isOpen || !selectedDoctor) return null
@@ -148,8 +212,11 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
             <AnimatePresence mode="wait">
               {currentStep === 'select-date' && (
                 <DateSelector
-                  availableDates={getAvailableDates()}
+                  availableDates={availableDates}
                   onDateSelect={handleDateSelect}
+                  loading={loadingDates}
+                  error={datesError}
+                  onRetry={retryLoadDates}
                 />
               )}
 
@@ -157,7 +224,7 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
                 <TimeSelector
                   selectedDate={selectedDate}
                   availableSlots={availableSlots}
-                  loadingSlots={loadingSlots}
+                  loadingSlots={false}
                   onSlotSelect={handleSlotSelect}
                   onBack={() => setCurrentStep('select-date')}
                 />
@@ -171,6 +238,9 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
                   onPatientInfoChange={setPatientInfo}
                   onSubmit={handleSubmitAppointment}
                   onBack={() => setCurrentStep('select-time')}
+                  isSubmitting={bookingAppointment}
+                  error={bookingError}
+                  onClearError={() => setBookingError(null)}
                 />
               )}
 
@@ -180,6 +250,7 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
                   selectedDate={selectedDate}
                   selectedSlot={selectedSlot}
                   patientInfo={patientInfo}
+                  appointmentId={appointmentId}
                   onClose={resetModal}
                 />
               )}

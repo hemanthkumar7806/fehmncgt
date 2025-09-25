@@ -23,6 +23,9 @@ interface PatientInfoFormProps {
   onPatientInfoChange: (info: PatientInfo) => void
   onSubmit: () => void
   onBack: () => void
+  isSubmitting?: boolean
+  error?: string | null
+  onClearError?: () => void
 }
 
 export default function PatientInfoForm({
@@ -31,7 +34,10 @@ export default function PatientInfoForm({
   patientInfo,
   onPatientInfoChange,
   onSubmit,
-  onBack
+  onBack,
+  isSubmitting = false,
+  error = null,
+  onClearError
 }: PatientInfoFormProps) {
   const handleInputChange = (field: keyof PatientInfo, value: string) => {
     onPatientInfoChange({
@@ -59,10 +65,11 @@ export default function PatientInfoForm({
         <div>
           <h4 className="text-lg font-semibold text-gray-900">Your Information</h4>
           <p className="text-sm text-gray-600">
-            {new Date(selectedDate).toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric' 
-            })} at {selectedSlot?.time}
+              {new Date(selectedDate).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric',
+                timeZone: 'America/New_York'
+              })} at {selectedSlot?.time}
           </p>
         </div>
       </div>
@@ -110,19 +117,45 @@ export default function PatientInfoForm({
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex items-start">
+            <svg className="w-5 h-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <div className="flex-1">
+              <p className="text-sm text-red-700">{error}</p>
+              {onClearError && (
+                <button
+                  onClick={onClearError}
+                  className="mt-2 text-xs text-red-600 hover:text-red-800 underline"
+                >
+                  Dismiss
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex space-x-3 mt-6">
         <button
           onClick={onBack}
-          className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          disabled={isSubmitting}
+          className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Back
         </button>
         <button
           onClick={onSubmit}
-          disabled={!isFormValid}
-          className="flex-1 px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={!isFormValid || isSubmitting}
+          className="flex-1 px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          Book Appointment
+          {isSubmitting && (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          )}
+          {isSubmitting ? 'Booking...' : 'Book Appointment'}
         </button>
       </div>
     </motion.div>

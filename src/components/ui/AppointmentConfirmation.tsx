@@ -22,6 +22,7 @@ interface AppointmentConfirmationProps {
   selectedDate: string
   selectedSlot: TimeSlot | null
   patientInfo: PatientInfo
+  appointmentId?: string
   onClose: () => void
 }
 
@@ -30,6 +31,7 @@ export default function AppointmentConfirmation({
   selectedDate,
   selectedSlot,
   patientInfo,
+  appointmentId,
   onClose
 }: AppointmentConfirmationProps) {
   return (
@@ -53,11 +55,12 @@ export default function AppointmentConfirmation({
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Date:</span>
             <span className="font-medium">
-              {new Date(selectedDate).toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
+                {new Date(selectedDate).toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  month: 'long', 
+                  day: 'numeric',
+                  timeZone: 'America/New_York'
+                })}
             </span>
           </div>
           <div className="flex justify-between text-sm">
@@ -68,6 +71,12 @@ export default function AppointmentConfirmation({
             <span className="text-gray-600">Type:</span>
             <span className="font-medium capitalize">{selectedSlot?.type}</span>
           </div>
+          {appointmentId && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Appointment ID:</span>
+              <span className="font-medium text-[#01a69c]">{appointmentId}</span>
+            </div>
+          )}
         </div>
       </div>
       

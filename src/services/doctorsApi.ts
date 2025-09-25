@@ -1,6 +1,6 @@
 // Centralized API service for doctors-related endpoints
 import { shouldUseMockData, devUtils } from '@/config/development'
-import { mockDoctors, mockTimeSlots } from '@/data/mockDoctors'
+import { mockDoctors } from '@/data/mockDoctors'
 
 export interface Doctor {
   _id?: string
@@ -41,13 +41,12 @@ export interface ApiResponse<T> {
   code?: string
 }
 
-export interface SlotResponse extends ApiResponse<TimeSlot[]> {
-  providerId?: string
-  locationId?: string
-  dateRange?: {
-    startDate: string
-    endDate: string
-  }
+
+export interface AvailableDate {
+  date: string
+  slotsCount: number
+  hasSlots: boolean
+  slots?: TimeSlot[]
 }
 
 class DoctorsApiService {
@@ -83,40 +82,30 @@ class DoctorsApiService {
     }
   }
 
-  async getSlots(params: {
-    providerId: string
-    locationId: string
-    startDate: string
-    endDate: string
-  }): Promise<TimeSlot[]> {
-    // Check if we should use mock data
-    if (shouldUseMockData()) {
-      devUtils.log('Using mock time slots data', params)
-      // Simulate API delay in development
-      await new Promise(resolve => setTimeout(resolve, 300))
-      return mockTimeSlots
-    }
 
+  async getAvailableDates(params: {
+    providerId: string
+    noOfDays?: number
+  }): Promise<AvailableDate[]> {
     try {
-      devUtils.log('Fetching slots from API', params)
-      const { providerId, locationId, startDate, endDate } = params
-      const url = `${this.baseUrl}/slots?provider_id=${providerId}&location_id=${locationId}&start_date=${startDate}&end_date=${endDate}`
+      const { providerId, noOfDays = 7 } = params
+      const url = `${this.baseUrl}/available-dates?provider_id=${providerId}&noOfDays=${noOfDays}`
       
       const response = await fetch(url)
       
       if (!response.ok) {
-        throw new Error(`Failed to fetch slots: ${response.status}`)
+        throw new Error(`Failed to fetch available dates: ${response.status}`)
       }
 
-      const data: SlotResponse = await response.json()
+      const data: ApiResponse<AvailableDate[]> = await response.json()
       
       if (!data.success) {
-        throw new Error(data.error || 'Failed to fetch slots')
+        throw new Error(data.error || 'Failed to fetch available dates')
       }
 
       return data.data
     } catch (error) {
-      console.error('Error fetching slots:', error)
+      console.error('Error fetching available dates:', error)
       throw error
     }
   }
@@ -126,37 +115,102 @@ class DoctorsApiService {
     doctorId: string
     providerId: string
     locationId: string
-    date: string
-    time: string
+    startTime: string
+    duration?: string
     patientInfo: {
       name: string
       email: string
       phone: string
       reason?: string
     }
-  }): Promise<{ success: boolean; appointmentId?: string; error?: string }> {
+    patientId?: string
+    visitReasonId?: string
+    insuranceInfo?: {
+      carrier?: string
+      plan?: string
+      memberId?: string
+    }
+    patientAddress?: {
+      address1?: string
+      address2?: string
+      city?: string
+      state?: string
+      zip?: string
+    }
+  }): Promise<{ success: boolean; appointmentId?: string; error?: string; details?: any }> {
     try {
-      if (shouldUseMockData()) {
-        devUtils.log('Mock booking appointment:', appointmentData)
-        // Simulate API call with mock success
-        await new Promise(resolve => setTimeout(resolve, 1000))
+      const url = `${this.baseUrl}/appointments`
+      
+      // Convert time to the format expected by the Harmony API
+      const formatTimeForBooking = (timeString: string): string => {
+        // Parse the UTC time
+        const date = new Date(timeString)
         
-        return {
-          success: true,
-          appointmentId: 'MOCK-APT-' + Date.now()
+        // Check if it's a valid date
+        if (isNaN(date.getTime())) {
+          console.error('Invalid date string:', timeString)
+          return timeString // Return original if invalid
         }
+        
+        // Get the date in Eastern Time
+        const easternDate = new Date(date.toLocaleString("en-US", {timeZone: "America/New_York"}))
+        
+        // Format as YYYY-MM-DDTHH:MM:SS (no timezone offset)
+        const year = easternDate.getFullYear()
+        const month = String(easternDate.getMonth() + 1).padStart(2, '0')
+        const day = String(easternDate.getDate()).padStart(2, '0')
+        const hours = String(easternDate.getHours()).padStart(2, '0')
+        const minutes = String(easternDate.getMinutes()).padStart(2, '0')
+        const seconds = String(easternDate.getSeconds()).padStart(2, '0')
+        
+        const formattedTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
+        
+        return formattedTime
       }
 
-      devUtils.log('Booking appointment via API:', appointmentData)
-      // This would be implemented when the booking endpoint is ready
-      console.log('Booking appointment:', appointmentData)
+      // Prepare booking payload
+      const bookingPayload = {
+        patient_id: appointmentData.patientId || "000004279647", // Default patient ID for demo
+        start_time: formatTimeForBooking(appointmentData.startTime),
+        duration: appointmentData.duration || "30",
+        provider_id: appointmentData.providerId,
+        visit_reason_id: appointmentData.visitReasonId || "PMNP",
+        location_id: appointmentData.locationId,
+        schedulable_resource_id: "",
+        insurance_carrier: appointmentData.insuranceInfo?.carrier || "",
+        insurance_plan: appointmentData.insuranceInfo?.plan || "",
+        insurance_member_id: appointmentData.insuranceInfo?.memberId || "",
+        patient_address1: appointmentData.patientAddress?.address1 || "",
+        patient_address2: appointmentData.patientAddress?.address2 || "",
+        patient_city: appointmentData.patientAddress?.city || "",
+        patient_state: appointmentData.patientAddress?.state || "",
+        patient_zip: appointmentData.patientAddress?.zip || "",
+        notes: appointmentData.patientInfo.reason || "",
+        external_system: "Website"
+      }
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingPayload)
+      })
       
+      if (!response.ok) {
+        throw new Error(`Failed to book appointment: ${response.status}`)
+      }
+
+      const data: ApiResponse<any> = await response.json()
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to book appointment')
+      }
+
       return {
         success: true,
-        appointmentId: 'APT-' + Date.now()
+        appointmentId: data.data?.appointmentId,
+        details: data.data?.details
       }
     } catch (error) {
       console.error('Error booking appointment:', error)

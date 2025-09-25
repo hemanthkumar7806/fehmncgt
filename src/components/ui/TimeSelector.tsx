@@ -44,7 +44,8 @@ export default function TimeSelector({
             {new Date(selectedDate).toLocaleDateString('en-US', { 
               weekday: 'long', 
               month: 'long', 
-              day: 'numeric' 
+              day: 'numeric',
+              timeZone: 'America/New_York'
             })}
           </p>
         </div>

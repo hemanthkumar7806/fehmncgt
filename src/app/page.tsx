@@ -365,7 +365,6 @@ export default function Home() {
         onLoadingComplete={() => setLoading(false)}
       />
 
-      {/*TODO: Split them cos: Now Always render the main content, but it will be behind the loading screen when loading */}
       {!loading && <div className="min-h-screen bg-hnmc-gray">
         <Header
           isOpen={isSidebarOpen}

@@ -68,7 +68,6 @@ export default function Experts({ doctors: propDoctors, title = 'Meet Our Expert
   }
 
   const handleBookAppointment = (doctor: Doctor) => {
-    console.log('Selected doctor:', doctor)
     setSelectedDoctor(doctor)
     setShowAppointmentModal(true)
   }

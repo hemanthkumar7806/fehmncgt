@@ -154,18 +154,3 @@ export const mockDoctors: Doctor[] = [
   }
 ]
 
-// Mock time slots for development
-export const mockTimeSlots = [
-  { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
-  { time: "9:30 AM", available: true, type: "consultation" as const, startTime: "09:30", endTime: "10:00", slotTypes: ["consultation"] },
-  { time: "10:00 AM", available: false, type: "consultation" as const, startTime: "10:00", endTime: "10:30", slotTypes: ["consultation"] },
-  { time: "10:30 AM", available: true, type: "follow-up" as const, startTime: "10:30", endTime: "11:00", slotTypes: ["follow-up"] },
-  { time: "11:00 AM", available: true, type: "consultation" as const, startTime: "11:00", endTime: "11:30", slotTypes: ["consultation"] },
-  { time: "11:30 AM", available: false, type: "consultation" as const, startTime: "11:30", endTime: "12:00", slotTypes: ["consultation"] },
-  { time: "2:00 PM", available: true, type: "consultation" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["consultation"] },
-  { time: "2:30 PM", available: true, type: "follow-up" as const, startTime: "14:30", endTime: "15:00", slotTypes: ["follow-up"] },
-  { time: "3:00 PM", available: true, type: "consultation" as const, startTime: "15:00", endTime: "15:30", slotTypes: ["consultation"] },
-  { time: "3:30 PM", available: false, type: "consultation" as const, startTime: "15:30", endTime: "16:00", slotTypes: ["consultation"] },
-  { time: "4:00 PM", available: true, type: "consultation" as const, startTime: "16:00", endTime: "16:30", slotTypes: ["consultation"] },
-  { time: "4:30 PM", available: true, type: "follow-up" as const, startTime: "16:30", endTime: "17:00", slotTypes: ["follow-up"] }
-]

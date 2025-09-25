@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
       return error
     }
     
+    
     // Transform the data to match our component structure
     const transformedDoctors = doctorsData.map((doctor: any) => ({
       _id: doctor.id.toString(),
@@ -53,7 +54,7 @@ export async function GET(request: NextRequest) {
       organization: doctor.organizations?.[0] || null
     }))
 
-    console.log(`Successfully fetched ${transformedDoctors.length} doctors for IP: ${validation.clientIP}`)
+    
     
     return createSuccessResponse({
       data: transformedDoctors,
