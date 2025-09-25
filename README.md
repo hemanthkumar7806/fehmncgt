@@ -11,7 +11,6 @@ A modern medical website built with Next.js and Sanity CMS, featuring a responsi
 - **Fast Performance** - Built with Next.js 15 and Turbopack
 
 ## 🚀 Quick Start
-
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
