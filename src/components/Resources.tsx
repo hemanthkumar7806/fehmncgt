@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 import { GlowingEffect } from "@/components/ui/GlowingCards";
-import { PortableText } from "@portabletext/react";
+import TextClamp from "@/components/ui/TextClamp";
 
 interface Resource {
   title?: string;
@@ -140,9 +140,15 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
             <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
               {title}
             </h3>
-            <div className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}>
-              <PortableText value={description} />
-            </div>
+            <TextClamp
+              content={description}
+              maxLines={3}
+              isPortableText={true}
+              className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
+              readMoreClassName={`${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
+              readMoreText="Read more"
+              title={title}
+            />
           </div>
           {link && (
             <div className="mt-auto pt-4">
