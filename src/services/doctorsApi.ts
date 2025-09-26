@@ -49,6 +49,45 @@ export interface AvailableDate {
   slots?: TimeSlot[]
 }
 
+export interface PatientSearchRequest {
+  first_name: string
+  last_name: string
+  date_of_birth: string  // Format: MM-DD-YYYY for search
+  email_address?: string
+  phone_number?: string
+  gender: 'M' | 'F'
+  provider_id?: string
+  patient_id?: string
+}
+
+export interface PatientCreateRequest {
+  first_name: string
+  last_name: string
+  date_of_birth: string  // Format: YYYY-MM-DD for creation
+  email_address: string
+  phone_number: string
+  gender: 'M' | 'F'
+  insurance_carrier?: string
+  insurance_plan?: string
+  insurance_member_id?: string
+}
+
+export interface Patient {
+  patient_id: string
+  first_name: string
+  last_name: string
+  date_of_birth: string
+  email_address: string
+  phone_number: string
+  gender: string
+}
+
+export interface VisitReason {
+  visit_reason_id: string
+  visit_reason: string
+  description?: string
+}
+
 class DoctorsApiService {
   private baseUrl = '/api/doctors'
 
@@ -106,6 +145,86 @@ class DoctorsApiService {
       return data.data
     } catch (error) {
       console.error('Error fetching available dates:', error)
+      throw error
+    }
+  }
+
+  async searchPatient(searchData: PatientSearchRequest): Promise<Patient[]> {
+    try {
+      const response = await fetch('/api/patients/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(searchData)
+      })
+      
+      if (!response.ok) {
+        throw new Error(`Failed to search patient: ${response.status}`)
+      }
+
+      const data: ApiResponse<Patient[]> = await response.json()
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to search patient')
+      }
+
+      return data.data
+    } catch (error) {
+      console.error('Error searching patient:', error)
+      throw error
+    }
+  }
+
+  async createPatient(patientData: PatientCreateRequest): Promise<Patient> {
+    try {
+      const response = await fetch('/api/patients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(patientData)
+      })
+      
+      if (!response.ok) {
+        throw new Error(`Failed to create patient: ${response.status}`)
+      }
+
+      const data: ApiResponse<Patient> = await response.json()
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to create patient')
+      }
+
+      return data.data
+    } catch (error) {
+      console.error('Error creating patient:', error)
+      throw error
+    }
+  }
+
+  async getVisitReasons(): Promise<VisitReason[]> {
+    try {
+      const response = await fetch('/api/visit-reasons', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch visit reasons: ${response.status}`)
+      }
+
+      const data: ApiResponse<VisitReason[]> = await response.json()
+      
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to fetch visit reasons')
+      }
+
+      return data.data
+    } catch (error) {
+      console.error('Error fetching visit reasons:', error)
       throw error
     }
   }

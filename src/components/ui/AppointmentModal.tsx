@@ -21,10 +21,14 @@ interface Doctor {
 }
 
 interface PatientInfo {
-  name: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
   reason: string
+  reasonId: string
+  dateOfBirth: string
+  gender: 'M' | 'F'
 }
 
 interface AppointmentModalProps {
@@ -40,13 +44,16 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
   const [patientInfo, setPatientInfo] = useState<PatientInfo>({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    reason: ''
+    reason: '',
+    reasonId: '',
+    dateOfBirth: '',
+    gender: 'M'
   })
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([])
-  const [loadingSlots, setLoadingSlots] = useState(false)
   const [availableDates, setAvailableDates] = useState<AvailableDate[]>([])
   const [loadingDates, setLoadingDates] = useState(false)
   const [bookingAppointment, setBookingAppointment] = useState(false)
@@ -58,10 +65,9 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
     setCurrentStep('select-date')
     setSelectedDate('')
     setSelectedSlot(null)
-    setPatientInfo({ name: '', email: '', phone: '', reason: '' })
+    setPatientInfo({ firstName: '', lastName: '', email: '', phone: '', reason: '', reasonId: '', dateOfBirth: '', gender: 'M' })
     setAvailableSlots([])
     setAvailableDates([])
-    setLoadingSlots(false)
     setLoadingDates(false)
     setBookingAppointment(false)
     setAppointmentId(undefined)
@@ -120,14 +126,71 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
     setBookingError(null)
     
     try {
+      // Step 1: Validate first and last name
+      const firstName = patientInfo.firstName.trim()
+      const lastName = patientInfo.lastName.trim()
+
+      if (!firstName || !lastName) {
+        setBookingError('Please enter both first and last name.')
+        return
+      }
+
+      // Step 2: Convert date format for patient search (YYYY-MM-DD -> MM-DD-YYYY)
+      const dateOfBirth = patientInfo.dateOfBirth
+      const [year, month, day] = dateOfBirth.split('-')
+      const searchDateFormat = `${month}-${day}-${year}`
+
+      // Step 3: Search for existing patient
+      const searchData = {
+        first_name: firstName,
+        last_name: lastName,
+        date_of_birth: searchDateFormat,
+        email_address: patientInfo.email,
+        phone_number: patientInfo.phone,
+        gender: patientInfo.gender,
+        provider_id: selectedDoctor.npi || '',
+        patient_id: ''
+      }
+
+      let patientId: string = ''
+      
+      try {
+        const existingPatients = await doctorsApi.searchPatient(searchData)
+        
+        if (existingPatients.length > 0) {
+          // Patient found, use existing patient ID
+          patientId = existingPatients[0].patient_id
+        } else {
+          // Patient not found, create new patient
+          const createData = {
+            first_name: firstName,
+            last_name: lastName,
+            date_of_birth: dateOfBirth, // Use YYYY-MM-DD format for creation
+            email_address: patientInfo.email,
+            phone_number: patientInfo.phone,
+            gender: patientInfo.gender
+          }
+
+          const newPatient = await doctorsApi.createPatient(createData)
+          patientId = newPatient.patient_id
+        }
+      } catch (patientError) {
+        console.error('Error with patient search/create:', patientError)
+        setBookingError('Failed to process patient information. Please try again.')
+        return
+      }
+
+      // Step 4: Book appointment with patient ID
       const bookingData = {
         doctorId: selectedDoctor._id || '',
         providerId: selectedDoctor.npi || '',
         locationId: selectedDoctor.organization?.organizationId || '',
         startTime: selectedSlot.startTime || '',
         duration: "30",
+        patientId: patientId,
+        visitReasonId: patientInfo.reasonId || 'PMNP', // Default to consultation if not selected
         patientInfo: {
-          name: patientInfo.name,
+          name: `${patientInfo.firstName} ${patientInfo.lastName}`,
           email: patientInfo.email,
           phone: patientInfo.phone,
           reason: patientInfo.reason
@@ -188,11 +251,11 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden"
+          className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}
-          <div className="bg-[#093b60] text-white p-6">
+          <div className="bg-[#093b60] text-white p-6 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-2xl font-bold">Book Appointment</h3>
@@ -207,8 +270,8 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
             </div>
           </div>
 
-          {/* Modal Content */}
-          <div className="p-6">
+          {/* Modal Content - Scrollable */}
+          <div className="p-6 overflow-y-auto flex-1">
             <AnimatePresence mode="wait">
               {currentStep === 'select-date' && (
                 <DateSelector
