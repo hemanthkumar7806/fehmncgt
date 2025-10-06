@@ -150,34 +150,6 @@ export const footerQuery = `
 // Query to fetch homepage data based on your Sanity schema
 export const homepageQuery = `
   *[_type == "homePage"][0] {
-    seo-> {
-      title,
-      description,
-      keywords,
-      ogImage {
-        asset-> {
-          _id,
-          url
-        }
-      },
-      ogTitle,
-      ogDescription,
-      twitterCard,
-      twitterImage {
-        asset-> {
-          _id,
-          url
-        }
-      },
-      canonicalUrl,
-      noIndex,
-      noFollow,
-      structuredData,
-      robotsTxt {
-        allow,
-        disallow
-      }
-    },
     hero {
       headline,
       subheadline,
@@ -462,17 +434,52 @@ export async function getHomePageData() {
   }
 }
 
+// Server-side SEO data fetching function
+export async function getSeoData() {
+  try {
+    const query = `
+      *[_type == "seo"][0] {
+        title,
+        description,
+        keywords,
+        ogImage {
+          asset-> {
+            _id,
+            url
+          }
+        },
+        ogTitle,
+        ogDescription,
+        twitterCard,
+        twitterImage {
+          asset-> {
+            _id,
+            url
+          }
+        },
+        canonicalUrl,
+        noIndex,
+        noFollow,
+        structuredData,
+        robotsTxt {
+          allow,
+          disallow
+        }
+      }
+    `;
+    
+    const seoData = await client.fetch(query);
+    return seoData;
+  } catch (error) {
+    console.error('Error fetching SEO data:', error);
+    return null;
+  }
+}
+
 // Function to fetch data by document ID (for your specific URL)
 export async function getHomePageById(id: string) {
   try {
     const query = `*[_id == $id][0] {
-      seo {
-        title,
-        description,
-        ogImage {
-          asset->
-        }
-      },
       hero {
         headline,
         subheadline,

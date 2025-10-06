@@ -20,7 +20,6 @@ import {
 import Resources from "@/components/Resources";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import SEO from "@/components/SEO";
 import fallbackDataHome from "@/constants/fallbackData.home.json";
 import fallbackDataNavbar from "@/constants/fallbackData.navbar.json";
 import fallbackDataSidebar from "@/constants/fallbackData.sidebar.json";
@@ -92,37 +91,8 @@ interface FooterData {
   copyright?: string;
 }
 
-interface SeoData {
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  ogImage?: {
-    asset?: {
-      _id?: string;
-      url?: string;
-    };
-  };
-  ogTitle?: string;
-  ogDescription?: string;
-  twitterCard?: string;
-  twitterImage?: {
-    asset?: {
-      _id?: string;
-      url?: string;
-    };
-  };
-  canonicalUrl?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
-  structuredData?: string;
-  robotsTxt?: {
-    allow?: string[];
-    disallow?: string[];
-  };
-}
 
 interface HomePageData {
-  seo?: SeoData;
   hero?: {
     headline?: string;
     subheadline?: string;
@@ -359,7 +329,6 @@ export default function Home() {
 
   return (
     <>
-      <SEO seoData={homePageData?.seo} />
       <LoadingScreen
         isLoading={loading}
         onLoadingComplete={() => setLoading(false)}
