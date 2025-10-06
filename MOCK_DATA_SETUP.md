@@ -43,11 +43,12 @@ When mock data mode is enabled, the following API calls are replaced with mock d
 - **Doctor profiles include**: Names, titles, credentials, specialties, experience, photos, contact info
 
 ### 📅 Appointments API  
+- **GET /api/doctors/available-dates** → Returns sample available dates for appointments
 - **GET /api/doctors/slots** → Returns sample time slots for appointments
 - **POST booking endpoints** → Simulates successful appointment booking
 
 ### ⚡ Performance
-- **Simulated delays**: 300-500ms delays to mimic real API response times
+- **Simulated delays**: 300-800ms delays to mimic real API response times
 - **Loading states**: All loading indicators work normally
 - **Error handling**: Mock APIs can still simulate errors if needed
 
@@ -63,10 +64,18 @@ The mock data includes 6 specialists:
 - Dr. Robert Martinez (Interventional Radiologist)
 
 ### Sample Time Slots
-- Morning slots: 9:00 AM - 12:00 PM
+- Morning slots: 8:30 AM - 12:00 PM
 - Afternoon slots: 2:00 PM - 5:00 PM
 - Mix of consultation and follow-up appointment types
 - Some slots marked as unavailable for realistic testing
+- Dynamic dates: Tomorrow, day after tomorrow, 3 days, 5 days, and 1 week from current date
+
+### Sample Available Dates
+- **5 different dates** starting from tomorrow
+- **Varying slot counts**: 4-10 available slots per date
+- **Realistic scheduling**: Some dates busier than others
+- **Pre-loaded slots**: Each date comes with its own time slots
+- **Mixed availability**: Some time slots are unavailable to simulate real-world scenarios
 
 ## Development Logging
 
@@ -75,7 +84,9 @@ When mock data is enabled, you'll see helpful console logs:
 ```
 [DEV] Using mock doctors data
 [DEV] Successfully loaded 6 doctors { mockMode: true, count: 6 }
+[DEV] Using mock available dates data { providerId: "...", noOfDays: 7 }
 [DEV] Using mock time slots data { providerId: "...", locationId: "..." }
+[DEV] Mock booking appointment: { doctorId: "...", date: "...", time: "..." }
 ```
 
 ## File Structure

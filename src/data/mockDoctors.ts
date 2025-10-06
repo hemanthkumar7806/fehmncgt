@@ -1,5 +1,5 @@
 // Mock data for development/testing purposes
-import { Doctor } from '@/services/doctorsApi'
+import { Doctor, TimeSlot, AvailableDate } from '@/services/doctorsApi'
 
 export const mockDoctors: Doctor[] = [
   {
@@ -151,6 +151,96 @@ export const mockDoctors: Doctor[] = [
       organizationId: "org-001",
       organizationName: "Holy Name Medical Center"
     }
+  }
+]
+
+// Mock time slots for development
+export const mockTimeSlots = [
+  { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+  { time: "9:30 AM", available: true, type: "consultation" as const, startTime: "09:30", endTime: "10:00", slotTypes: ["consultation"] },
+  { time: "10:00 AM", available: false, type: "consultation" as const, startTime: "10:00", endTime: "10:30", slotTypes: ["consultation"] },
+  { time: "10:30 AM", available: true, type: "follow-up" as const, startTime: "10:30", endTime: "11:00", slotTypes: ["follow-up"] },
+  { time: "11:00 AM", available: true, type: "consultation" as const, startTime: "11:00", endTime: "11:30", slotTypes: ["consultation"] },
+  { time: "11:30 AM", available: false, type: "consultation" as const, startTime: "11:30", endTime: "12:00", slotTypes: ["consultation"] },
+  { time: "2:00 PM", available: true, type: "consultation" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["consultation"] },
+  { time: "2:30 PM", available: true, type: "follow-up" as const, startTime: "14:30", endTime: "15:00", slotTypes: ["follow-up"] },
+  { time: "3:00 PM", available: true, type: "consultation" as const, startTime: "15:00", endTime: "15:30", slotTypes: ["consultation"] },
+  { time: "3:30 PM", available: false, type: "consultation" as const, startTime: "15:30", endTime: "16:00", slotTypes: ["consultation"] },
+  { time: "4:00 PM", available: true, type: "consultation" as const, startTime: "16:00", endTime: "16:30", slotTypes: ["consultation"] },
+  { time: "4:30 PM", available: true, type: "follow-up" as const, startTime: "16:30", endTime: "17:00", slotTypes: ["follow-up"] }
+]
+
+// Mock available dates for development
+export const mockAvailableDates: AvailableDate[] = [
+  {
+    date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
+    slotsCount: 8,
+    hasSlots: true,
+    slots: [
+      { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+      { time: "9:30 AM", available: true, type: "consultation" as const, startTime: "09:30", endTime: "10:00", slotTypes: ["consultation"] },
+      { time: "10:30 AM", available: true, type: "follow-up" as const, startTime: "10:30", endTime: "11:00", slotTypes: ["follow-up"] },
+      { time: "11:00 AM", available: true, type: "consultation" as const, startTime: "11:00", endTime: "11:30", slotTypes: ["consultation"] },
+      { time: "2:00 PM", available: true, type: "consultation" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["consultation"] },
+      { time: "2:30 PM", available: true, type: "follow-up" as const, startTime: "14:30", endTime: "15:00", slotTypes: ["follow-up"] },
+      { time: "3:00 PM", available: true, type: "consultation" as const, startTime: "15:00", endTime: "15:30", slotTypes: ["consultation"] },
+      { time: "4:00 PM", available: true, type: "consultation" as const, startTime: "16:00", endTime: "16:30", slotTypes: ["consultation"] }
+    ]
+  },
+  {
+    date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Day after tomorrow
+    slotsCount: 6,
+    hasSlots: true,
+    slots: [
+      { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+      { time: "10:00 AM", available: true, type: "consultation" as const, startTime: "10:00", endTime: "10:30", slotTypes: ["consultation"] },
+      { time: "11:30 AM", available: true, type: "follow-up" as const, startTime: "11:30", endTime: "12:00", slotTypes: ["follow-up"] },
+      { time: "2:00 PM", available: true, type: "consultation" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["consultation"] },
+      { time: "3:30 PM", available: true, type: "consultation" as const, startTime: "15:30", endTime: "16:00", slotTypes: ["consultation"] },
+      { time: "4:30 PM", available: true, type: "follow-up" as const, startTime: "16:30", endTime: "17:00", slotTypes: ["follow-up"] }
+    ]
+  },
+  {
+    date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 3 days from now
+    slotsCount: 10,
+    hasSlots: true,
+    slots: [
+      { time: "8:30 AM", available: true, type: "consultation" as const, startTime: "08:30", endTime: "09:00", slotTypes: ["consultation"] },
+      { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+      { time: "9:30 AM", available: true, type: "consultation" as const, startTime: "09:30", endTime: "10:00", slotTypes: ["consultation"] },
+      { time: "10:00 AM", available: false, type: "consultation" as const, startTime: "10:00", endTime: "10:30", slotTypes: ["consultation"] },
+      { time: "10:30 AM", available: true, type: "follow-up" as const, startTime: "10:30", endTime: "11:00", slotTypes: ["follow-up"] },
+      { time: "11:00 AM", available: true, type: "consultation" as const, startTime: "11:00", endTime: "11:30", slotTypes: ["consultation"] },
+      { time: "2:00 PM", available: true, type: "consultation" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["consultation"] },
+      { time: "2:30 PM", available: true, type: "follow-up" as const, startTime: "14:30", endTime: "15:00", slotTypes: ["follow-up"] },
+      { time: "3:00 PM", available: true, type: "consultation" as const, startTime: "15:00", endTime: "15:30", slotTypes: ["consultation"] },
+      { time: "4:00 PM", available: true, type: "consultation" as const, startTime: "16:00", endTime: "16:30", slotTypes: ["consultation"] }
+    ]
+  },
+  {
+    date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 5 days from now
+    slotsCount: 4,
+    hasSlots: true,
+    slots: [
+      { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+      { time: "11:00 AM", available: true, type: "consultation" as const, startTime: "11:00", endTime: "11:30", slotTypes: ["consultation"] },
+      { time: "2:00 PM", available: true, type: "follow-up" as const, startTime: "14:00", endTime: "14:30", slotTypes: ["follow-up"] },
+      { time: "3:30 PM", available: true, type: "consultation" as const, startTime: "15:30", endTime: "16:00", slotTypes: ["consultation"] }
+    ]
+  },
+  {
+    date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 week from now
+    slotsCount: 7,
+    hasSlots: true,
+    slots: [
+      { time: "9:00 AM", available: true, type: "consultation" as const, startTime: "09:00", endTime: "09:30", slotTypes: ["consultation"] },
+      { time: "9:30 AM", available: true, type: "consultation" as const, startTime: "09:30", endTime: "10:00", slotTypes: ["consultation"] },
+      { time: "10:30 AM", available: true, type: "follow-up" as const, startTime: "10:30", endTime: "11:00", slotTypes: ["follow-up"] },
+      { time: "11:30 AM", available: true, type: "consultation" as const, startTime: "11:30", endTime: "12:00", slotTypes: ["consultation"] },
+      { time: "2:30 PM", available: true, type: "follow-up" as const, startTime: "14:30", endTime: "15:00", slotTypes: ["follow-up"] },
+      { time: "3:00 PM", available: true, type: "consultation" as const, startTime: "15:00", endTime: "15:30", slotTypes: ["consultation"] },
+      { time: "4:30 PM", available: true, type: "follow-up" as const, startTime: "16:30", endTime: "17:00", slotTypes: ["follow-up"] }
+    ]
   }
 ]
 

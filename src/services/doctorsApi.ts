@@ -1,6 +1,6 @@
 // Centralized API service for doctors-related endpoints
 import { shouldUseMockData, devUtils } from '@/config/development'
-import { mockDoctors } from '@/data/mockDoctors'
+import { mockDoctors, mockTimeSlots, mockAvailableDates } from '@/data/mockDoctors'
 
 export interface Doctor {
   _id?: string
@@ -126,7 +126,16 @@ class DoctorsApiService {
     providerId: string
     noOfDays?: number
   }): Promise<AvailableDate[]> {
+    // Check if we should use mock data
+    if (shouldUseMockData()) {
+      devUtils.log('Using mock available dates data', params)
+      // Simulate API delay in development
+      await new Promise(resolve => setTimeout(resolve, 800))
+      return mockAvailableDates
+    }
+
     try {
+      devUtils.log('Fetching available dates from API', params)
       const { providerId, noOfDays = 7 } = params
       const url = `${this.baseUrl}/available-dates?provider_id=${providerId}&noOfDays=${noOfDays}`
       
