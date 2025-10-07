@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { getSeoData, urlFor } from "@/lib/sanity";
 import ClientHomePage from "./ClientHomePage";
 
+// Force dynamic rendering - this prevents static generation and caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Disable caching completely
+
 // Generate dynamic metadata from Sanity - runs on every request
 export async function generateMetadata(): Promise<Metadata> {
   try {

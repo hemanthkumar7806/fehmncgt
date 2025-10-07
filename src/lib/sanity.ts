@@ -468,7 +468,10 @@ export async function getSeoData() {
       }
     `;
     
-    const seoData = await client.fetch(query);
+    // Disable caching to ensure fresh data on every request
+    const seoData = await client.fetch(query, {}, {
+      next: { revalidate: 0 }
+    });
     return seoData;
   } catch (error) {
     console.error('Error fetching SEO data:', error);
