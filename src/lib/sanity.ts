@@ -460,11 +460,7 @@ export async function getSeoData() {
         canonicalUrl,
         noIndex,
         noFollow,
-        structuredData,
-        robotsTxt {
-          allow,
-          disallow
-        }
+        structuredData
       }
     `;
     

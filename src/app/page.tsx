@@ -6,23 +6,15 @@ import ClientHomePage from "./ClientHomePage";
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Disable caching completely
 
-// Generate dynamic metadata from Sanity - runs on every request
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const seoData = await getSeoData();
     
-    // Fallback data (from original SEO.tsx component)
-    const fallbackTitle = "Fibroid Care at Holy Name";
-    const fallbackDescription = "Leading fibroid treatment center offering expert care and minimally invasive procedures.";
-    const fallbackKeywords = ["fibroid treatment", "uterine fibroids", "women's health", "gynecology"];
-    
-    // Use Sanity data or fallback
-    const title = seoData?.title || fallbackTitle;
-    const description = seoData?.description || fallbackDescription;
-    const keywords = seoData?.keywords || fallbackKeywords;
+    const title = seoData?.title || "Fibroid Care at Holy Name";;
+    const description = seoData?.description || "Leading fibroid treatment center offering expert care and minimally invasive procedures.";;
+    const keywords = seoData?.keywords || ["fibroid treatment", "uterine fibroids", "women's health", "gynecology"];
     const canonicalUrl = seoData?.canonicalUrl || process.env.NEXT_PUBLIC_SITE_URL || 'https://hnmchealthcare.com';
     
-    // Generate image URLs
     const ogImageUrl = seoData?.ogImage?.asset?.url 
       ? urlFor(seoData.ogImage.asset).width(1200).height(630).url()
       : "/hnmc_logo.jpg";
@@ -92,10 +84,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
       // Core SEO
-      title: {
-        default: title,
-        template: "%s | HNMC Healthcare"
-      },
+      title,
       description,
       keywords,
       authors: [{ name: "HNMC Healthcare" }],
@@ -156,6 +145,7 @@ export async function generateMetadata(): Promise<Metadata> {
         canonical: '/',
       },
       applicationName: 'HNMC Healthcare',
+      
       appleWebApp: {
         capable: true,
         statusBarStyle: 'default',
@@ -172,12 +162,12 @@ export async function generateMetadata(): Promise<Metadata> {
         'mobile-web-app-capable': 'yes',
         'msapplication-TileColor': '#1e40af',
         'structured-data': JSON.stringify(structuredData),
+        'pdf-title': title,
       },
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
-    
-    // Return fallback metadata if Sanity fails
+  
     return {
       title: {
         default: "Fibroid Care at Holy Name",

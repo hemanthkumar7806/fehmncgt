@@ -12,7 +12,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Basic static metadata - dynamic metadata is handled at page level
 export const metadata: Metadata = {
   title: {
     template: "%s | HNMC Healthcare",
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
   applicationName: 'HNMC Healthcare',
 };
 
-// Separate viewport configuration (Next.js 15+)
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
