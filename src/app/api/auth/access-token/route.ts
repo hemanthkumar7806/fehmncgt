@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     const credentials = Buffer.from(`${authConfig.harmony.clientId}:${authConfig.harmony.clientKey}`).toString('base64')
     
     // Make request to Harmony EHR API
-    const response = await fetch(`${authConfig.harmony.baseUrl}/devmain/Account/oauth2/access_token`, {
+    const response = await fetch(`${authConfig.harmony.baseUrl}/Account/oauth2/access_token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

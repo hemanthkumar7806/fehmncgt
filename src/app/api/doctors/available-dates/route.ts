@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get available dates from Harmony EHR API
-    const endpoint = `/devmain/ExternalAppointmentBooking/ZocDoc/nextAvailable_slots/by_provider?provider_id=${providerId}&noOfDays=${noOfDays}`
+    const endpoint = `/ExternalAppointmentBooking/ZocDoc/nextAvailable_slots/by_provider?provider_id=${providerId}&noOfDays=${noOfDays}`
     
     const { data: slotsData, error } = await makeHarmonyRequest(endpoint, { method: 'GET' })
 

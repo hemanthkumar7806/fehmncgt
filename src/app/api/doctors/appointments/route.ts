@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 
     // Book appointment via Harmony EHR API
     const { data: bookingResponse, error } = await makeHarmonyRequest(
-      '/devmain/ExternalAppointmentBooking/ZocDoc/appointments',
+      '/ExternalAppointmentBooking/ZocDoc/appointments',
       { 
         method: 'POST',
         body: JSON.stringify(bookingPayload)

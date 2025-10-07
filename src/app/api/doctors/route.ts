@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     // Get doctors from Harmony EHR API
     const { data: doctorsData, error } = await makeHarmonyRequest(
-      '/devmain/ExternalAppointmentBooking/ZocDoc/FetchProviderSpeciality/207V00000X',
+      '/ExternalAppointmentBooking/ZocDoc/FetchProviderSpeciality/207V00000X',
       { method: 'GET' }
     )
 
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       credentials: doctor.providerCredential || 'MD',
       specialties: doctor.specialities?.map((spec: any) => spec.name) || [],
       experience: '15+ years', // Default since not provided by API
-      photo: null, // Will use default avatar
+      photo: doctor.providerPhoto || null, // Will use default avatar
       slug: {
         current: `${doctor.firstName.toLowerCase()}-${doctor.lastName.toLowerCase()}`
       },

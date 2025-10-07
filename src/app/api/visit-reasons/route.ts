@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Make the request to Harmony EHR visit reasons API
-    const { data: harmonyResponse, error } = await makeHarmonyRequest('/devmain/ExternalAppointmentBooking/ZocDoc/visit_reasons', {
+    const { data: harmonyResponse, error } = await makeHarmonyRequest('/ExternalAppointmentBooking/ZocDoc/visit_reasons', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
