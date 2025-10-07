@@ -450,13 +450,6 @@ export async function getSeoData() {
         },
         ogTitle,
         ogDescription,
-        twitterCard,
-        twitterImage {
-          asset-> {
-            _id,
-            url
-          }
-        },
         canonicalUrl,
         noIndex,
         noFollow,

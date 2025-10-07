@@ -18,10 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
     const ogImageUrl = seoData?.ogImage?.asset?.url 
       ? urlFor(seoData.ogImage.asset).width(1200).height(630).url()
       : "/hnmc_logo.jpg";
-      
-    const twitterImageUrl = seoData?.twitterImage?.asset?.url
-      ? urlFor(seoData.twitterImage.asset).width(1200).height(675).url()
-      : ogImageUrl;
 
     // Default structured data for healthcare organization
     const defaultStructuredData = {
@@ -109,14 +105,13 @@ export async function generateMetadata(): Promise<Metadata> {
         ],
       },
       
-      // Twitter
       twitter: {
         title: seoData?.ogTitle || title,
         description: seoData?.ogDescription || description,
-        card: (seoData?.twitterCard as any) || "summary_large_image",
+        card: "summary_large_image",
         images: [
           {
-            url: twitterImageUrl,
+            url: ogImageUrl,
             width: 1200,
             height: 630,
             alt: seoData?.ogTitle || title,
