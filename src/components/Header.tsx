@@ -104,8 +104,18 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
             {/* CTA Button */}
             {showCtaButton && (
               <a
-                href="https://www.zocdoc.com/wl/holyname/search?address=Teaneck%2C+NJ&after_5pm=false&before_10am=false&day_filter=AnyDay&dr_specialty=153&filters=%7B%7D&gender=-1&insurance_carrier=-1&insurance_plan=-1&language=-1&offset=0&parentSearchRequestId=2f0a8c4b-44d6-42f0-85cb-e05a0f442f80&reason_visit=2551&searchOriginator=SearchBar&searchQueryGuid=89fc74b0-ec9d-4dde-b352-3f1d0218fb5a&searchType=procedure&sees_children=false&sort_type=Default&visitType=inPersonAndVirtualVisits'"
-                target="_blank"
+                href="#experts"
+                onClick={(e) => {
+                  e.preventDefault()
+                  const element = document.getElementById('experts')
+                  if (element) {
+                    element.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'start',
+                      inline: 'nearest'
+                    })
+                  }
+                }}
                 className="inline-flex items-center space-x-1 sm:space-x-2 bg-secondary hover:bg-secondary-light text-white px-3 py-2 sm:px-4 rounded-lg font-medium transition-all duration-300 text-xs sm:text-sm"
               >
                 <Calendar size={14} className="sm:w-4 sm:h-4" />
