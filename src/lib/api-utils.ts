@@ -138,7 +138,7 @@ export async function getAccessToken(): Promise<{ token?: string; error?: NextRe
   try {
     const credentials = Buffer.from(`${authConfig.harmony.clientId}:${authConfig.harmony.clientKey}`).toString('base64')
     
-    const tokenResponse = await fetch(`${authConfig.harmony.baseUrl}/devmain/Account/oauth2/access_token`, {
+    const tokenResponse = await fetch(`${authConfig.harmony.baseUrl}/Account/oauth2/access_token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

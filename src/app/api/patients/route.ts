@@ -38,7 +38,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Make the request to Harmony EHR patient creation API
-    const { data: harmonyResponse, error } = await makeHarmonyRequest('/devmain/ExternalAppointmentBooking/ZocDoc/patients', {
+    const { data: harmonyResponse, error } = await makeHarmonyRequest('/ExternalAppointmentBooking/ZocDoc/patients', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
