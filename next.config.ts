@@ -11,14 +11,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/sanity/:path*',
-        destination: 'https://rl2j4kml.api.sanity.io/v2025-08-30/data/query/production/:path*',
-      },
-    ];
-  },
   async headers() {
     return [
       {

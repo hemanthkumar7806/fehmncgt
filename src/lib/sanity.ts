@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === 'development' && typeof window === 'undefined') {
 }
 
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rl2j4kml',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2025-08-30', // Updated to match your working URL
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   useCdn: false, // Set to false for development to avoid caching issues
   token: process.env.SANITY_TOKEN, // Optional: for private content
 })
