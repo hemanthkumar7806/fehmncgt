@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import { X, ChevronDown } from "lucide-react";
+import { createPortal } from "react-dom";
+import Image from "next/image";
+import { urlFor } from "@/lib/sanity";
 
 interface TextClampProps {
   content: string | any[];
@@ -15,24 +18,33 @@ interface TextClampProps {
   readMoreClassName?: string;
   isPortableText?: boolean;
   title?: string;
+  onReadMore?: () => void;
 }
 
 export default function TextClamp({
   content,
   maxLines = 3,
   className = "",
-  readMoreText = "Read more",
+  readMoreText = "Learn more",
   readLessText = "Read less",
   showReadMore = true,
   readMoreClassName = "",
   isPortableText = false,
   title = "Full Content",
+  onReadMore,
 }: TextClampProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleReadMore = () => {
-    if (isPortableText) {
+    if (onReadMore) {
+      onReadMore();
+    } else if (isPortableText) {
       setIsModalOpen(true);
     } else {
       setIsExpanded(true);
@@ -99,7 +111,24 @@ export default function TextClamp({
           <PortableText
             value={content}
             components={{
-              list: ({ children }) => <ul className="space-y-2">{children}</ul>,
+              types: {
+                image: ({ value }) => (
+                  <div className="my-4">
+                    <Image
+                      src={urlFor(value).width(800).height(600).url()}
+                      alt={'Image'}
+                      width={800}
+                      height={600}
+                      className="rounded-lg w-full h-auto"
+                    />
+                    {value.caption && (
+                      <p className="text-sm text-gray-600 mt-2 text-center italic">
+                        {value.caption}
+                      </p>
+                    )}
+                  </div>
+                ),
+              },
               block: {
                 normal: ({ children }) => <p className="mb-2">{children}</p>,
               },
@@ -119,14 +148,14 @@ export default function TextClamp({
         </button>
       )}
 
-      {/* Modal for PortableText */}
-      <AnimatePresence>
-        {isModalOpen && (
+      {/* Modal for PortableText - rendered outside component context using portal */}
+      {isModalOpen && isMounted && createPortal(
+        <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={handleCloseModal}
           >
             <motion.div
@@ -134,11 +163,16 @@ export default function TextClamp({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative w-full max-w-2xl max-h-[80vh] bg-white rounded-2xl shadow-2xl overflow-hidden"
+              className="relative bg-white rounded-2xl shadow-2xl overflow-hidden"
+              style={{ 
+                width: 'calc(100vw - 4rem)', 
+                height: 'calc(100vh - 4rem)',
+                margin: '2rem'
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gray-50">
+              <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
                 <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
                 <button
                   onClick={handleCloseModal}
@@ -149,39 +183,45 @@ export default function TextClamp({
               </div>
 
               {/* Content */}
-              <div className="p-6 overflow-y-auto max-h-[70vh]">
+              <div className="p-6 overflow-y-auto" style={{ height: 'calc(100vh - 10rem)' }}>
                 <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed">
                   {isPortableText ? (
                     <PortableText
                       value={content}
                       components={{
-                        listItem: ({ children }) => (
-                          <li className="flex items-start mb-4">
-                            <div className="w-3 h-3 bg-secondary rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <span className="text-hnmc-gray-700 text-lg leading-relaxed">
-                              {children}
-                            </span>
-                          </li>
-                        ),
-                        list: ({ children }) => (
-                          <ul className="space-y-3">{children}</ul>
-                        ),
-                        block: {
-                          normal: ({ children }) => (
-                            <p className="mb-4">{children}</p>
+                        types: {
+                          image: ({ value }) => (
+                            <div className="my-6 w-full md:w-[50%] mx-auto">
+                              <Image
+                                src={urlFor(value).width(1200).height(800).url()}
+                                alt={value.alt || 'Image'}
+                                width={1200}
+                                height={800}
+                                className="rounded-lg h-auto"
+                              />
+                              {value.caption && (
+                                <p className="text-sm text-gray-600 mt-2 text-center italic">
+                                  {value.caption}
+                                </p>
+                              )}
+                            </div>
                           ),
+                        },
+                        block: {
+                          normal: ({ children }) => <p className="mb-4 text-lg leading-relaxed">{children}</p>,
                         },
                       }}
                     />
                   ) : (
-                    <p className="text-gray-700 leading-relaxed">{content}</p>
+                    <p className="text-gray-700 leading-relaxed text-lg">{content}</p>
                   )}
                 </div>
               </div>
             </motion.div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }

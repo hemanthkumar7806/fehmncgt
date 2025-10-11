@@ -412,7 +412,22 @@
         "author": "Atul",
         "authorTitle": "Chennai",
         "profilePhoto": null,
-        "quote": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.",
+        "quote": [
+          {
+            "_key": "testimonial-1-quote",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "testimonial-1-text",
+                "_type": "span",
+                "marks": [],
+                "text": "Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "rating": 4
       },
       {
@@ -424,14 +439,44 @@
             "url": "https://cdn.sanity.io/images/rl2j4kml/production/10d76323a9dd99bbc12a887a9d547a03e8dc7553-380x380.png"
           }
         },
-        "quote": "\"(Placeholder: This center changed my life! The doctors were incredibly supportive and the treatment was effective.)\"",
+        "quote": [
+          {
+            "_key": "testimonial-2-quote",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "testimonial-2-text",
+                "_type": "span",
+                "marks": [],
+                "text": "This center changed my life! The doctors were incredibly supportive and the treatment was effective. I felt heard and cared for throughout my entire journey."
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "rating": 5
       },
       {
-        "author": "- Patient Name 2",
+        "author": "Patient Name 2",
         "authorTitle": "USA",
         "profilePhoto": null,
-        "quote": "\"(Placeholder: I received excellent care and felt truly heard. Highly recommend Holy Name Fibroid Center.)\"",
+        "quote": [
+          {
+            "_key": "testimonial-3-quote",
+            "_type": "block",
+            "children": [
+              {
+                "_key": "testimonial-3-text",
+                "_type": "span",
+                "marks": [],
+                "text": "I received excellent care and felt truly heard. The team at Holy Name Fibroid Center made my treatment experience comfortable and successful. Highly recommend!"
+              }
+            ],
+            "markDefs": [],
+            "style": "normal"
+          }
+        ],
         "rating": 5
       }
     ],

@@ -146,7 +146,7 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
               isPortableText={true}
               className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
               readMoreClassName={`${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
-              readMoreText="Read more"
+              readMoreText="Learn more"
               title={title}
             />
           </div>

@@ -100,7 +100,7 @@ export default function About({ about }: AboutProps) {
                   maxLines={4}
                   isPortableText={true}
                   className="text-lg text-hnmc-gray-600 leading-relaxed"
-                  readMoreText="Read more"
+                  readMoreText="Learn more"
                   title={aboutData.title || "About Us"}
                 />
               )}

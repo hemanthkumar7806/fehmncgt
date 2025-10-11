@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Star, Quote, User } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity";
+import TextClamp from "./ui/TextClamp";
+import TestimonialsModal from "./TestimonialsModal";
 
 export interface TestimonialItem {
   author?: string;
   authorTitle?: string;
-  quote?: string;
+  quote?: any[];
   rating?: number;
   profilePhoto?: {
     asset?: {
@@ -29,7 +32,23 @@ export default function Testimonials({
   subtitle,
   testimonialsList,
 }: TestimonialsProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTestimonialIndex, setSelectedTestimonialIndex] = useState(0);
+
   if (!testimonialsList || testimonialsList.length === 0) return null;
+
+  // Show only first 3 testimonials in the main view
+  const displayedTestimonials = testimonialsList.slice(0, 3);
+
+  const handleViewMore = (index: number) => {
+    setSelectedTestimonialIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const handleViewAll = () => {
+    setSelectedTestimonialIndex(0);
+    setIsModalOpen(true);
+  };
 
   return (
     <section className="py-20 px-6 md:px-12">
@@ -58,7 +77,7 @@ export default function Testimonials({
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonialsList.map((testimonial, idx) => (
+          {displayedTestimonials.map((testimonial, idx) => (
             <motion.div
               key={idx}
               className="group bg-white rounded-3xl shadow-lg p-8 transition-all duration-500 border border-gray-100 relative overflow-hidden h-full flex flex-col"
@@ -99,7 +118,19 @@ export default function Testimonials({
                 {/* Quote */}
                 <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative flex-1">
                   <span className="text-4xl text-[#01a69c]/30 absolute -top-2 -left-2">&quot;</span>
-                  <span className="relative z-10">{testimonial.quote}</span>
+                  <div className="relative z-10">
+                    {testimonial.quote && (
+                      <TextClamp
+                        content={testimonial.quote}
+                        maxLines={3}
+                        isPortableText={true}
+                        className="text-gray-700 leading-relaxed"
+                        readMoreText="Read more"
+                        title={`Testimonial from ${testimonial.author}`}
+                        onReadMore={() => handleViewMore(idx)}
+                      />
+                    )}
+                  </div>
                   <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
@@ -137,6 +168,32 @@ export default function Testimonials({
             </motion.div>
           ))}
         </div>
+
+        {/* View All Button */}
+        {testimonialsList.length > 3 && (
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <button
+              onClick={handleViewAll}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              View All Testimonials ({testimonialsList.length})
+            </button>
+          </motion.div>
+        )}
+
+        {/* Testimonials Modal */}
+        <TestimonialsModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          testimonials={testimonialsList}
+          initialIndex={selectedTestimonialIndex}
+        />
 
       </div>
     </section>
