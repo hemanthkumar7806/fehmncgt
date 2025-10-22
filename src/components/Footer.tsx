@@ -9,26 +9,13 @@ import {
 
 interface FooterProps {
   footer?: {
-    logo?: {
-      asset?: any;
-    };
-    description?: any[];
     socialLinks?: Array<{
       platform?: string;
       url?: string;
       showLink?: boolean;
     }>;
-    footerLinks?: Array<{
-      title?: string;
-      url?: string;
-      openInNewTab?: boolean;
-      showLink?: boolean;
-    }>;
     contactInfo?: {
-      phone?: string;
-      email?: string;
       address?: string;
-      showContactInfo?: boolean;
     };
     copyright?: string;
   } | null;

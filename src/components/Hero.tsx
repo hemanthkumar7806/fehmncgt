@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Calendar, Shield, Award } from 'lucide-react'
+import { ArrowRight, Calendar, Shield } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -23,23 +23,6 @@ interface HeroProps {
       link?: string
       showButton?: boolean
     }
-    stats?: Array<{
-      number?: string
-      label?: string
-    }>
-    rightContent?: {
-      title?: string
-      description?: string
-      achievements?: Array<{
-        text?: string
-      }>
-    }
-    floatingCards?: Array<{
-      title?: string
-      subtitle?: string
-      position?: string
-      showCard?: boolean
-    }>
     backgroundImage?: {
       asset?: any
     }
@@ -78,9 +61,6 @@ export default function Hero({ hero }: HeroProps) {
   const badge = hero?.badge
   const ctaButton = hero?.ctaButton
   const secondaryButton = hero?.secondaryButton
-  const stats = hero?.stats || []
-  const rightContent = hero?.rightContent
-  const floatingCards = hero?.floatingCards || []
   const backgroundImage = hero?.backgroundImage
 
   return (
@@ -169,105 +149,7 @@ export default function Hero({ hero }: HeroProps) {
             )}
           </motion.div>
 
-          {/* Stats - Hidden in simple layout but kept for schema compatibility */}
-          {stats.length > 0 && (
-            <motion.div 
-              className="grid grid-cols-3 gap-8 pt-12 border-t border-white/20 mt-12"
-              initial={{ opacity: 0 }}
-              animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              style={{ display: 'none' }} // Hidden but kept for schema
-            >
-              {stats.map((stat, index) => (
-                <motion.div 
-                  key={index}
-                  className="text-center"
-                  initial={{ opacity: 0 }}
-                  animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
-                >
-                  <div className="text-3xl font-bold text-white mb-1">{stat.number}</div>
-                  <div className="text-sm text-white/80">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
 
-          {/* Right Content - Hidden in simple layout but kept for schema compatibility */}
-          {rightContent && (
-            <motion.div 
-              className="relative mt-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              style={{ display: 'none' }} // Hidden but kept for schema
-            >
-              <div className="relative bg-white rounded-3xl p-8 pb-16 lg:p-12 lg:pb-16 shadow-xl z-5">
-                <div className="relative z-1 space-y-4">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl">
-                    <Award className="w-8 h-8 text-white" />
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-hnmc-gray-800">
-                    {rightContent?.title || 'Award-Winning Healthcare'}
-                  </h3>
-                  
-                  <p className="text-hnmc-gray-600 leading-relaxed">
-                    {rightContent?.description}
-                  </p>
-                  
-                  <div className="space-y-4">
-                    {(rightContent?.achievements || [
-                      { text: 'Joint Commission Accredited' },
-                      { text: 'Magnet® Recognition for Nursing' },
-                      { text: 'Top 100 Hospital Award' }
-                    ]).map((achievement, index) => (
-                      <div 
-                        key={index}
-                        className="flex items-center space-x-3"
-                      >
-                        <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                        <span className="text-sm text-hnmc-gray-700">{achievement.text}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Cards - Hidden in simple layout but kept for schema compatibility */}
-              {floatingCards.map((card, index) => {
-                if (!card.showCard) return null
-                
-                const positionClasses = card.position === 'top-right' 
-                  ? '-top-6 -right-6' 
-                  : '-bottom-6 -left-6'
-                
-                return (
-                  <motion.div 
-                    key={index}
-                    className={`absolute ${positionClasses} bg-white rounded-2xl shadow-lg p-4 border border-gray-100`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 ${card.position === 'top-right' ? 'bg-green-100' : 'bg-blue-100'} rounded-full flex items-center justify-center`}>
-                        {card.position === 'top-right' ? (
-                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        ) : (
-                          <Calendar className="w-5 h-5 text-blue-600" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-hnmc-gray-800">{card.title}</div>
-                        <div className="text-xs text-hnmc-gray-600">{card.subtitle}</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-          )}
         </div>
       </div>
 
