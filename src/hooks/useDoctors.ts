@@ -13,7 +13,7 @@ export interface UseDoctorsReturn {
 /**
  * React hook for fetching doctors data from Harmony EHR API
  */
-export function useDoctors(): UseDoctorsReturn {
+export function useDoctors(specialityCode?: string): UseDoctorsReturn {
   const [doctors, setDoctors] = useState<Doctor[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -21,13 +21,13 @@ export function useDoctors(): UseDoctorsReturn {
 
   const fetchDoctors = useCallback(async () => {
     const devMode = getDevelopmentMode()
-    devUtils.log('Fetching doctors', { useMockData: devMode.useMockData })
+    devUtils.log('Fetching doctors', { useMockData: devMode.useMockData, specialityCode })
     
     setIsLoading(true)
     setError(null)
 
     try {
-      const data = await doctorsApi.getDoctors()
+      const data = await doctorsApi.getDoctors(specialityCode)
       setDoctors(data)
       setCount(data.length)
       
@@ -43,7 +43,7 @@ export function useDoctors(): UseDoctorsReturn {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [specialityCode])
 
   // Auto-fetch on mount
   useEffect(() => {

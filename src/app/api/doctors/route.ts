@@ -19,9 +19,12 @@ export async function GET(request: NextRequest) {
       return validation.error
     }
 
+    const { searchParams } = new URL(request.url)
+    const specialityCode = searchParams.get('specialityCode') || '207V00000X'
+
     // Get doctors from Harmony EHR API
     const { data: doctorsData, error } = await makeHarmonyRequest(
-      '/ExternalAppointmentBooking/ZocDoc/FetchProviderSpeciality/207V00000X',
+      `/ExternalAppointmentBooking/ZocDoc/FetchProviderSpeciality/${specialityCode}`,
       { method: 'GET' }
     )
 

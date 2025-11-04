@@ -190,6 +190,11 @@ export const homepageQuery = `
         }
       }
     },
+    doctorsSpeciality {
+      title,
+      subtitle,
+      specialityCode
+    },
     topic {
       title,
       subtitle,
@@ -298,7 +303,7 @@ export const homepageQuery = `
       button {
         text,
         link
-      },
+    },
       showSection
     }
   }

@@ -91,18 +91,21 @@ export interface VisitReason {
 class DoctorsApiService {
   private baseUrl = '/api/doctors'
 
-  async getDoctors(): Promise<Doctor[]> {
+  async getDoctors(specialityCode?: string): Promise<Doctor[]> {
     // Check if we should use mock data
     if (shouldUseMockData()) {
-      devUtils.log('Using mock doctors data')
+      devUtils.log('Using mock doctors data', { specialityCode })
       // Simulate API delay in development
       await new Promise(resolve => setTimeout(resolve, 500))
       return mockDoctors
     }
 
     try {
-      devUtils.log('Fetching doctors from API')
-      const response = await fetch(this.baseUrl)
+      devUtils.log('Fetching doctors from API', { specialityCode })
+      const url = specialityCode 
+        ? `${this.baseUrl}?specialityCode=${encodeURIComponent(specialityCode)}`
+        : this.baseUrl
+      const response = await fetch(url)
       
       if (!response.ok) {
         throw new Error(`Failed to fetch doctors: ${response.status}`)

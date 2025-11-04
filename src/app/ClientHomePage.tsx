@@ -226,6 +226,11 @@ interface HomePageData {
       link?: string;
     };
   };
+  doctorsSpeciality?: {
+    title?: string;
+    subtitle?: string;
+    specialityCode?: string;
+  };
   testimonials?: {
     title?: string;
     subtitle?: string;
@@ -365,7 +370,11 @@ export default function ClientHomePage() {
             </section>
 
             <section id="dr-liberman">
-              <Experts />
+              <Experts
+                title={homePageData?.doctorsSpeciality?.title}
+                subtitle={homePageData?.doctorsSpeciality?.subtitle}
+                specialityCode={homePageData?.doctorsSpeciality?.specialityCode}
+              />
             </section>
 
             <section id="about-fibroids">

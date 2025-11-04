@@ -37,15 +37,13 @@ interface Doctor {
 }
 
 interface ExpertsProps {
-  doctors?: Doctor[]
   title?: string
   subtitle?: string
+  specialityCode?: string
 }
 
-export default function Experts({ doctors: propDoctors, title = 'Meet Our Experts', subtitle = 'Our team of specialized physicians is dedicated to providing the highest quality fibroid care' }: ExpertsProps) {
-  // Use API data or props - no fallback
-  const { doctors: apiDoctors, isLoading, error, refetch } = useDoctors()
-  const doctors = apiDoctors.length > 0 ? apiDoctors : (propDoctors || [])
+export default function Experts({ title, subtitle, specialityCode }: ExpertsProps) {
+  const { doctors, isLoading, error, refetch } = useDoctors(specialityCode)
   
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
   const [showAppointmentModal, setShowAppointmentModal] = useState(false)
@@ -89,12 +87,12 @@ export default function Experts({ doctors: propDoctors, title = 'Meet Our Expert
           viewport={{ once: true }}
         >
           <div className="flex items-center justify-center gap-4 mb-6">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{title}</h2>
+            {title && <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{title}</h2>}
             {isLoading && (
               <RefreshCw className="w-8 h-8 text-[#01a69c] animate-spin" />
             )}
           </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
+          {subtitle && <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>}
         </motion.div>
 
 
