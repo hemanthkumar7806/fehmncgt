@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PortableText } from "@portabletext/react";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 interface CTAProps {
   cta?: {
@@ -62,7 +62,7 @@ export default function CTA({ cta }: CTAProps) {
             viewport={{ once: true }}
           >
             {cta.description && 
-              <PortableText value={cta.description} />
+              <RichTextRenderer content={cta.description} />
             }
           </motion.div>
           

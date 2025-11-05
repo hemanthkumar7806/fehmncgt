@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import RichTextRenderer from "./ui/RichTextRenderer";
 import {
   Facebook,
   Twitter,
@@ -84,7 +84,7 @@ export default function Footer2({ footer }: FooterProps) {
             
             {footer.description && (
               <div className="max-w-md text-gray-300 mx-auto md:mx-0">
-                <PortableText value={footer.description} />
+                <RichTextRenderer content={footer.description} />
               </div>
             )}
           </div>

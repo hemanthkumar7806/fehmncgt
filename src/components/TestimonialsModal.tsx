@@ -6,7 +6,7 @@ import { X, Star, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity";
-import { PortableText } from "@portabletext/react";
+import RichTextRenderer from "./ui/RichTextRenderer";
 import { TestimonialItem } from "./Testimonials";
 
 interface TestimonialsModalProps {
@@ -140,13 +140,9 @@ export default function TestimonialsModal({
                       )}
                       <div className="text-sm text-gray-700 line-clamp-2">
                         {testimonial.quote && (
-                          <PortableText
-                            value={testimonial.quote}
-                            components={{
-                              block: {
-                                normal: ({ children }) => <span>{children}</span>,
-                              },
-                            }}
+                          <RichTextRenderer 
+                            content={testimonial.quote} 
+                            className="[&_p]:inline [&_p]:mb-0"
                           />
                         )}
                       </div>
@@ -258,35 +254,9 @@ export default function TestimonialsModal({
                         <div className="pl-6 md:pl-8 pr-6 md:pr-8">
                           {selectedTestimonial.quote && (
                             <div className="prose prose-base md:prose-lg max-w-none text-gray-700 leading-relaxed">
-                              <PortableText
-                                value={selectedTestimonial.quote}
-                                components={{
-                                  types: {
-                                    image: ({ value }) => (
-                                      <div className="my-6 md:my-8 w-full mx-auto">
-                                        <Image
-                                          src={urlFor(value).width(1200).height(800).url()}
-                                          alt="Testimonial Image"
-                                          width={1200}
-                                          height={800}
-                                          className="rounded-lg w-full h-auto shadow-lg"
-                                        />
-                                        {value.caption && (
-                                          <p className="text-sm text-gray-600 mt-3 text-center italic">
-                                            {value.caption}
-                                          </p>
-                                        )}
-                                      </div>
-                                    ),
-                                  },
-                                  block: {
-                                    normal: ({ children }) => (
-                                      <p className="mb-4 md:mb-6 text-base md:text-lg leading-relaxed">
-                                        {children}
-                                      </p>
-                                    ),
-                                  },
-                                }}
+                              <RichTextRenderer 
+                                content={selectedTestimonial.quote}
+                                className="[&_p]:mb-4 md:[&_p]:mb-6 [&_p]:text-base md:[&_p]:text-lg [&_p]:leading-relaxed"
                               />
                             </div>
                           )}

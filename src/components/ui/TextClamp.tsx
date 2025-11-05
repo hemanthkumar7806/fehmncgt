@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PortableText } from "@portabletext/react";
 import { X, ChevronDown } from "lucide-react";
 import { createPortal } from "react-dom";
-import Image from "next/image";
-import { urlFor } from "@/lib/sanity";
+import RichTextRenderer from "./RichTextRenderer";
 
 interface TextClampProps {
   content: string | any[];
@@ -108,32 +106,7 @@ export default function TextClamp({
         }}
       >
         {isPortableText ? (
-          <PortableText
-            value={content}
-            components={{
-              types: {
-                image: ({ value }) => (
-                  <div className="my-4">
-                    <Image
-                      src={urlFor(value).width(800).height(600).url()}
-                      alt={'Image'}
-                      width={800}
-                      height={600}
-                      className="rounded-lg w-full h-auto"
-                    />
-                    {value.caption && (
-                      <p className="text-sm text-gray-600 mt-2 text-center italic">
-                        {value.caption}
-                      </p>
-                    )}
-                  </div>
-                ),
-              },
-              block: {
-                normal: ({ children }) => <p className="mb-2">{children}</p>,
-              },
-            }}
-          />
+          <RichTextRenderer content={content as any[]} className="mb-2" />
         ) : (
           content
         )}
@@ -186,32 +159,7 @@ export default function TextClamp({
               <div className="p-6 overflow-y-auto" style={{ height: 'calc(100vh - 10rem)' }}>
                 <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed">
                   {isPortableText ? (
-                    <PortableText
-                      value={content}
-                      components={{
-                        types: {
-                          image: ({ value }) => (
-                            <div className="my-6 w-full md:w-[50%] mx-auto">
-                              <Image
-                                src={urlFor(value).width(1200).height(800).url()}
-                                alt={value.alt || 'Image'}
-                                width={1200}
-                                height={800}
-                                className="rounded-lg h-auto"
-                              />
-                              {value.caption && (
-                                <p className="text-sm text-gray-600 mt-2 text-center italic">
-                                  {value.caption}
-                                </p>
-                              )}
-                            </div>
-                          ),
-                        },
-                        block: {
-                          normal: ({ children }) => <p className="mb-4 text-lg leading-relaxed">{children}</p>,
-                        },
-                      }}
-                    />
+                    <RichTextRenderer content={content as any[]} className="text-lg leading-relaxed" />
                   ) : (
                     <p className="text-gray-700 leading-relaxed text-lg">{content}</p>
                   )}
