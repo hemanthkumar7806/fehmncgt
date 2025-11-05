@@ -142,8 +142,8 @@ export async function getAccessToken(): Promise<{ token?: string; error?: NextRe
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'client_id': authConfig.harmony.clientId,
-        'client_key': authConfig.harmony.clientKey,
+        'client_id': authConfig.harmony.clientId!,
+        'client_key': authConfig.harmony.clientKey!,
         'Authorization': `Basic ${credentials}`,
       },
       body: JSON.stringify({}),
@@ -200,6 +200,7 @@ export async function makeHarmonyRequest(
       },
     })
 
+    console.log('Harmony API response:', response)
     if (!response.ok) {
       const errorText = await response.text()
       console.error(`Harmony API error: ${response.status} - ${errorText}`)
