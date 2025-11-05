@@ -1,9 +1,9 @@
 "use client";
 
-import { PortableText } from "@portabletext/react";
 import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight, AlertCircle, Heart } from "lucide-react";
 import * as LucideIcons from "lucide-react";
+import RichTextRenderer from "@/components/ui/RichTextRenderer";
 
 export interface Topic {
   title?: string;
@@ -83,21 +83,11 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="max-w-5xl mx-auto text-center">
-                <div className="prose prose-lg max-w-none">
-                  <div className="text-hnmc-gray-700 leading-relaxed text-xl">
-                    <PortableText
-                      value={topic.mainContent}
-                      components={{
-                        block: {
-                          normal: ({ children }) => (
-                            <p className="mb-4">{children}</p>
-                          ),
-                        },
-                      }}
-                    />
-                  </div>
-                </div>
+              <div className="max-w-5xl mx-auto">
+                <RichTextRenderer 
+                  content={topic.mainContent} 
+                  className="text-hnmc-gray-700 leading-relaxed text-xl"
+                />
               </div>
             </motion.div>
           )}
@@ -123,24 +113,12 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                 </div>
 
                 <div className="bg-secondary/5 rounded-2xl p-6">
-                  <div className="prose prose-lg max-w-none">
-                    <PortableText
-                      value={topic.detailsList}
-                      components={{
-                        listItem: ({ children }) => (
-                          <li className="flex items-start mb-4">
-                            <div className="w-3 h-3 bg-secondary rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <span className="text-hnmc-gray-700 text-lg leading-relaxed">
-                              {children}
-                            </span>
-                          </li>
-                        ),
-                        list: ({ children }) => (
-                          <ul className="space-y-3">{children}</ul>
-                        ),
-                      }}
+                  {topic.detailsList && (
+                    <RichTextRenderer 
+                      content={topic.detailsList}
+                      className="text-hnmc-gray-700 text-lg leading-relaxed"
                     />
-                  </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -166,16 +144,12 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                   </div>
 
                   <div className="text-white mb-8 leading-relaxed text-lg">
-                    <PortableText
-                      value={topic.callToAction.description}
-                      components={{
-                        block: {
-                          normal: ({ children }) => (
-                            <p className="mb-4">{children}</p>
-                          ),
-                        },
-                      }}
-                    />
+                    {topic.callToAction.description && (
+                      <RichTextRenderer 
+                        content={topic.callToAction.description} 
+                        className="text-white"
+                      />
+                    )}
                   </div>
                   {topic.callToAction.link && (
                     <a

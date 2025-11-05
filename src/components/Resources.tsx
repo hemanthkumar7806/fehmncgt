@@ -142,7 +142,7 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
             </h3>
             <TextClamp
               content={description}
-              maxLines={3}
+              maxLines={5}
               isPortableText={true}
               className={`font-sans text-sm/[1.125rem] md:text-base/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
               readMoreClassName={`${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
