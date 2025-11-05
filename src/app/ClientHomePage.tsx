@@ -94,7 +94,7 @@ interface FooterData {
 interface HomePageData {
   hero?: {
     headline?: string;
-    subheadline?: string;
+    subheadline?: any[];
     badge?: {
       text?: string;
       showBadge?: boolean;

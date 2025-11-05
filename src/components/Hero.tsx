@@ -5,11 +5,12 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
+import RichTextRenderer from '@/components/ui/RichTextRenderer'
 
 interface HeroProps {
   hero?: {
     headline?: string
-    subheadline?: string
+    subheadline?: any[]
     badge?: {
       text?: string
       showBadge?: boolean
@@ -57,7 +58,7 @@ export default function Hero({ hero }: HeroProps) {
 
   // Fallback data
   const headline = hero?.headline || 'Comprehensive Fibroid Care at Holy Name'
-  const subheadline = hero?.subheadline || 'Experience personalized, multidisciplinary care with cutting-edge treatments and digital health solutions. Your journey to better health starts here.'
+  const subheadline = hero?.subheadline || []
   const badge = hero?.badge
   const ctaButton = hero?.ctaButton
   const secondaryButton = hero?.secondaryButton
@@ -84,7 +85,7 @@ export default function Hero({ hero }: HeroProps) {
 
       {/* Main Content - Centered Layout */}
       <div className="relative z-1 container mx-auto px-6 lg:px-8 py-20">
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+        <div className="flex flex-col items-center justify-center max-w-4xl mx-auto">
           {/* Badge */}
           {badge?.showBadge && (
             <motion.div 
@@ -100,7 +101,7 @@ export default function Hero({ hero }: HeroProps) {
 
           {/* Main Heading */}
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 text-center"
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -109,14 +110,17 @@ export default function Hero({ hero }: HeroProps) {
           </motion.h1>
 
           {/* Subheading */}
-          <motion.p 
+          <motion.div 
             className="text-xl md:text-2xl text-white/90 leading-relaxed mb-12 max-w-7xl"
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
-            {subheadline}
-          </motion.p>
+            {subheadline.length > 0 && <RichTextRenderer 
+              content={subheadline} 
+              className="[&_p]:text-xl md:[&_p]:text-2xl [&_p]:text-white/90 [&_p]:leading-relaxed [&_p]:mb-0"
+            />}
+          </motion.div>
           
           {/* Buttons */}
           <motion.div 

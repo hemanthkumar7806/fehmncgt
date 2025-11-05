@@ -5,11 +5,12 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
+import RichTextRenderer from '@/components/ui/RichTextRenderer'
 
 interface HeroProps {
   hero?: {
     headline?: string
-    subheadline?: string
+    subheadline?: any[]
     badge?: {
       text?: string
       showBadge?: boolean
@@ -74,7 +75,7 @@ export default function Hero2({ hero }: HeroProps) {
 
   // Fallback data
   const headline = hero?.headline || 'Expert Medical Care at Holy Name Medical Center'
-  const subheadline = hero?.subheadline || 'Experience compassionate, comprehensive healthcare with our team of specialists. From routine care to complex treatments, we\'re here for your health journey.'
+  const subheadline = hero?.subheadline || []
   const badge = hero?.badge
   const ctaButton = hero?.ctaButton
   const secondaryButton = hero?.secondaryButton
@@ -134,9 +135,12 @@ export default function Hero2({ hero }: HeroProps) {
               <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
                 {headline}
               </h1>
-              <p className="text-xl text-white/90 leading-relaxed max-w-xl">
-                {subheadline}
-              </p>
+              {subheadline.length > 0 && <div className="text-xl text-white/90 leading-relaxed max-w-xl">
+                <RichTextRenderer 
+                  content={subheadline} 
+                  className="[&_p]:text-xl [&_p]:text-white/90 [&_p]:leading-relaxed [&_p]:mb-0"
+                />
+              </div>}
             </motion.div>
             
             <motion.div 
