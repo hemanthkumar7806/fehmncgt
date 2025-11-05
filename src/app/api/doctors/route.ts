@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url)
-    const specialityCode = searchParams.get('specialityCode') || '207V00000X'
+    const specialityCode = searchParams.get('specialityCode')
 
     // Get doctors from Harmony EHR API
     const { data: doctorsData, error } = await makeHarmonyRequest(
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
       return error
     }
     
-    
+    console.log('doctorsData', JSON.stringify(doctorsData[0]))
     // Transform the data to match our component structure
     const transformedDoctors = doctorsData.map((doctor: any) => ({
       _id: doctor.id.toString(),
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       experience: '15+ years', // Default since not provided by API
       photo: doctor.providerPhoto || null, // Will use default avatar
       slug: {
-        current: `${doctor.firstName.toLowerCase()}-${doctor.lastName.toLowerCase()}`
+        current: `${doctor.firstName?.toLowerCase()}-${doctor.lastName?.toLowerCase()}`
       },
       // Additional data from API
       npi: doctor.npi,

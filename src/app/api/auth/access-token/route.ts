@@ -107,8 +107,8 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'client_id': authConfig.harmony.clientId,
-        'client_key': authConfig.harmony.clientKey,
+        'client_id': authConfig.harmony.clientId!,
+        'client_key': authConfig.harmony.clientKey!,
         'Authorization': `Basic ${credentials}`,
       },
       body: JSON.stringify({}), // Required for content-length
