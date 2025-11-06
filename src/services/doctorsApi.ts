@@ -1,6 +1,6 @@
 // Centralized API service for doctors-related endpoints
 import { shouldUseMockData, devUtils } from '@/config/development'
-import { mockDoctors, mockTimeSlots, mockAvailableDates } from '@/data/mockDoctors'
+import { mockDoctors, mockAvailableDates } from '@/data/mockDoctors'
 
 export interface Doctor {
   _id?: string

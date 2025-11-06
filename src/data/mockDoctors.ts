@@ -1,5 +1,5 @@
 // Mock data for development/testing purposes
-import { Doctor, TimeSlot, AvailableDate } from '@/services/doctorsApi'
+import { Doctor, AvailableDate } from '@/services/doctorsApi'
 
 export const mockDoctors: Doctor[] = [
   {
