@@ -135,10 +135,10 @@ export default function Services({ services }: ServicesProps) {
 
                         {/* Content */}
                         <div className="flex-1 flex flex-col">
-                          <h3 className="text-lg font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
+                          <h3 className="text-lg lg:text-xl font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
                             {service.title}
                           </h3>
-                          <p className="text-hnmc-gray-600 leading-relaxed flex-1 text-sm">
+                          <p className="text-hnmc-gray-600 leading-relaxed flex-1 text-sm lg:text-lg">
                             {service.description}
                           </p>
 

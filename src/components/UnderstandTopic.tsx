@@ -19,7 +19,7 @@ export interface Topic {
   };
   infoCards?: Array<{
     title?: string;
-    description?: string;
+    description?: any[];
     icon?: string;
     showCard?: boolean;
   }>;
@@ -86,7 +86,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
               <div className="max-w-5xl mx-auto">
                 <RichTextRenderer 
                   content={topic.mainContent} 
-                  className="text-hnmc-gray-700 leading-relaxed text-xl"
+                  className="text-hnmc-gray-700 leading-relaxed text-md lg:text-xl"
                 />
               </div>
             </motion.div>
@@ -116,7 +116,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                   {topic.detailsList && (
                     <RichTextRenderer 
                       content={topic.detailsList}
-                      className="text-hnmc-gray-700 text-lg leading-relaxed"
+                      className="text-hnmc-gray-700 text-sm md:text-lg leading-relaxed"
                     />
                   )}
                 </div>
@@ -143,7 +143,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                     </h3>
                   </div>
 
-                  <div className="text-white mb-8 leading-relaxed text-lg">
+                  <div className="text-white mb-8 leading-relaxed text-sm md:text-lg">
                     {topic.callToAction.description && (
                       <RichTextRenderer 
                         content={topic.callToAction.description} 
@@ -214,9 +214,12 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       {card.title}
                     </h4>
                   </div>
-                  <p className="text-hnmc-gray-600 leading-relaxed">
-                    {card.description}
-                  </p>
+                  {card.description && card.description.length > 0 ? (
+                    <RichTextRenderer 
+                      content={card.description} 
+                      className="text-hnmc-gray-600 leading-relaxed [&_p]:mb-0 text-sm md:text-lg"
+                    />
+                  ) : null}
                 </div>
               );
             })}

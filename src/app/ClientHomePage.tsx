@@ -132,18 +132,18 @@ interface HomePageData {
   topic?: {
     title?: string;
     subtitle?: string;
-    whatIsTopic?: any[];
-    commonSymptomsHeading?: string;
-    commonSymptoms?: any[];
-    doYouHaveSymptoms?: {
+    mainContent?: any[];
+    detailsHeading?: string;
+    detailsList?: any[];
+    callToAction?: {
       heading?: string;
       link?: string;
-      symptomsExist?: any[];
+      description?: any[];
       buttonText?: string;
     };
-    additionalInfo?: Array<{
+    infoCards?: Array<{
       title?: string;
-      description?: string;
+      description?: any[];
       icon?: string;
       showCard?: boolean;
     }>;
@@ -151,18 +151,18 @@ interface HomePageData {
   insurance?: {
     title?: string;
     subtitle?: string;
-    whatIsInsurance?: any[];
-    coverageDetailsHeading?: string;
-    coverageDetails?: any[];
-    contactForInsurance?: {
+    mainContent?: any[];
+    detailsHeading?: string;
+    detailsList?: any[];
+    callToAction?: {
       heading?: string;
       link?: string;
-      insuranceDescription?: any[];
+      description?: any[];
       buttonText?: string;
     };
-    additionalInfo?: Array<{
+    infoCards?: Array<{
       title?: string;
-      description?: string;
+      description?: any[];
       icon?: string;
       showCard?: boolean;
     }>;
@@ -210,36 +210,20 @@ interface HomePageData {
       showCard?: boolean;
     }>;
   };
-  doctors?: {
-    title?: string;
-    subtitle?: string;
-    featuredDoctors?: Array<{
-      _id?: string;
-      name?: string;
-      title?: string;
-      credentials?: string;
-      photo?: any;
-      slug?: any;
-    }>;
-    ctaButton?: {
-      text?: string;
-      link?: string;
-    };
-  };
   doctorsSpeciality?: {
     title?: string;
-    subtitle?: string;
+    subtitle?: any[];
     specialityCode?: string;
   };
   testimonials?: {
     title?: string;
     subtitle?: string;
     testimonialsList?: Array<{
-      name?: string;
-      role?: string;
-      content?: string;
+      quote?: any[];
+      author?: string;
+      authorTitle?: string;
       rating?: number;
-      photo?: any;
+      profilePhoto?: any;
     }>;
   };
   cta?: {
@@ -250,27 +234,6 @@ interface HomePageData {
       link?: string;
     };
     showSection?: boolean;
-  };
-  contact?: {
-    title?: string;
-    subtitle?: string;
-    phone?: string;
-    email?: string;
-    address?: string;
-    hours?: any;
-  };
-  footer?: {
-    logo?: {
-      asset?: {
-        _ref?: string;
-      };
-    };
-    description?: any[];
-    socialLinks?: Array<{
-      _key: string;
-      platform: string;
-      url?: string;
-    }>;
   };
 }
 

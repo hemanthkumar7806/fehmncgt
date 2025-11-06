@@ -9,6 +9,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import { useDoctors } from '@/hooks/useDoctors';
 import DoctorCard from './ui/DoctorCard'
 import AppointmentModal from './ui/AppointmentModal'
+import RichTextRenderer from './ui/RichTextRenderer'
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -38,7 +39,7 @@ interface Doctor {
 
 interface ExpertsProps {
   title?: string
-  subtitle?: string
+  subtitle?: any[]
   specialityCode?: string
 }
 
@@ -92,7 +93,14 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
               <RefreshCw className="w-8 h-8 text-[#01a69c] animate-spin" />
             )}
           </div>
-          {subtitle && <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">{subtitle}</p>}
+          {subtitle && subtitle.length > 0 && (
+            <div className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              <RichTextRenderer 
+                content={subtitle} 
+                className="[&_p]:text-xl [&_p]:text-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"
+              />
+            </div>
+          )}
         </motion.div>
 
 
