@@ -186,10 +186,10 @@ interface HomePageData {
   };
   services?: {
     title?: string;
-    subtitle?: string;
+    subtitle?: any[];
     servicesList?: Array<{
       title?: string;
-      description?: string;
+      description?: any[];
       icon?: string;
       link?: string;
     }>;
@@ -201,7 +201,7 @@ interface HomePageData {
   };
   resources?: {
     title?: string;
-    subtitle?: string;
+    subtitle?: any[];
     resourcesList?: Array<{
       title?: string;
       description?: any[];

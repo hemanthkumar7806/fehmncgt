@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import * as LucideIcons from "lucide-react";
 import { GlowingEffect } from "@/components/ui/GlowingCards";
 import TextClamp from "@/components/ui/TextClamp";
+import RichTextRenderer from "@/components/ui/RichTextRenderer";
 
 interface Resource {
   title?: string;
@@ -16,7 +17,7 @@ interface Resource {
 interface ResourcesProps {
   resources?: {
     title?: string;
-    subtitle?: string;
+    subtitle?: any[];
     resourcesList?: Resource[];
   };
 }
@@ -24,7 +25,6 @@ interface ResourcesProps {
 export default function Resources({ resources }: ResourcesProps) {
   const resourcesList = resources?.resourcesList || [];
   const title = resources?.title || "Educational Resources";
-  const subtitle = resources?.subtitle || "Comprehensive educational resources to guide you through your fibroid treatment journey";
 
   const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
     if (link && !link.startsWith("http")) {
@@ -71,9 +71,14 @@ export default function Resources({ resources }: ResourcesProps) {
           <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight">
             {title}
           </h2>
-          <p className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {subtitle}
-          </p>
+          {resources?.subtitle && resources.subtitle.length > 0 && (
+            <div className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed">
+              <RichTextRenderer
+                content={resources.subtitle}
+                className="[&_p]:text-xl [&_p]:text-hnmc-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"
+              />
+            </div>
+          )}
         </motion.div>
 
         {/* Resources Grid */}

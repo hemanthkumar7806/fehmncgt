@@ -7,13 +7,14 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
+import RichTextRenderer from "@/components/ui/RichTextRenderer";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 interface Service {
   title?: string;
-  description?: string;
+  description?: any[];
   icon?: string;
   link?: string;
 }
@@ -21,7 +22,7 @@ interface Service {
 interface ServicesProps {
   services?: {
     title?: string;
-    subtitle?: string;
+    subtitle?: any[];
     servicesList?: Service[];
     ctaButton?: {
       text?: string;
@@ -34,9 +35,6 @@ interface ServicesProps {
 export default function Services({ services }: ServicesProps) {
   const servicesList = services?.servicesList;
   const title = services?.title || "Our Medical Services";
-  const subtitle =
-    services?.subtitle ||
-    "Comprehensive healthcare solutions delivered by our team of expert medical professionals";
 
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -90,9 +88,14 @@ export default function Services({ services }: ServicesProps) {
           <h2 className="text-3xl lg:text-4xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
             {title}
           </h2>
-          <p className="text-lg text-hnmc-gray-600 max-w-2xl mx-auto leading-relaxed">
-            {subtitle}
-          </p>
+          {services?.subtitle && services.subtitle.length > 0 &&
+            <div className="text-lg text-hnmc-gray-600 max-w-2xl mx-auto leading-relaxed">
+              <RichTextRenderer
+                content={services.subtitle}
+                className="[&_p]:text-lg [&_p]:text-hnmc-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"
+              />
+            </div>
+          }
         </motion.div>
 
         {/* Services Grid */}
@@ -138,9 +141,14 @@ export default function Services({ services }: ServicesProps) {
                           <h3 className="text-lg lg:text-xl font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
                             {service.title}
                           </h3>
-                          <p className="text-hnmc-gray-600 leading-relaxed flex-1 text-sm lg:text-lg">
-                            {service.description}
-                          </p>
+                          {service.description && service.description.length > 0 &&
+                            <div className="text-hnmc-gray-600 leading-relaxed flex-1">
+                              <RichTextRenderer
+                                content={service.description}
+                                className="[&_p]:text-hnmc-gray-600 [&_p]:leading-relaxed [&_p]:text-sm lg:[&_p]:text-lg [&_p]:mb-0"
+                              />
+                            </div>
+                          }
 
                           {/* CTA Button */}
                           {service.link && (
