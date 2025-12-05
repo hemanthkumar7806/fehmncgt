@@ -90,10 +90,15 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
             {/* Contact Info (hidden on mobile) */}
             {showContactInfo && (
               <div className="hidden lg:flex items-center space-x-6">
-                <a href={`tel:${phone}`} className="flex items-center space-x-2 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  <Phone size={16} className="text-secondary" />
-                  <span className="text-hnmc-gray-700">{phone}</span>
-                </a>
+                {phone && (
+                  <a
+                    href={`tel:${phone.replace(/\s/g, '')}`}
+                    className="flex items-center space-x-2 text-sm text-hnmc-gray-700 hover:text-secondary transition-colors group"
+                  >
+                    <Phone size={16} className="text-secondary" />
+                    <span>{phone}</span>
+                  </a>
+                )}
                 <div className="flex items-center space-x-2 text-sm">
                   <Clock size={16} className="text-secondary" />
                   <span className="text-hnmc-gray-700">{emergencyText}</span>

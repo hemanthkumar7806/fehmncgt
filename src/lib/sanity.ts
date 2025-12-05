@@ -122,26 +122,13 @@ export const sidebarQuery = `
 // Query to fetch footer data
 export const footerQuery = `
   *[_type == "footer"][0] {
-    logo {
-      asset->
-    },
-    description,
     socialLinks[] {
       platform,
       url,
       showLink
     },
-    footerLinks[] {
-      title,
-      url,
-      openInNewTab,
-      showLink
-    },
     contactInfo {
-      phone,
-      email,
-      address,
-      showContactInfo
+      address
     },
     copyright
   }
@@ -165,23 +152,6 @@ export const homepageQuery = `
         text,
         link,
         showButton
-      },
-      stats[] {
-        number,
-        label
-      },
-      rightContent {
-        title,
-        description,
-        achievements[] {
-          text
-        }
-      },
-      floatingCards[] {
-        title,
-        subtitle,
-        position,
-        showCard
       },
       backgroundImage {
         asset-> {
@@ -493,29 +463,17 @@ export async function getHomePageById(id: string) {
           link,
           showButton
         },
-        stats[] {
-          number,
-          label
-        },
-        rightContent {
-          title,
-          description,
-          achievements[] {
-            text
-          }
-        },
-        floatingCards[] {
-          title,
-          subtitle,
-          position,
-          showCard
-        },
         backgroundImage {
           asset-> {
             _id,
             url
           }
         }
+      },
+      doctorsSpeciality {
+        title,
+        subtitle,
+        specialityCode
       },
       topic {
         title,

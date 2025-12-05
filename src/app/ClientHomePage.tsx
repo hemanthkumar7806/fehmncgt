@@ -67,26 +67,13 @@ interface SidebarData {
 }
 
 interface FooterData {
-  logo?: {
-    asset?: any;
-  };
-  description?: any[];
   socialLinks?: Array<{
     platform?: string;
     url?: string;
     showLink?: boolean;
   }>;
-  footerLinks?: Array<{
-    title?: string;
-    url?: string;
-    openInNewTab?: boolean;
-    showLink?: boolean;
-  }>;
   contactInfo?: {
-    phone?: string;
-    email?: string;
     address?: string;
-    showContactInfo?: boolean;
   };
   copyright?: string;
 }
@@ -108,23 +95,6 @@ interface HomePageData {
       link?: string;
       showButton?: boolean;
     };
-    stats?: Array<{
-      number?: string;
-      label?: string;
-    }>;
-    rightContent?: {
-      title?: string;
-      description?: string;
-      achievements?: Array<{
-        text?: string;
-      }>;
-    };
-    floatingCards?: Array<{
-      title?: string;
-      subtitle?: string;
-      position?: string;
-      showCard?: boolean;
-    }>;
     backgroundImage?: {
       asset?: any;
     };

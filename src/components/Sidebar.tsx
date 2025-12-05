@@ -140,13 +140,19 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
               <h3 className="text-sm font-semibold text-primary mb-3">Contact Info</h3>
               <div className="space-y-2 text-sm text-hnmc-gray-600">
                 {contactInfo.phone && (
-                  <a href={`tel:${contactInfo.phone}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
+                  <a
+                    href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
+                    className="flex items-center space-x-2 text-hnmc-gray-600 hover:text-secondary transition-colors group"
+                  >
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <span>{contactInfo.phone}</span>
                   </a>
                 )}
                 {contactInfo.email && (
-                  <a href={`mailto:${contactInfo.email}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="flex items-center space-x-2 text-hnmc-gray-600 hover:text-secondary transition-colors group"
+                  >
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <span>{contactInfo.email}</span>
                   </a>
