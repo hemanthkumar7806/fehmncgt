@@ -72,7 +72,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
             {/* Logo */}
             <div className="relative w-80 h-24 mb-8">
               <Image
-                src="/hnmc_logo.jpg"
+                src="/Holy-Name-100-Anniversary.png"
                 alt="Holy Name Medical Center"
                 fill
                 className="object-contain"

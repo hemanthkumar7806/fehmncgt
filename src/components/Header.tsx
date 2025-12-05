@@ -90,10 +90,10 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
             {/* Contact Info (hidden on mobile) */}
             {showContactInfo && (
               <div className="hidden lg:flex items-center space-x-6">
-                <div className="flex items-center space-x-2 text-sm">
+                <a href={`tel:${phone}`} className="flex items-center space-x-2 text-sm hover:text-secondary transition-colors cursor-pointer">
                   <Phone size={16} className="text-secondary" />
                   <span className="text-hnmc-gray-700">{phone}</span>
-                </div>
+                </a>
                 <div className="flex items-center space-x-2 text-sm">
                   <Clock size={16} className="text-secondary" />
                   <span className="text-hnmc-gray-700">{emergencyText}</span>
@@ -109,10 +109,13 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
                   e.preventDefault()
                   const element = document.getElementById('experts')
                   if (element) {
-                    element.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'start',
-                      inline: 'nearest'
+                    const headerHeight = 100
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                    const offsetPosition = elementPosition - headerHeight
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
                     })
                   }
                 }}

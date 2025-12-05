@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar } from 'lucide-react'
+import { Calendar, Phone, Mail, MapPin, Stethoscope, Award, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 
 interface Doctor {
@@ -12,6 +12,7 @@ interface Doctor {
   specialties?: string[]
   experience?: string
   photo?: any
+  profileLink?: string | null
   npi?: string
   contactInfo?: {
     phone?: string
@@ -46,10 +47,10 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
         <div className="relative bg-[#093b60] p-4">
           <div className="text-center">
             <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden shadow-lg">
-              {index === 0 ? (
+              {doctor.photo ? (
                 <Image
-                  src="/dr_eric_liberman.webp"
-                  alt={doctor.name || 'Dr. Eric Liberman'}
+                  src={doctor.photo}
+                  alt={doctor.name || 'Doctor'}
                   width={96}
                   height={96}
                   className="w-full h-full object-cover object-top rounded-full"
@@ -60,9 +61,21 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                 </span>
               )}
             </div>
-            <h3 className="text-lg font-bold text-white mb-1">{doctor.name || 'Doctor'}</h3>
-            <p className="text-white/90 text-sm mb-1">{doctor.title || 'Specialist'}</p>
-            <p className="text-white/80 text-xs">{doctor.credentials || 'MD'}</p>
+            {doctor.profileLink ? (
+              <a 
+                href={doctor.profileLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lg font-bold text-white mb-1 hover:text-white/90 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>{doctor.name || ''}</span>
+                <ExternalLink size={16} className="flex-shrink-0" />
+              </a>
+            ) : (
+              <h3 className="text-lg font-bold text-white mb-1">{doctor.name || ''}</h3>
+            )}
+            {doctor.title && <p className="text-white/90 text-sm mb-1">{doctor.title}</p>}
+            {doctor.credentials && <p className="text-white/80 text-xs">{doctor.credentials}</p>}
           </div>
         </div>
 
@@ -71,8 +84,8 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           {/* Specialties */}
           {doctor.specialties && doctor.specialties.length > 0 && (
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center">
-                <div className="w-1.5 h-1.5 bg-[#093b60] rounded-full mr-2"></div>
+              <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center gap-2">
+                <Stethoscope size={16} className="text-[#01a69c]" />
                 Specialties
               </h4>
               <div className="flex flex-wrap gap-1">
@@ -91,29 +104,36 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           )}
 
           {/* Experience */}
-          <div className="mb-4">
-            <div className="flex items-center text-sm text-gray-600">
-              <span className="w-2 h-2 bg-[#093b60] rounded-full mr-2"></span>
-              <span>{doctor.experience}</span>
+          {doctor.experience && (
+            <div className="mb-4">
+              <div className="flex items-center text-sm text-gray-600 gap-2">
+                <Award size={16} className="text-[#01a69c] flex-shrink-0" />
+                <span>Experience: {doctor.experience}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Contact Info */}
           {doctor.contactInfo && (
             <div className="mb-4">
-              <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center">
-                <div className="w-1.5 h-1.5 bg-[#093b60] rounded-full mr-2"></div>
-                Contact
-              </h4>
-              <div className="text-xs text-gray-600 space-y-1">
+              <div className="text-xs text-gray-600 space-y-2">
                 {doctor.contactInfo.phone && (
-                  <p>📞 {doctor.contactInfo.phone}</p>
+                  <a href={`tel:${doctor.contactInfo.phone}`} className="flex items-center gap-2 hover:text-[#01a69c] transition-colors cursor-pointer">
+                    <Phone size={14} className="text-[#01a69c] flex-shrink-0" />
+                    <span>{doctor.contactInfo.phone}</span>
+                  </a>
                 )}
                 {doctor.contactInfo.email && (
-                  <p>✉️ {doctor.contactInfo.email}</p>
+                  <a href={`mailto:${doctor.contactInfo.email}`} className="flex items-center gap-2 hover:text-[#01a69c] transition-colors cursor-pointer">
+                    <Mail size={14} className="text-[#01a69c] flex-shrink-0" />
+                    <span className="truncate">{doctor.contactInfo.email}</span>
+                  </a>
                 )}
                 {doctor.contactInfo.addressLine1 && (
-                  <p>📍 {doctor.contactInfo.addressLine1}, {doctor.contactInfo.city}, {doctor.contactInfo.state}</p>
+                  <div className="flex items-start gap-2">
+                    <MapPin size={14} className="text-[#01a69c] flex-shrink-0 mt-0.5" />
+                    <span>{doctor.contactInfo.addressLine1}, {doctor.contactInfo.city}, {doctor.contactInfo.state}</span>
+                  </div>
                 )}
               </div>
             </div>

@@ -42,7 +42,7 @@ export default function SEO({
   // Generate image URLs
   const ogImageUrl = seoData?.ogImage?.asset?.url 
     ? urlFor(seoData.ogImage.asset).width(1200).height(630).url()
-    : "/hnmc_logo.jpg";
+    : "/Holy-Name-100-Anniversary.png";
     
   const twitterImageUrl = seoData?.twitterImage?.asset?.url
     ? urlFor(seoData.twitterImage.asset).width(1200).height(675).url()
@@ -111,7 +111,9 @@ export default function SEO({
     try {
       structuredData = JSON.parse(seoData.structuredData);
     } catch (e) {
-      console.error("Error parsing structured data:", e);
+      console.error("Error parsing structured data from Sanity CMS:", e);
+      console.error("Invalid JSON received:", seoData?.structuredData?.substring(0, 200) + "...");
+      console.log("Using default structured data instead");
       structuredData = defaultStructuredData;
     }
   }

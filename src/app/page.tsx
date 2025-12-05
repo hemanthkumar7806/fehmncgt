@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     
     const ogImageUrl = seoData?.ogImage?.asset?.url 
       ? urlFor(seoData.ogImage.asset).width(1200).height(630).url()
-      : "/hnmc_logo.jpg";
+      : "/Holy-Name-100-Anniversary.png";
 
     // Default structured data for healthcare organization
     const defaultStructuredData = {
@@ -71,9 +71,11 @@ export async function generateMetadata(): Promise<Metadata> {
     let structuredData = defaultStructuredData;
     if (seoData?.structuredData) {
       try {
-        structuredData = JSON.parse(seoData.structuredData);
+        structuredData = JSON.parse(seoData?.structuredData);
       } catch (e) {
-        console.error("Error parsing structured data:", e);
+        console.error("Error parsing structured data from Sanity CMS:", e);
+        console.error("Invalid JSON received:", seoData?.structuredData?.substring(0, 200) + "...");
+        console.log("Using default structured data instead");
         structuredData = defaultStructuredData;
       }
     }

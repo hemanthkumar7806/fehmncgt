@@ -57,10 +57,13 @@ export default function Services({ services }: ServicesProps) {
       e.preventDefault();
       const element = document.getElementById(link.replace("#", ""));
       if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-          inline: "nearest",
+        const headerHeight = 100;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
         });
       }
     }

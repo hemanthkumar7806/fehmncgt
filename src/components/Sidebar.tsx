@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import * as LucideIcons from 'lucide-react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
@@ -30,6 +31,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps) {
+  const [activeIndex, setActiveIndex] = useState<number>(0)
+
   // Function to get Lucide icon by name
   const getIcon = (iconName: string) => {
     // Convert kebab-case to PascalCase (e.g., 'credit-card' -> 'CreditCard')
@@ -51,11 +54,20 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
   const logo = data?.logo?.asset ? urlFor(data.logo.asset).url() : '/holy_name_logo.jpg'
   const contactInfo = data?.contactInfo
 
-  const handleLinkClick = (item: any) => {
+  const handleLinkClick = (item: any, index: number) => {
+    setActiveIndex(index)
     if (item.linkType === 'internal' && item.internalSection) {
       const element = document.getElementById(item.internalSection)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        // Get header height and add some padding
+        const headerHeight = 100 // Approximate fixed header height
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+        const offsetPosition = elementPosition - headerHeight
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
       }
     } else if (item.linkType === 'external' && item.externalUrl) {
       if (item.openInNewTab) {
@@ -102,11 +114,16 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
           <nav className="space-y-2">
             {menuItems?.map((item, index) => {
               const IconComponent = getIcon(item.icon || 'home')
+              const isActive = activeIndex === index
               return (
                 <button
                   key={`${item.label}-${index}`}
-                  onClick={() => handleLinkClick(item)}
-                  className="w-full text-left block p-3 rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 text-primary font-medium"
+                  onClick={() => handleLinkClick(item, index)}
+                  className={`w-full text-left block p-3 rounded-lg transition-colors duration-200 font-medium ${
+                    isActive 
+                      ? 'bg-primary text-white' 
+                      : 'text-primary hover:bg-primary hover:text-white'
+                  }`}
                 >
                   <div className="flex items-center space-x-3">
                     <IconComponent size={20} />
@@ -123,16 +140,16 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
               <h3 className="text-sm font-semibold text-primary mb-3">Contact Info</h3>
               <div className="space-y-2 text-sm text-hnmc-gray-600">
                 {contactInfo.phone && (
-                  <div className="flex items-center space-x-2">
+                  <a href={`tel:${contactInfo.phone}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <span>{contactInfo.phone}</span>
-                  </div>
+                  </a>
                 )}
                 {contactInfo.email && (
-                  <div className="flex items-center space-x-2">
+                  <a href={`mailto:${contactInfo.email}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <span>{contactInfo.email}</span>
-                  </div>
+                  </a>
                 )}
                 {contactInfo.address && (
                   <div className="flex items-center space-x-2">

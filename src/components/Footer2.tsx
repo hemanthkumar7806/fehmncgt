@@ -56,10 +56,13 @@ export default function Footer2({ footer }: FooterProps) {
       e.preventDefault()
       const element = document.getElementById(link.replace('#', ''))
       if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest'
+        const headerHeight = 100
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+        const offsetPosition = elementPosition - headerHeight
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
         })
       }
     }
@@ -118,16 +121,16 @@ export default function Footer2({ footer }: FooterProps) {
               <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
               <div className="space-y-3">
                 {footer.contactInfo.phone && (
-                  <div className="flex items-center justify-center md:justify-start gap-2 text-gray-300">
+                  <a href={`tel:${footer.contactInfo.phone}`} className="flex items-center justify-center md:justify-start gap-2 text-gray-300 hover:text-white transition-colors cursor-pointer">
                     <Phone className="w-4 h-4" />
                     <span>{footer.contactInfo.phone}</span>
-                  </div>
+                  </a>
                 )}
                 {footer.contactInfo.email && (
-                  <div className="flex items-center justify-center md:justify-start gap-2 text-gray-300">
+                  <a href={`mailto:${footer.contactInfo.email}`} className="flex items-center justify-center md:justify-start gap-2 text-gray-300 hover:text-white transition-colors cursor-pointer">
                     <Mail className="w-4 h-4" />
                     <span>{footer.contactInfo.email}</span>
-                  </div>
+                  </a>
                 )}
                 {footer.contactInfo.address && (
                   <div className="flex items-center justify-center md:justify-start gap-2 text-gray-300">

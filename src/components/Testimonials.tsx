@@ -80,15 +80,12 @@ export default function Testimonials({
           {displayedTestimonials.map((testimonial, idx) => (
             <motion.div
               key={idx}
-              className="group bg-white rounded-3xl shadow-lg p-8 transition-all duration-500 border border-gray-100 relative overflow-hidden h-full flex flex-col"
+              className="bg-white rounded-3xl shadow-lg p-8 relative overflow-hidden h-full flex flex-col"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -8 }}
             >
-              {/* Background accent */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#01a69c]/10 to-[#093b60]/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-1 flex flex-col h-full">
                 {/* Quote Icon */}
@@ -162,8 +159,6 @@ export default function Testimonials({
                   </div>
                 </div>
 
-                {/* Hover effect border */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-[#01a69c]/20 transition-colors duration-500"></div>
               </div>
             </motion.div>
           ))}
@@ -180,7 +175,7 @@ export default function Testimonials({
           >
             <button
               onClick={handleViewAll}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl"
             >
               View All Testimonials ({testimonialsList.length})
             </button>

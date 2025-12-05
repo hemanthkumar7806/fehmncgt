@@ -23,6 +23,7 @@ interface Doctor {
   specialties?: string[]
   experience?: string
   photo?: any
+  profileLink?: string | null
   npi?: string
   contactInfo?: {
     phone?: string
