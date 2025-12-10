@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
+import HeroContentSection from "@/components/HeroContentSection";
 import Experts from "@/components/Experts";
 import Services from "@/components/Services";
 import About from "@/components/About";
@@ -300,6 +301,10 @@ export default function ClientHomePage() {
           >
             <section id="home">
               <Hero hero={homePageData?.hero} />
+            </section>
+
+            <section id="hero-content">
+              <HeroContentSection hero={homePageData?.hero} />
             </section>
 
             <section id="dr-liberman">

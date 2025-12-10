@@ -92,7 +92,7 @@ export default function Services({ services }: ServicesProps) {
             {title}
           </h2>
           {services?.subtitle && services.subtitle.length > 0 &&
-            <div className="text-lg text-hnmc-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <div className="text-lg text-hnmc-gray-600 max-w-2xl mx-auto leading-relaxed font-body">
               <RichTextRenderer
                 content={services.subtitle}
                 className="[&_p]:text-lg [&_p]:text-hnmc-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"

@@ -75,7 +75,7 @@ export default function Resources({ resources }: ResourcesProps) {
             {title}
           </h2>
           {resources?.subtitle && resources.subtitle.length > 0 && (
-            <div className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <div className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed font-body">
               <RichTextRenderer
                 content={resources.subtitle}
                 className="[&_p]:text-xl [&_p]:text-hnmc-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"

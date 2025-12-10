@@ -15,7 +15,7 @@ export default function RichTextRenderer({ content, className = "" }: RichTextRe
   const components: PortableTextComponents = {
     block: {
       normal: ({ children }) => (
-        <p className="mb-4">{children}</p>
+        <p className="mb-4 font-body">{children}</p>
       ),
       
       h1: ({ children }) => (
@@ -32,22 +32,22 @@ export default function RichTextRenderer({ content, className = "" }: RichTextRe
       ),
       
       blockquote: ({ children }) => (
-        <blockquote className="border-l-4 border-primary pl-6 py-2 italic mb-6 bg-gray-50 rounded-r-lg">
+        <blockquote className="border-l-4 border-primary pl-6 py-2 italic mb-6 bg-gray-50 rounded-r-lg font-body">
           {children}
         </blockquote>
       ),
       
       textLeft: ({ children }) => (
-        <p className="mb-4 text-left">{children}</p>
+        <p className="mb-4 text-left font-body">{children}</p>
       ),
       textCenter: ({ children }) => (
-        <p className="mb-4 text-center">{children}</p>
+        <p className="mb-4 text-center font-body">{children}</p>
       ),
       textRight: ({ children }) => (
-        <p className="mb-4 text-right">{children}</p>
+        <p className="mb-4 text-right font-body">{children}</p>
       ),
       textJustify: ({ children }) => (
-        <p className="mb-4 text-justify">{children}</p>
+        <p className="mb-4 text-justify font-body">{children}</p>
       ),
     },
 
@@ -62,10 +62,10 @@ export default function RichTextRenderer({ content, className = "" }: RichTextRe
 
     listItem: {
       bullet: ({ children }) => (
-        <li className="leading-relaxed">{children}</li>
+        <li className="leading-relaxed font-body">{children}</li>
       ),
       number: ({ children }) => (
-        <li className="leading-relaxed">{children}</li>
+        <li className="leading-relaxed font-body">{children}</li>
       ),
     },
 

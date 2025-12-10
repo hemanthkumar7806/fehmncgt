@@ -69,7 +69,7 @@ export default function Testimonials({
             </div>
           )}
           {subtitle && (
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-body">
               {subtitle}
             </p>
           )}
@@ -131,32 +131,55 @@ export default function Testimonials({
                   <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
-                <div className="flex items-center mt-auto">
-                  <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                    {testimonial.profilePhoto?.asset?.url ? (
-                      <Image
-                        src={urlFor(testimonial.profilePhoto.asset).url()}
-                        alt={testimonial.author || "Profile"}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-left">
-                    <p className="font-bold text-gray-900 text-lg">
-                      {testimonial.author}
-                    </p>
-                    {testimonial.authorTitle && (
-                      <p className="text-sm text-[#01a69c] font-medium">
-                        {testimonial.authorTitle}
+                <div className="mt-auto">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                      {testimonial.profilePhoto?.asset?.url ? (
+                        <Image
+                          src={urlFor(testimonial.profilePhoto.asset).url()}
+                          alt={testimonial.author || "Profile"}
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-full flex items-center justify-center">
+                          <User className="w-6 h-6 text-white" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-left flex-1">
+                      <p className="font-bold text-gray-900 text-lg">
+                        {testimonial.author}
                       </p>
-                    )}
+                      {testimonial.authorTitle && (
+                        <p className="text-sm text-[#01a69c] font-medium">
+                          {testimonial.authorTitle}
+                        </p>
+                      )}
+                    </div>
                   </div>
+                  
+                  {/* Read Full Story Button */}
+                  <button
+                    onClick={() => handleViewMore(idx)}
+                    className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#01a69c] to-[#093b60] text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
+                  >
+                    <span>Read full story</span>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
                 </div>
 
               </div>

@@ -95,7 +95,7 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
             )}
           </div>
           {subtitle && subtitle.length > 0 && (
-            <div className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <div className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-body">
               <RichTextRenderer 
                 content={subtitle} 
                 className="[&_p]:text-xl [&_p]:text-gray-600 [&_p]:leading-relaxed [&_p]:mb-0"

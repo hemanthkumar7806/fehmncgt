@@ -69,7 +69,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
           </h2>
         )}
         {topic.subtitle && (
-          <p className="text-xl text-primary font-medium max-w-3xl mx-auto">
+          <p className="text-xl text-primary font-medium max-w-3xl mx-auto font-body">
             {topic.subtitle}
           </p>
         )}
@@ -121,6 +121,22 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       content={topic.detailsList}
                       className="text-hnmc-gray-700 text-sm md:text-lg leading-relaxed"
                     />
+                  )}
+                  
+                  {/* Pay Your Bill Button - Show only for Insurance & Billing section */}
+                  {(topic.detailsHeading?.toLowerCase().includes("billing") || 
+                    topic.title?.toLowerCase().includes("insurance")) && (
+                    <div className="mt-6">
+                      <a
+                        href="https://www.holyname.org/patients-visitors/pay-your-bill"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                      >
+                        <span>Pay your bill</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    </div>
                   )}
                 </div>
               </motion.div>
