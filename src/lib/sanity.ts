@@ -139,6 +139,7 @@ export const homepageQuery = `
   *[_type == "homePage"][0] {
     hero {
       headline,
+      highlightedTexts,
       subheadline,
       badge {
         text,
@@ -449,6 +450,7 @@ export async function getHomePageById(id: string) {
     const query = `*[_id == $id][0] {
       hero {
         headline,
+        highlightedTexts,
         subheadline,
         badge {
           text,

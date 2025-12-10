@@ -82,6 +82,7 @@ interface FooterData {
 interface HomePageData {
   hero?: {
     headline?: string;
+    highlightedTexts?: string[];
     subheadline?: any[];
     badge?: {
       text?: string;
