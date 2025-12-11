@@ -9,7 +9,7 @@ import React from 'react';
 export function renderTextWithHighlights(
   text: string,
   highlights: string[] = []
-): string | React.ReactElement[] {
+): React.ReactNode {
   if (!highlights || highlights.length === 0 || !text) {
     return text;
   }
