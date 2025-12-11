@@ -162,6 +162,11 @@ interface HomePageData {
       label?: string;
       icon?: string;
     }>;
+    storyButton?: {
+      text?: string;
+      link?: string;
+      showButton?: boolean;
+    };
   };
   services?: {
     title?: string;

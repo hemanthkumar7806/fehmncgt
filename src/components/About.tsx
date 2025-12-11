@@ -28,6 +28,11 @@ interface AboutProps {
       label?: string;
       icon?: string;
     }>;
+    storyButton?: {
+      text?: string;
+      link?: string;
+      showButton?: boolean;
+    };
   };
 }
 
@@ -107,32 +112,34 @@ export default function About({ about }: AboutProps) {
                 />
               )}
               
-              {/* Read Full Story Button */}
-              <motion.a
-                href="https://www.holyname.org/patientstories/story-details.aspx?story=166"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <span>Read full story</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* Story Button */}
+              {aboutData?.storyButton?.showButton !== false && aboutData?.storyButton?.link && (
+                <motion.a
+                  href={aboutData.storyButton.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                  viewport={{ once: true }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </motion.a>
+                  <span>{aboutData.storyButton.text || "Read full story"}</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </motion.a>
+              )}
             </motion.div>
           </motion.div>
 

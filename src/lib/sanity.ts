@@ -233,6 +233,11 @@ export const homepageQuery = `
         number,
         label,
         icon
+      },
+      storyButton {
+        text,
+        link,
+        showButton
       }
     },
     services {
