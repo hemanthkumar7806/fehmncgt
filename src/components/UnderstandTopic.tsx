@@ -135,7 +135,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                         href="https://www.holyname.org/patients-visitors/pay-your-bill"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                        className="inline-flex items-center gap-2 bg-secondary text-white px-6 py-3 rounded-xl font-semibold hover:bg-secondary/90 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
                       >
                         <span>Pay your bill</span>
                         <ArrowRight className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
             {/* CTA Section */}
             {topic.callToAction && (
               <motion.div
-                className="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 lg:p-10 text-white relative overflow-hidden"
+                className="bg-secondary rounded-3xl p-8 lg:p-10 text-white relative overflow-hidden"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}

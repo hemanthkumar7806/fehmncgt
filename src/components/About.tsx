@@ -194,7 +194,7 @@ export default function About({ about }: AboutProps) {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                    <div className="w-full h-full bg-secondary/10 flex items-center justify-center">
                       <div className="text-center">
                         <div className="w-24 h-24 bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
                           <Stethoscope className="w-12 h-12 text-white" />
@@ -233,7 +233,7 @@ export default function About({ about }: AboutProps) {
                   <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-all duration-300">
                     <IconComponent className="w-8 h-8 text-secondary" />
                   </div>
-                  <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                  <div className="text-3xl lg:text-4xl font-bold text-secondary mb-2">
                     {stat.number}
                   </div>
                   <div className="text-hnmc-gray-600 font-medium">{stat.label}</div>

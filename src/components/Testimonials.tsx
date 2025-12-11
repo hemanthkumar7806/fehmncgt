@@ -92,7 +92,7 @@ export default function Testimonials({
               
               <div className="relative z-1 flex flex-col h-full">
                 {/* Quote Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-secondary to-primary rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
+                <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
                   <Quote className="w-8 h-8 text-white" />
                 </div>
 
@@ -146,7 +146,7 @@ export default function Testimonials({
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-secondary to-primary rounded-full flex items-center justify-center">
+                        <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center">
                           <User className="w-6 h-6 text-white" />
                         </div>
                       )}
@@ -182,7 +182,7 @@ export default function Testimonials({
           >
             <button
               onClick={handleViewAll}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-2xl"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-white font-semibold rounded-2xl hover:bg-secondary/90 transition-colors"
             >
               View All Testimonials ({testimonialsList.length})
             </button>

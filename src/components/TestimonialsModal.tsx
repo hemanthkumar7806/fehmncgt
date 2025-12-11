@@ -110,7 +110,7 @@ export default function TestimonialsModal({
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                            <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center">
                               <User className="w-5 h-5 text-white" />
                             </div>
                           )}
@@ -189,7 +189,7 @@ export default function TestimonialsModal({
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                          <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center">
                             <User className="w-6 h-6 md:w-8 md:h-8 text-white" />
                           </div>
                         )}

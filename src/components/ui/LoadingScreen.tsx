@@ -43,8 +43,8 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
             }
           }}
         >
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-primary-50/30 to-secondary-50/30" />
+          {/* Background */}
+          <div className="absolute inset-0 bg-hnmc-gray" />
 
           {/* Logo container */}
           <motion.div

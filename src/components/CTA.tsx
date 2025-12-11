@@ -42,7 +42,7 @@ export default function CTA({ cta }: CTAProps) {
     <section className="py-16 px-6">
       <div className="container mx-auto">
         <motion.div 
-          className="bg-gradient-to-t from-hnmc-blue to-hnmc-teal rounded-3xl p-8 md:p-12 text-white max-w-4xl mx-auto text-center"
+          className="bg-secondary rounded-3xl p-8 md:p-12 text-white max-w-4xl mx-auto text-center"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.02 }}
