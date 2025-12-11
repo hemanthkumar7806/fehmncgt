@@ -124,7 +124,7 @@ export default function PatientInfoForm({
               type="text"
               value={patientInfo.firstName}
               onChange={(e) => handleInputChange('firstName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
               placeholder="Enter your first name"
             />
           </div>
@@ -134,7 +134,7 @@ export default function PatientInfoForm({
               type="text"
               value={patientInfo.lastName}
               onChange={(e) => handleInputChange('lastName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
               placeholder="Enter your last name"
             />
           </div>
@@ -145,7 +145,7 @@ export default function PatientInfoForm({
             type="email"
             value={patientInfo.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
             placeholder="Enter your email"
           />
         </div>
@@ -155,7 +155,7 @@ export default function PatientInfoForm({
             type="tel"
             value={patientInfo.phone}
             onChange={(e) => handleInputChange('phone', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
             placeholder="(555) 123-4567"
           />
         </div>
@@ -166,7 +166,7 @@ export default function PatientInfoForm({
               type="date"
               value={patientInfo.dateOfBirth}
               onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
             />
           </div>
           <div>
@@ -174,7 +174,7 @@ export default function PatientInfoForm({
             <select
               value={patientInfo.gender}
               onChange={(e) => handleInputChange('gender', e.target.value as 'M' | 'F')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
             >
               <option value="">Select gender</option>
               <option value="M">Male</option>
@@ -188,7 +188,7 @@ export default function PatientInfoForm({
           {loadingReasons ? (
             <div className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-[#01a69c] border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
                 <span className="text-gray-500">Loading visit reasons...</span>
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function PatientInfoForm({
             <select
               value={patientInfo.reasonId || ''}
               onChange={(e) => handleReasonChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#01a69c] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
             >
               <option value="">Select reason for visit</option>
               {visitReasons.map((reason) => (
@@ -243,7 +243,7 @@ export default function PatientInfoForm({
         <button
           onClick={onSubmit}
           disabled={!isFormValid || isSubmitting}
-          className="flex-1 px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-2 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {isSubmitting && (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

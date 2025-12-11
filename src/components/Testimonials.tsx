@@ -7,6 +7,7 @@ import Image from "next/image";
 import { urlFor } from "@/lib/sanity";
 import TextClamp from "./ui/TextClamp";
 import TestimonialsModal from "./TestimonialsModal";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 export interface TestimonialItem {
   author?: string;
@@ -23,12 +24,14 @@ export interface TestimonialItem {
 
 export interface TestimonialsProps {
   title?: string;
+  highlightedTexts?: string[];
   subtitle?: string | null;
   testimonialsList?: TestimonialItem[];
 }
 
 export default function Testimonials({
   title,
+  highlightedTexts,
   subtitle,
   testimonialsList,
 }: TestimonialsProps) {
@@ -64,7 +67,7 @@ export default function Testimonials({
           {title && (
             <div className="flex items-center justify-center gap-3 mb-4"> 
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-                {title}
+                {renderTextWithHighlights(title || '', highlightedTexts)}
               </h2> 
             </div>
           )}
@@ -89,7 +92,7 @@ export default function Testimonials({
               
               <div className="relative z-1 flex flex-col h-full">
                 {/* Quote Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-br from-secondary to-primary rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
                   <Quote className="w-8 h-8 text-white" />
                 </div>
 
@@ -114,7 +117,7 @@ export default function Testimonials({
 
                 {/* Quote */}
                 <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative flex-1">
-                  <span className="text-4xl text-[#01a69c]/30 absolute -top-2 -left-2">&quot;</span>
+                  <span className="text-4xl text-secondary/30 absolute -top-2 -left-2">&quot;</span>
                   <div className="relative z-10">
                     {testimonial.quote && (
                       <TextClamp
@@ -128,7 +131,7 @@ export default function Testimonials({
                       />
                     )}
                   </div>
-                  <span className="text-4xl text-[#01a69c]/30 absolute -bottom-4 -right-2">&quot;</span>
+                  <span className="text-4xl text-secondary/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
                 <div className="mt-auto">
@@ -143,7 +146,7 @@ export default function Testimonials({
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-[#01a69c] to-[#093b60] rounded-full flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-secondary to-primary rounded-full flex items-center justify-center">
                           <User className="w-6 h-6 text-white" />
                         </div>
                       )}
@@ -153,33 +156,14 @@ export default function Testimonials({
                         {testimonial.author}
                       </p>
                       {testimonial.authorTitle && (
-                        <p className="text-sm text-[#01a69c] font-medium">
+                        <p className="text-sm text-secondary font-medium">
                           {testimonial.authorTitle}
                         </p>
                       )}
                     </div>
                   </div>
                   
-                  {/* Read Full Story Button */}
-                  <button
-                    onClick={() => handleViewMore(idx)}
-                    className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#01a69c] to-[#093b60] text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
-                  >
-                    <span>Read full story</span>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+                   
                 </div>
 
               </div>

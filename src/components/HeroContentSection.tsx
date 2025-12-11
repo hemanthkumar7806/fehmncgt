@@ -3,6 +3,7 @@
 import { ArrowRight, Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import RichTextRenderer from '@/components/ui/RichTextRenderer'
+import { renderTextWithHighlights } from '@/lib/textUtils'
 
 interface HeroContentSectionProps {
   hero?: {
@@ -43,50 +44,6 @@ export default function HeroContentSection({ hero }: HeroContentSectionProps) {
     }
   }
 
-  // Function to render headline with highlighted text
-  const renderHeadlineWithHighlights = (text: string, highlights: string[] = []) => {
-    if (!highlights || highlights.length === 0) {
-      return text
-    }
-
-    // Create a regex pattern that matches any of the highlight texts (case-insensitive)
-    const pattern = new RegExp(
-      highlights.map(h => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'),
-      'gi'
-    )
-
-    const parts: (string | React.ReactElement)[] = []
-    let lastIndex = 0
-    let match
-
-    // Find all matches and create parts array
-    while ((match = pattern.exec(text)) !== null) {
-      // Add text before match
-      if (match.index > lastIndex) {
-        parts.push(text.substring(lastIndex, match.index))
-      }
-
-      // Add highlighted match
-      parts.push(
-        <span
-          key={`highlight-${match.index}`}
-          className="text-hnmc-teal"
-        >
-          {match[0]}
-        </span>
-      )
-
-      lastIndex = pattern.lastIndex
-    }
-
-    // Add remaining text
-    if (lastIndex < text.length) {
-      parts.push(text.substring(lastIndex))
-    }
-
-    return parts.length > 0 ? parts : text
-  }
-
   // Fallback data
   const headline = hero?.headline || 'Comprehensive Fibroid Care at Holy Name'
   const highlightedTexts = hero?.highlightedTexts || []
@@ -120,7 +77,7 @@ export default function HeroContentSection({ hero }: HeroContentSectionProps) {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            {renderHeadlineWithHighlights(headline, highlightedTexts)}
+            {renderTextWithHighlights(headline, highlightedTexts)}
           </motion.h1>
 
           {/* Subheading */}

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, Phone, Mail, MapPin, Stethoscope, Award, ExternalLink } from 'lucide-react'
+import { Calendar, Phone, MapPin, Stethoscope, Award, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 
 interface Doctor {
@@ -42,11 +42,11 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
       viewport={{ once: true }}
       className="h-full"
     >
-      <div className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+      <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden transition-all duration-300 h-full flex flex-col">
         {/* Doctor Header */}
-        <div className="relative bg-[#093b60] p-4">
+        <div className="relative bg-primary p-4">
           <div className="text-center">
-            <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden shadow-lg">
+            <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center border-4 border-white mx-auto mb-3 overflow-hidden">
               {doctor.photo ? (
                 <Image
                   src={doctor.photo}
@@ -85,12 +85,12 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           {doctor.specialties && doctor.specialties.length > 0 && (
             <div className="mb-4">
               <h4 className="font-semibold text-gray-900 text-sm mb-2 flex items-center gap-2">
-                <Stethoscope size={16} className="text-[#01a69c]" />
+                <Stethoscope size={16} className="text-secondary" />
                 Specialties
               </h4>
               <div className="flex flex-wrap gap-1">
                 {doctor.specialties.slice(0, 2).map((specialty, index) => (
-                  <span key={index} className="px-2 py-1 bg-[#01a69c]/10 text-[#01a69c] rounded-full text-xs font-medium border border-[#01a69c]/20">
+                  <span key={index} className="px-2 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium border border-secondary/20">
                     {specialty}
                   </span>
                 ))}
@@ -107,7 +107,7 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           {doctor.experience && (
             <div className="mb-4">
               <div className="flex items-center text-sm text-gray-600 gap-2">
-                <Award size={16} className="text-[#01a69c] flex-shrink-0" />
+                <Award size={16} className="text-secondary flex-shrink-0" />
                 <span>Experience: {doctor.experience}</span>
               </div>
             </div>
@@ -118,20 +118,14 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
             <div className="mb-4">
               <div className="text-xs text-gray-600 space-y-2">
                 {doctor.contactInfo.phone && (
-                  <a href={`tel:${doctor.contactInfo.phone}`} className="flex items-center gap-2 hover:text-[#01a69c] transition-colors cursor-pointer">
-                    <Phone size={14} className="text-[#01a69c] flex-shrink-0" />
+                  <a href={`tel:${doctor.contactInfo.phone}`} className="flex items-center gap-2 hover:text-secondary transition-colors cursor-pointer">
+                    <Phone size={14} className="text-secondary flex-shrink-0" />
                     <span>{doctor.contactInfo.phone}</span>
-                  </a>
-                )}
-                {doctor.contactInfo.email && (
-                  <a href={`mailto:${doctor.contactInfo.email}`} className="flex items-center gap-2 hover:text-[#01a69c] transition-colors cursor-pointer">
-                    <Mail size={14} className="text-[#01a69c] flex-shrink-0" />
-                    <span className="truncate">{doctor.contactInfo.email}</span>
                   </a>
                 )}
                 {doctor.contactInfo.addressLine1 && (
                   <div className="flex items-start gap-2">
-                    <MapPin size={14} className="text-[#01a69c] flex-shrink-0 mt-0.5" />
+                    <MapPin size={14} className="text-secondary flex-shrink-0 mt-0.5" />
                     <span>{doctor.contactInfo.addressLine1}, {doctor.contactInfo.city}, {doctor.contactInfo.state}</span>
                   </div>
                 )}
@@ -143,7 +137,7 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           <div className="mt-auto">
             <button
               onClick={() => onBookAppointment(doctor)}
-              className="w-full bg-[#01a69c] hover:bg-[#01a69c]/90 text-white py-2.5 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-sm"
+              className="w-full bg-secondary hover:bg-secondary/90 text-white py-2.5 px-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 text-sm"
             >
               <Calendar size={16} />
               <span>Book Appointment</span>

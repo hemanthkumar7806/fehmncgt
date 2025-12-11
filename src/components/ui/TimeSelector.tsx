@@ -53,7 +53,7 @@ export default function TimeSelector({
       
       {loadingSlots ? (
         <div className="flex items-center justify-center py-8">
-          <RefreshCw className="w-6 h-6 animate-spin text-[#01a69c]" />
+          <RefreshCw className="w-6 h-6 animate-spin text-secondary" />
           <span className="ml-2 text-gray-600">Loading available slots...</span>
         </div>
       ) : availableSlots.length > 0 ? (
@@ -65,7 +65,7 @@ export default function TimeSelector({
               disabled={!slot.available}
               className={`p-3 border rounded-lg text-center transition-all ${
                 slot.available
-                  ? 'border-gray-200 hover:border-[#01a69c] hover:bg-[#01a69c] hover:text-white'
+                  ? 'border-gray-200 hover:border-secondary hover:bg-secondary hover:text-white'
                   : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
               }`}
             >
@@ -85,7 +85,7 @@ export default function TimeSelector({
           </p>
           <button
             onClick={onBack}
-            className="px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors text-sm"
+            className="px-4 py-2 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors text-sm"
           >
             Choose Different Date
           </button>

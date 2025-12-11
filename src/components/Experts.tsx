@@ -10,6 +10,7 @@ import { useDoctors } from '@/hooks/useDoctors';
 import DoctorCard from './ui/DoctorCard'
 import AppointmentModal from './ui/AppointmentModal'
 import RichTextRenderer from './ui/RichTextRenderer'
+import { renderTextWithHighlights } from '@/lib/textUtils'
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -40,11 +41,12 @@ interface Doctor {
 
 interface ExpertsProps {
   title?: string
+  highlightedTexts?: string[]
   subtitle?: any[]
   specialityCode?: string
 }
 
-export default function Experts({ title, subtitle, specialityCode }: ExpertsProps) {
+export default function Experts({ title, highlightedTexts, subtitle, specialityCode }: ExpertsProps) {
   const { doctors, isLoading, error, refetch } = useDoctors(specialityCode)
   
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
@@ -89,9 +91,9 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
           viewport={{ once: true }}
         >
           <div className="flex items-center justify-center gap-4 mb-6">
-            {title && <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{title}</h2>}
+            {title && <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{renderTextWithHighlights(title, highlightedTexts)}</h2>}
             {isLoading && (
-              <RefreshCw className="w-8 h-8 text-[#01a69c] animate-spin" />
+              <RefreshCw className="w-8 h-8 text-secondary animate-spin" />
             )}
           </div>
           {subtitle && subtitle.length > 0 && (
@@ -135,7 +137,7 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
               </p>
               <button
                 onClick={refetch}
-                className="px-6 py-3 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors inline-flex items-center gap-2"
+                className="px-6 py-3 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors inline-flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
                 Try Again
@@ -200,7 +202,7 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
                       className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                         isBeginning
                           ? 'border-gray-200 text-gray-300 cursor-not-allowed'
-                          : 'border-[#093b60] text-[#093b60] hover:bg-[#093b60] hover:text-white hover:shadow-lg'
+                          : 'border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg'
                       }`}
                     >
                       <ChevronLeft className="w-5 h-5" />
@@ -211,7 +213,7 @@ export default function Experts({ title, subtitle, specialityCode }: ExpertsProp
                       className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                         isEnd
                           ? 'border-gray-200 text-gray-300 cursor-not-allowed'
-                          : 'border-[#093b60] text-[#093b60] hover:bg-[#093b60] hover:text-white hover:shadow-lg'
+                          : 'border-primary text-primary hover:bg-primary hover:text-white hover:shadow-lg'
                       }`}
                     >
                       <ChevronRight className="w-5 h-5" />

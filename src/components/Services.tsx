@@ -8,12 +8,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import RichTextRenderer from "@/components/ui/RichTextRenderer";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 interface Service {
   title?: string;
+  highlightedTexts?: string[];
   description?: any[];
   icon?: string;
   link?: string;
@@ -22,6 +24,7 @@ interface Service {
 interface ServicesProps {
   services?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: any[];
     servicesList?: Service[];
     ctaButton?: {
@@ -89,7 +92,7 @@ export default function Services({ services }: ServicesProps) {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl lg:text-4xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
-            {title}
+            {renderTextWithHighlights(title, services?.highlightedTexts)}
           </h2>
           {services?.subtitle && services.subtitle.length > 0 &&
             <div className="text-lg text-hnmc-gray-600 max-w-2xl mx-auto leading-relaxed font-body">
@@ -142,7 +145,7 @@ export default function Services({ services }: ServicesProps) {
                         {/* Content */}
                         <div className="flex-1 flex flex-col">
                           <h3 className="text-lg lg:text-xl font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
-                            {service.title}
+                            {renderTextWithHighlights(service.title || '', service.highlightedTexts)}
                           </h3>
                           {service.description && service.description.length > 0 &&
                             <div className="text-hnmc-gray-600 leading-relaxed flex-1">

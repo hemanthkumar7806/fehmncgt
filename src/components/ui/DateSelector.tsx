@@ -37,7 +37,7 @@ export default function DateSelector({ availableDates, onDateSelect, loading = f
           {onRetry && (
             <button
               onClick={onRetry}
-              className="px-4 py-2 bg-[#01a69c] hover:bg-[#01a69c]/90 text-white rounded-lg font-medium transition-colors"
+              className="px-4 py-2 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors"
             >
               Try Again
             </button>
@@ -92,11 +92,11 @@ export default function DateSelector({ availableDates, onDateSelect, loading = f
             <button
               key={dateInfo.date}
               onClick={() => onDateSelect(dateInfo.date)}
-              className="w-full p-4 border border-gray-200 rounded-lg hover:border-[#01a69c] hover:bg-[#01a69c]/5 transition-all text-left group"
+              className="w-full p-4 border border-gray-200 rounded-lg hover:border-secondary hover:bg-secondary/5 transition-all text-left group"
             >
               <div className="flex justify-between items-center">
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-[#01a69c]">
+                  <div className="font-semibold text-gray-900 group-hover:text-secondary">
                     {new Date(dateInfo.date).toLocaleDateString('en-US', { 
                       weekday: 'long', 
                       month: 'short', 
@@ -112,7 +112,7 @@ export default function DateSelector({ availableDates, onDateSelect, loading = f
                   <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
                     {dateInfo.slotsCount}
                   </span>
-                  <ChevronRight size={18} className="text-gray-400 group-hover:text-[#01a69c]" />
+                  <ChevronRight size={18} className="text-gray-400 group-hover:text-secondary" />
                 </div>
               </div>
             </button>

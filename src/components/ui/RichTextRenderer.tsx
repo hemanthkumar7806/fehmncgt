@@ -15,7 +15,7 @@ export default function RichTextRenderer({ content, className = "" }: RichTextRe
   const components: PortableTextComponents = {
     block: {
       normal: ({ children }) => (
-        <p className="mb-4 font-body">{children}</p>
+        <p className="mb-4 font-body whitespace-pre-line">{children}</p>
       ),
       
       h1: ({ children }) => (
@@ -47,9 +47,12 @@ export default function RichTextRenderer({ content, className = "" }: RichTextRe
         <p className="mb-4 text-right font-body">{children}</p>
       ),
       textJustify: ({ children }) => (
-        <p className="mb-4 text-justify font-body">{children}</p>
+        <p className="mb-4 text-justify font-body whitespace-pre-line">{children}</p>
       ),
     },
+
+    // Handle hard breaks (Shift+Enter)
+    hardBreak: () => <br />,
 
     list: {
       bullet: ({ children }) => (

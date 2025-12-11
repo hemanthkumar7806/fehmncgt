@@ -255,7 +255,7 @@ export default function AppointmentModal({ isOpen, selectedDoctor, onClose }: Ap
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}
-          <div className="bg-[#093b60] text-white p-6 flex-shrink-0">
+          <div className="bg-primary text-white p-6 flex-shrink-0">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-2xl font-bold">Book Appointment</h3>

@@ -163,23 +163,27 @@ export const homepageQuery = `
     },
     doctorsSpeciality {
       title,
+      highlightedTexts,
       subtitle,
       specialityCode
     },
     topic {
       title,
+      highlightedTexts,
       subtitle,
       mainContent,
       detailsHeading,
       detailsList,
       callToAction {
         heading,
+        highlightedTexts,
         link,
         description,
         buttonText
       },
       infoCards[] {
         title,
+        highlightedTexts,
         description,
         icon,
         showCard
@@ -187,18 +191,21 @@ export const homepageQuery = `
     },
     insurance {
       title,
+      highlightedTexts,
       subtitle,
       mainContent,
       detailsHeading,
       detailsList,
       callToAction {
         heading,
+        highlightedTexts,
         link,
         description,
         buttonText
       },
       infoCards[] {
         title,
+        highlightedTexts,
         description,
         icon,
         showCard
@@ -206,6 +213,7 @@ export const homepageQuery = `
     },
     about {
       title,
+      highlightedTexts,
       subtitle,
       description,
       mediaType,
@@ -229,9 +237,11 @@ export const homepageQuery = `
     },
     services {
       title,
+      highlightedTexts,
       subtitle,
       servicesList[] {
         title,
+        highlightedTexts,
         description,
         icon,
         link
@@ -244,6 +254,7 @@ export const homepageQuery = `
     },
     testimonials {
       title,
+      highlightedTexts,
       testimonialsList[] {
         quote,
         author,
@@ -259,9 +270,11 @@ export const homepageQuery = `
     },
     resources {
       title,
+      highlightedTexts,
       subtitle,
       resourcesList[] {
         title,
+        highlightedTexts,
         icon,
         description,
         link,
@@ -270,6 +283,7 @@ export const homepageQuery = `
     },
     cta {
       title,
+      highlightedTexts,
       description,
       button {
         text,

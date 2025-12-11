@@ -5,9 +5,11 @@ import * as LucideIcons from "lucide-react";
 import { GlowingEffect } from "@/components/ui/GlowingCards";
 import TextClamp from "@/components/ui/TextClamp";
 import RichTextRenderer from "@/components/ui/RichTextRenderer";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 interface Resource {
   title?: string;
+  highlightedTexts?: string[];
   description?: any[];
   icon?: string;
   link?: string;
@@ -17,6 +19,7 @@ interface Resource {
 interface ResourcesProps {
   resources?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: any[];
     resourcesList?: Resource[];
   };
@@ -72,7 +75,7 @@ export default function Resources({ resources }: ResourcesProps) {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight">
-            {title}
+            {renderTextWithHighlights(title, resources?.highlightedTexts)}
           </h2>
           {resources?.subtitle && resources.subtitle.length > 0 && (
             <div className="text-xl text-hnmc-gray-600 max-w-3xl mx-auto leading-relaxed font-body">
@@ -102,6 +105,7 @@ export default function Resources({ resources }: ResourcesProps) {
                     area={isOddRow(index) ? "md:col-span-2" : "md:col-span-4"}
                     icon={IconComponent ? <IconComponent className={`h-5 w-5 ${isOddRow(index) ? "text-hnmc-gray-600" : "text-white"}`} /> : null}
                     title={resource.title || "Resource"}
+                    highlightedTexts={resource.highlightedTexts}
                     description={resource.description || []}
                     link={resource.link}
                     isOddRow={isOddRow(index)}
@@ -120,13 +124,14 @@ interface GridItemProps {
   area: string;
   icon: React.ReactNode | null;
   title: string;
+  highlightedTexts?: string[];
   description: any[];
   link?: string;
   onSmoothScroll: (link: string, e: React.MouseEvent) => void;
   isOddRow: boolean;
 }
 
-const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScroll }: GridItemProps) => {
+const GridItem = ({ area, icon, title, highlightedTexts, description, link, isOddRow, onSmoothScroll }: GridItemProps) => {
   const content = (
     <div className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3">
       <GlowingEffect
@@ -146,7 +151,7 @@ const GridItem = ({ area, icon, title, description, link, isOddRow, onSmoothScro
           )}
           <div className="space-y-4">
             <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
-              {title}
+              {renderTextWithHighlights(title, highlightedTexts)}
             </h3>
             <TextClamp
               content={description}

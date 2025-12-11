@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary Brand Colors - Holy Name Blue
+        // Primary Brand Colors - Midnight Blue (Pantone 2955)
         primary: {
           50: '#f0f4f8',
           100: '#d9e2ec',
@@ -21,10 +21,10 @@ module.exports = {
           800: '#243b53',
           900: '#102a43',
           950: '#0a1c2e',
-          DEFAULT: '#093b60',
+          DEFAULT: '#123559', // Midnight Blue - Pantone 2955
           light: '#0f5a8a',
         },
-        // Secondary Brand Colors - Holy Name Green
+        // Secondary Brand Colors - Holy Name Teal (Pantone 3272)
         secondary: {
           50: '#f0fdfa',
           100: '#ccfbf1',
@@ -37,7 +37,7 @@ module.exports = {
           800: '#115e59',
           900: '#134e4a',
           950: '#042f2e',
-          DEFAULT: '#01a69c',
+          DEFAULT: '#00A499', // Holy Name Teal - Pantone 3272
           light: '#02c4b8',
         },
         // Holy Name Medical Center Brand Colors
@@ -54,7 +54,7 @@ module.exports = {
             800: '#243b53',
             900: '#102a43',
             950: '#0a1c2e',
-            DEFAULT: '#093b60', 
+            DEFAULT: '#123559', // Midnight Blue - Pantone 2955
             light: '#0f5a8a',
           },
           teal: {
@@ -69,7 +69,7 @@ module.exports = {
             800: '#115e59',
             900: '#134e4a',
             950: '#042f2e',
-            DEFAULT: '#01a69c',
+            DEFAULT: '#00A499', // Holy Name Teal - Pantone 3272
             light: '#02c4b8',
           },
           gray: {
@@ -84,8 +84,11 @@ module.exports = {
             800: '#1e293b',
             900: '#0f172a',
             950: '#020617',
-            DEFAULT: '#f8fafc',
+            DEFAULT: '#F1F1F2', // Dove Gray
             text: '#1e293b',
+          },
+          black: {
+            DEFAULT: '#3E3834', // Soft Black - Pantone BLACK 7C
           },
         },
         // Semantic Colors

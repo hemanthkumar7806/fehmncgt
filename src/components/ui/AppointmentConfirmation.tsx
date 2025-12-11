@@ -74,7 +74,7 @@ export default function AppointmentConfirmation({
           {appointmentId && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Appointment ID:</span>
-              <span className="font-medium text-[#01a69c]">{appointmentId}</span>
+              <span className="font-medium text-secondary">{appointmentId}</span>
             </div>
           )}
         </div>
@@ -87,7 +87,7 @@ export default function AppointmentConfirmation({
       
       <button
         onClick={onClose}
-        className="w-full bg-[#01a69c] hover:bg-[#01a69c]/90 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+        className="w-full bg-secondary hover:bg-secondary/90 text-white py-2 px-4 rounded-lg font-medium transition-colors"
       >
         Done
       </button>

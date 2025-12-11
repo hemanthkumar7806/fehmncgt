@@ -8,10 +8,12 @@ import { urlFor } from "@/lib/sanity";
 import { useState, useRef } from "react";
 import fallbackData from "@/constants/fallbackData.home.json";
 import TextClamp from "@/components/ui/TextClamp";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 interface AboutProps {
   about?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: string;
     description?: any[];
     mediaType?: string;
@@ -33,7 +35,7 @@ export default function About({ about }: AboutProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const aboutData = about || fallbackData.about;
+  const aboutData = (about || fallbackData.about) as AboutProps['about'];
 
   const handleVideoToggle = () => {
     if (videoRef.current) {
@@ -84,7 +86,7 @@ export default function About({ about }: AboutProps) {
               transition={{ duration: 0.4, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              {aboutData?.title || "About Holy Name Fibroid Center"}
+              {renderTextWithHighlights(aboutData?.title || "About Holy Name Fibroid Center", aboutData?.highlightedTexts)}
             </motion.h2>
 
             <motion.div
@@ -104,6 +106,33 @@ export default function About({ about }: AboutProps) {
                   title={aboutData.title || "About Us"}
                 />
               )}
+              
+              {/* Read Full Story Button */}
+              <motion.a
+                href="https://www.holyname.org/patientstories/story-details.aspx?story=166"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-colors duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <span>Read full story</span>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </motion.a>
             </motion.div>
           </motion.div>
 

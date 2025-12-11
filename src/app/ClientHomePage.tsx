@@ -103,18 +103,21 @@ interface HomePageData {
   };
   topic?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: string;
     mainContent?: any[];
     detailsHeading?: string;
     detailsList?: any[];
     callToAction?: {
       heading?: string;
+      highlightedTexts?: string[];
       link?: string;
       description?: any[];
       buttonText?: string;
     };
     infoCards?: Array<{
       title?: string;
+      highlightedTexts?: string[];
       description?: any[];
       icon?: string;
       showCard?: boolean;
@@ -122,18 +125,21 @@ interface HomePageData {
   };
   insurance?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: string;
     mainContent?: any[];
     detailsHeading?: string;
     detailsList?: any[];
     callToAction?: {
       heading?: string;
+      highlightedTexts?: string[];
       link?: string;
       description?: any[];
       buttonText?: string;
     };
     infoCards?: Array<{
       title?: string;
+      highlightedTexts?: string[];
       description?: any[];
       icon?: string;
       showCard?: boolean;
@@ -141,6 +147,7 @@ interface HomePageData {
   };
   about?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: string;
     description?: any[];
     mediaType?: string;
@@ -158,9 +165,11 @@ interface HomePageData {
   };
   services?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: any[];
     servicesList?: Array<{
       title?: string;
+      highlightedTexts?: string[];
       description?: any[];
       icon?: string;
       link?: string;
@@ -173,9 +182,11 @@ interface HomePageData {
   };
   resources?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: any[];
     resourcesList?: Array<{
       title?: string;
+      highlightedTexts?: string[];
       description?: any[];
       icon?: string;
       link?: string;
@@ -184,11 +195,13 @@ interface HomePageData {
   };
   doctorsSpeciality?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: any[];
     specialityCode?: string;
   };
   testimonials?: {
     title?: string;
+    highlightedTexts?: string[];
     subtitle?: string;
     testimonialsList?: Array<{
       quote?: any[];
@@ -200,6 +213,7 @@ interface HomePageData {
   };
   cta?: {
     title?: string;
+    highlightedTexts?: string[];
     description?: any[];
     button?: {
       text?: string;
@@ -311,6 +325,7 @@ export default function ClientHomePage() {
             <section id="dr-liberman">
               <Experts
                 title={homePageData?.doctorsSpeciality?.title}
+                highlightedTexts={homePageData?.doctorsSpeciality?.highlightedTexts}
                 subtitle={homePageData?.doctorsSpeciality?.subtitle}
                 specialityCode={homePageData?.doctorsSpeciality?.specialityCode}
               />
@@ -335,6 +350,7 @@ export default function ClientHomePage() {
             <section id="testimonials">
               <Testimonials
                 title={homePageData?.testimonials?.title}
+                highlightedTexts={homePageData?.testimonials?.highlightedTexts}
                 subtitle={homePageData?.testimonials?.subtitle}
                 testimonialsList={homePageData?.testimonials?.testimonialsList}
               />

@@ -4,21 +4,25 @@ import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight, AlertCircle, Heart } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import RichTextRenderer from "@/components/ui/RichTextRenderer";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 export interface Topic {
   title?: string;
+  highlightedTexts?: string[];
   subtitle?: string;
   mainContent?: any[];
   detailsHeading?: string;
   detailsList?: any[];
   callToAction?: {
     heading?: string;
+    highlightedTexts?: string[];
     link?: string;
     description?: any[];
     buttonText?: string;
   };
   infoCards?: Array<{
     title?: string;
+    highlightedTexts?: string[];
     description?: any[];
     icon?: string;
     showCard?: boolean;
@@ -65,7 +69,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
       >
         {topic.title && (
           <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
-            {topic.title}
+            {renderTextWithHighlights(topic.title, topic.highlightedTexts)}
           </h2>
         )}
         {topic.subtitle && (
@@ -157,8 +161,10 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       <AlertCircle className="w-7 h-7 text-white" />
                     </div>
                     <h3 className="text-2xl lg:text-3xl font-bold text-white">
-                      {topic.callToAction?.heading ||
-                        "Experiencing Symptoms"}
+                      {renderTextWithHighlights(
+                        topic.callToAction?.heading || "Experiencing Symptoms",
+                        topic.callToAction?.highlightedTexts
+                      )}
                     </h3>
                   </div>
 
@@ -230,7 +236,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       />
                     </div>
                     <h4 className="text-xl font-bold text-hnmc-gray-800">
-                      {card.title}
+                      {renderTextWithHighlights(card.title || '', card.highlightedTexts)}
                     </h4>
                   </div>
                   {card.description && card.description.length > 0 ? (

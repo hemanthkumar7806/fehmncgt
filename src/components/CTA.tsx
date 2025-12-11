@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import RichTextRenderer from "./ui/RichTextRenderer";
+import { renderTextWithHighlights } from "@/lib/textUtils";
 
 interface CTAProps {
   cta?: {
     title?: string;
+    highlightedTexts?: string[];
     description?: any[];
     button?: {
       text?: string;
@@ -54,7 +56,7 @@ export default function CTA({ cta }: CTAProps) {
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
           >
-            {cta.title || "Join Our Community of Satisfied Patients"}
+            {renderTextWithHighlights(cta.title || "Join Our Community of Satisfied Patients", cta.highlightedTexts)}
           </motion.h3>
           
           <motion.div 
