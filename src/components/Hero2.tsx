@@ -213,7 +213,7 @@ export default function Hero2({ hero }: HeroProps) {
                   <Award className="w-8 h-8 text-white" />
                 </div>
                 
-                <h3 className="text-2xl font-bold text-hnmc-gray-800">
+                <h3 className="text-2xl font-bold text-primary">
                   {rightContent?.title || 'Award-Winning Healthcare'}
                 </h3>
                 

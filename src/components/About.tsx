@@ -85,7 +85,7 @@ export default function About({ about }: AboutProps) {
             )}
 
             <motion.h2
-              className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight"
+              className="text-4xl lg:text-5xl font-bold text-primary mb-6 tracking-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}

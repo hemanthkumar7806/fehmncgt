@@ -66,7 +66,7 @@ export default function Testimonials({
         >
           {title && (
             <div className="flex items-center justify-center gap-3 mb-4"> 
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
+              <h2 className="text-4xl lg:text-5xl font-bold text-primary tracking-tight">
                 {renderTextWithHighlights(title || '', highlightedTexts)}
               </h2> 
             </div>

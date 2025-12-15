@@ -91,7 +91,7 @@ export default function Services({ services }: ServicesProps) {
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-4 tracking-tight">
             {renderTextWithHighlights(title, services?.highlightedTexts)}
           </h2>
           {services?.subtitle && services.subtitle.length > 0 &&
@@ -144,7 +144,7 @@ export default function Services({ services }: ServicesProps) {
 
                         {/* Content */}
                         <div className="flex-1 flex flex-col">
-                          <h3 className="text-lg lg:text-xl font-bold text-hnmc-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
+                          <h3 className="text-lg lg:text-xl font-bold text-primary mb-3 group-hover:text-secondary transition-colors duration-300">
                             {renderTextWithHighlights(service.title || '', service.highlightedTexts)}
                           </h3>
                           {service.description && service.description.length > 0 &&

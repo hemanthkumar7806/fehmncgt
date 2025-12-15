@@ -68,7 +68,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
         viewport={{ once: true }}
       >
         {topic.title && (
-          <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-4 tracking-tight">
+          <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-4 tracking-tight">
             {renderTextWithHighlights(topic.title, topic.highlightedTexts)}
           </h2>
         )}
@@ -114,7 +114,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                   <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mr-4">
                     <CheckCircle className="w-7 h-7 text-secondary" />
                   </div>
-                  <h3 className="text-2xl lg:text-3xl font-bold text-hnmc-gray-800">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-primary">
                     {topic.detailsHeading || "Details"}
                   </h3>
                 </div>
@@ -235,7 +235,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                         }`}
                       />
                     </div>
-                    <h4 className="text-xl font-bold text-hnmc-gray-800">
+                    <h4 className="text-xl font-bold text-primary">
                       {renderTextWithHighlights(card.title || '', card.highlightedTexts)}
                     </h4>
                   </div>

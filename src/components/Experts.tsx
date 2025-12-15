@@ -91,7 +91,7 @@ export default function Experts({ title, highlightedTexts, subtitle, specialityC
           viewport={{ once: true }}
         >
           <div className="flex items-center justify-center gap-4 mb-6">
-            {title && <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">{renderTextWithHighlights(title, highlightedTexts)}</h2>}
+            {title && <h2 className="text-4xl lg:text-5xl font-bold text-primary tracking-tight">{renderTextWithHighlights(title, highlightedTexts)}</h2>}
             {isLoading && (
               <RefreshCw className="w-8 h-8 text-secondary animate-spin" />
             )}

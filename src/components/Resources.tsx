@@ -74,7 +74,7 @@ export default function Resources({ resources }: ResourcesProps) {
           transition={{ duration: 0.4 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-hnmc-gray-800 mb-6 tracking-tight">
+          <h2 className="text-4xl lg:text-5xl font-bold text-primary mb-6 tracking-tight">
             {renderTextWithHighlights(title, resources?.highlightedTexts)}
           </h2>
           {resources?.subtitle && resources.subtitle.length > 0 && (
@@ -150,14 +150,14 @@ const GridItem = ({ area, icon, title, highlightedTexts, description, link, isOd
             </div>
           )}
           <div className="space-y-4">
-            <h3 className={`font-sans text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
+            <h3 className={`font-heading text-xl/[1.375rem] font-semibold text-balance md:text-2xl/[1.875rem] ${isOddRow ? "text-hnmc-gray-800" : "text-white"}`}>
               {renderTextWithHighlights(title, highlightedTexts)}
             </h3>
             <TextClamp
               content={description}
               maxLines={5}
               isPortableText={true}
-              className={`font-sans text-sm/[1.125rem] md:text-lg/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
+              className={`font-body text-sm/[1.125rem] md:text-lg/[1.375rem] ${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
               readMoreClassName={`${isOddRow ? "text-hnmc-gray-600" : "text-white/90"}`}
               readMoreText="Learn more"
               title={title}
