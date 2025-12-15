@@ -189,7 +189,8 @@ export const homepageQuery = `
           _id,
           url
         }
-      }
+      },
+      heroLayout
     },
     doctorsSpeciality {
       title,
@@ -536,7 +537,8 @@ export async function getHomePageById(id: string) {
             _id,
             url
           }
-        }
+        },
+        heroLayout
       },
       topic {
         title,

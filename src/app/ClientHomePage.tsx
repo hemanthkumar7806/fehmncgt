@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
-import HeroContentSection from "@/components/HeroContentSection";
 import Experts from "@/components/Experts";
 import Services from "@/components/Services";
 import About from "@/components/About";
@@ -130,6 +129,7 @@ interface HomePageData {
     backgroundImage?: {
       asset?: any;
     };
+    heroLayout?: 'separate' | 'overlay';
   };
   topic?: {
     title?: string;
@@ -349,13 +349,7 @@ export default function ClientHomePage() {
               isSidebarOpen ? "lg:ml-64" : "lg:ml-0"
             }`}
           >
-            <section id="home">
-              <Hero hero={homePageData?.hero} />
-            </section>
-
-            <section id="hero-content">
-              <HeroContentSection hero={homePageData?.hero} />
-            </section>
+            <Hero hero={homePageData?.hero} />
 
             <section id="dr-liberman">
               <Experts
