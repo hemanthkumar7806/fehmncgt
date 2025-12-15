@@ -190,13 +190,15 @@ export const homepageQuery = `
           url
         }
       },
-      heroLayout
+      heroLayout,
+      showSection
     },
     doctorsSpeciality {
       title,
       highlightedTexts,
       subtitle,
-      specialityCode
+      specialityCode,
+      showSection
     },
     topic {
       title,
@@ -218,7 +220,8 @@ export const homepageQuery = `
         description,
         icon,
         showCard
-      }
+      },
+      showSection
     },
     insurance {
       title,
@@ -240,7 +243,8 @@ export const homepageQuery = `
         description,
         icon,
         showCard
-      }
+      },
+      showSection
     },
     about {
       title,
@@ -269,7 +273,8 @@ export const homepageQuery = `
         text,
         link,
         showButton
-      }
+      },
+      showSection
     },
     services {
       title,
@@ -286,7 +291,8 @@ export const homepageQuery = `
         text,
         link,
         showButton
-      }
+      },
+      showSection
     },
     testimonials {
       title,
@@ -302,7 +308,8 @@ export const homepageQuery = `
           }
         },
         rating,
-      }
+      },
+      showSection
     },
     resources {
       title,
@@ -315,7 +322,8 @@ export const homepageQuery = `
         description,
         link,
         showCard
-      }
+      },
+      showSection
     },
     cta {
       title,
@@ -538,7 +546,15 @@ export async function getHomePageById(id: string) {
             url
           }
         },
-        heroLayout
+        heroLayout,
+        showSection
+      },
+      doctorsSpeciality {
+        title,
+        highlightedTexts,
+        subtitle,
+        specialityCode,
+        showSection
       },
       topic {
         title,
@@ -557,7 +573,8 @@ export async function getHomePageById(id: string) {
           description,
           icon,
           showCard
-        }
+        },
+        showSection
       },
       insurance {
         title,
@@ -576,7 +593,8 @@ export async function getHomePageById(id: string) {
           description,
           icon,
           showCard
-        }
+        },
+        showSection
       },
       about {
         title,
@@ -599,7 +617,8 @@ export async function getHomePageById(id: string) {
           number,
           label,
           icon
-        }
+        },
+        showSection
       },
       services {
         title,
@@ -614,7 +633,8 @@ export async function getHomePageById(id: string) {
           text,
           link,
           showButton
-        }
+        },
+        showSection
       },
       resources {
         title,
@@ -625,7 +645,8 @@ export async function getHomePageById(id: string) {
           description,
           link,
           showCard
-        }
+        },
+        showSection
       },
       testimonials {
         title,
@@ -640,7 +661,8 @@ export async function getHomePageById(id: string) {
             }
           },
           rating
-        }
+        },
+        showSection
       },
       cta {
         title,

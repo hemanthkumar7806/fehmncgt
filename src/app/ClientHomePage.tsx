@@ -130,6 +130,7 @@ interface HomePageData {
       asset?: any;
     };
     heroLayout?: 'separate' | 'overlay';
+    showSection?: boolean;
   };
   topic?: {
     title?: string;
@@ -152,6 +153,7 @@ interface HomePageData {
       icon?: string;
       showCard?: boolean;
     }>;
+    showSection?: boolean;
   };
   insurance?: {
     title?: string;
@@ -174,6 +176,7 @@ interface HomePageData {
       icon?: string;
       showCard?: boolean;
     }>;
+    showSection?: boolean;
   };
   about?: {
     title?: string;
@@ -197,6 +200,7 @@ interface HomePageData {
       link?: string;
       showButton?: boolean;
     };
+    showSection?: boolean;
   };
   services?: {
     title?: string;
@@ -214,6 +218,7 @@ interface HomePageData {
       link?: string;
       showButton?: boolean;
     };
+    showSection?: boolean;
   };
   resources?: {
     title?: string;
@@ -227,12 +232,14 @@ interface HomePageData {
       link?: string;
       showCard?: boolean;
     }>;
+    showSection?: boolean;
   };
   doctorsSpeciality?: {
     title?: string;
     highlightedTexts?: string[];
     subtitle?: any[];
     specialityCode?: string;
+    showSection?: boolean;
   };
   testimonials?: {
     title?: string;
@@ -245,6 +252,7 @@ interface HomePageData {
       rating?: number;
       profilePhoto?: any;
     }>;
+    showSection?: boolean;
   };
   cta?: {
     title?: string;
@@ -349,49 +357,67 @@ export default function ClientHomePage() {
               isSidebarOpen ? "lg:ml-64" : "lg:ml-0"
             }`}
           >
-            <Hero hero={homePageData?.hero} />
+            {homePageData?.hero?.showSection !== false && (
+              <Hero hero={homePageData?.hero} />
+            )}
 
-            <section id="dr-liberman">
-              <Experts
-                title={homePageData?.doctorsSpeciality?.title}
-                highlightedTexts={homePageData?.doctorsSpeciality?.highlightedTexts}
-                subtitle={homePageData?.doctorsSpeciality?.subtitle}
-                specialityCode={homePageData?.doctorsSpeciality?.specialityCode}
-              />
-            </section>
+            {homePageData?.doctorsSpeciality?.showSection !== false && (
+              <section id="dr-liberman">
+                <Experts
+                  title={homePageData?.doctorsSpeciality?.title}
+                  highlightedTexts={homePageData?.doctorsSpeciality?.highlightedTexts}
+                  subtitle={homePageData?.doctorsSpeciality?.subtitle}
+                  specialityCode={homePageData?.doctorsSpeciality?.specialityCode}
+                />
+              </section>
+            )}
 
-            <section id="about-fibroids">
-              <UnderstandTopic topic={homePageData?.topic} />
-            </section>
+            {homePageData?.topic?.showSection !== false && (
+              <section id="about-fibroids">
+                <UnderstandTopic topic={homePageData?.topic} />
+              </section>
+            )}
 
-            <section id="services">
-              <Services services={homePageData?.services} />
-            </section>
+            {homePageData?.services?.showSection !== false && (
+              <section id="services">
+                <Services services={homePageData?.services} />
+              </section>
+            )}
 
-            <section id="resources">
-              <Resources resources={homePageData?.resources} />
-            </section>
+            {homePageData?.resources?.showSection !== false && (
+              <section id="resources">
+                <Resources resources={homePageData?.resources} />
+              </section>
+            )}
 
-            <section id="about">
-              <About about={homePageData?.about} />
-            </section>
+            {homePageData?.about?.showSection !== false && (
+              <section id="about">
+                <About about={homePageData?.about} />
+              </section>
+            )}
 
-            <section id="testimonials">
-              <Testimonials
-                title={homePageData?.testimonials?.title}
-                highlightedTexts={homePageData?.testimonials?.highlightedTexts}
-                subtitle={homePageData?.testimonials?.subtitle}
-                testimonialsList={homePageData?.testimonials?.testimonialsList}
-              />
-            </section>
+            {homePageData?.testimonials?.showSection !== false && (
+              <section id="testimonials">
+                <Testimonials
+                  title={homePageData?.testimonials?.title}
+                  highlightedTexts={homePageData?.testimonials?.highlightedTexts}
+                  subtitle={homePageData?.testimonials?.subtitle}
+                  testimonialsList={homePageData?.testimonials?.testimonialsList}
+                />
+              </section>
+            )}
 
-            <section id="insurance">
-              <UnderstandTopic topic={homePageData?.insurance} />
-            </section>
+            {homePageData?.insurance?.showSection !== false && (
+              <section id="insurance">
+                <UnderstandTopic topic={homePageData?.insurance} />
+              </section>
+            )}
 
-            <section id="cta">
-              <CTA cta={homePageData?.cta} />
-            </section>
+            {homePageData?.cta?.showSection !== false && (
+              <section id="cta">
+                <CTA cta={homePageData?.cta} />
+              </section>
+            )}
 
             <section id="appointment">
               {/* Appointment section - can be added later */}
