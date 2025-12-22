@@ -15,8 +15,8 @@ interface HeroProps {
     subheadline?: any[]
     highlightedTexts?: string[]
     badge?: { text?: string; showBadge?: boolean }
-    ctaButton?: { text?: string; link?: string }
-    secondaryButton?: { text?: string; link?: string; showButton?: boolean }
+    ctaButton?: { text?: string; linkType?: 'link' | 'scroll'; sectionId?: string; link?: string }
+    secondaryButton?: { text?: string; linkType?: 'link' | 'scroll'; sectionId?: string; link?: string; showButton?: boolean }
   }
 }
 
@@ -96,23 +96,56 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            {ctaButton && (
+            {((ctaButton?.linkType === 'scroll' && ctaButton?.sectionId) || 
+              (ctaButton?.linkType === 'link' && ctaButton?.link) ||
+              (!ctaButton?.linkType && ctaButton?.link)) && (
               <a
-                href={ctaButton.link}
+                href={
+                  ctaButton.linkType === 'scroll' && ctaButton.sectionId
+                    ? `#${ctaButton.sectionId}`
+                    : ctaButton.link || '#'
+                }
                 className="inline-flex items-center justify-center px-8 py-4 bg-hnmc-teal hover:bg-hnmc-teal/90 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-lg font-body"
-                {...(ctaButton.link?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                onClick={(e) => handleSmoothScroll(ctaButton.link || '', e)}
+                {...(ctaButton.linkType === 'link' && 
+                     ctaButton.link?.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+                onClick={(e) => {
+                  if (ctaButton?.linkType === 'scroll' && ctaButton.sectionId) {
+                    e.preventDefault();
+                    handleSmoothScroll(`#${ctaButton.sectionId}`, e);
+                  } else if (ctaButton?.link && !ctaButton.link.startsWith('http')) {
+                    handleSmoothScroll(ctaButton.link, e);
+                  }
+                }}
               >
                 <Calendar size={20} className="mr-2" />
                 <span>{ctaButton.text}</span>
               </a>
             )}
-            {secondaryButton?.showButton && (
+            {secondaryButton?.showButton && 
+             ((secondaryButton.linkType === 'scroll' && secondaryButton.sectionId) || 
+              (secondaryButton.linkType === 'link' && secondaryButton.link) ||
+              (!secondaryButton.linkType && secondaryButton.link)) && (
               <a
-                href={secondaryButton.link || '#'}
+                href={
+                  secondaryButton.linkType === 'scroll' && secondaryButton.sectionId
+                    ? `#${secondaryButton.sectionId}`
+                    : secondaryButton.link || '#'
+                }
                 className="inline-flex items-center justify-center px-8 py-4 border-2 border-hnmc-teal text-hnmc-teal hover:bg-hnmc-teal hover:text-white font-semibold rounded-xl transition-all duration-300 text-lg font-body"
-                {...(secondaryButton.link?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                onClick={(e) => handleSmoothScroll(secondaryButton.link || '', e)}
+                {...(secondaryButton.linkType === 'link' && 
+                     secondaryButton.link?.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+                onClick={(e) => {
+                  if (secondaryButton?.linkType === 'scroll' && secondaryButton.sectionId) {
+                    e.preventDefault();
+                    handleSmoothScroll(`#${secondaryButton.sectionId}`, e);
+                  } else if (secondaryButton?.link && !secondaryButton.link.startsWith('http')) {
+                    handleSmoothScroll(secondaryButton.link, e);
+                  }
+                }}
               >
                 <span>{secondaryButton.text}</span>
                 <ArrowRight size={20} className="ml-2" />

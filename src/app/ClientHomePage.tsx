@@ -102,10 +102,14 @@ interface HomePageData {
     };
     ctaButton?: {
       text?: string;
+      linkType?: 'link' | 'scroll';
+      sectionId?: string;
       link?: string;
     };
     secondaryButton?: {
       text?: string;
+      linkType?: 'link' | 'scroll';
+      sectionId?: string;
       link?: string;
       showButton?: boolean;
     };
@@ -142,6 +146,8 @@ interface HomePageData {
     callToAction?: {
       heading?: string;
       highlightedTexts?: string[];
+      linkType?: 'link' | 'scroll';
+      sectionId?: string;
       link?: string;
       description?: any[];
       buttonText?: string;
@@ -165,6 +171,8 @@ interface HomePageData {
     callToAction?: {
       heading?: string;
       highlightedTexts?: string[];
+      linkType?: 'link' | 'scroll';
+      sectionId?: string;
       link?: string;
       description?: any[];
       buttonText?: string;

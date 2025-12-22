@@ -160,10 +160,14 @@ export const homepageQuery = `
       },
       ctaButton {
         text,
+        linkType,
+        sectionId,
         link
       },
       secondaryButton {
         text,
+        linkType,
+        sectionId,
         link,
         showButton
       },
@@ -207,9 +211,16 @@ export const homepageQuery = `
       mainContent,
       detailsHeading,
       detailsList,
+      payBillButton {
+        showButton,
+        text,
+        link
+      },
       callToAction {
         heading,
         highlightedTexts,
+        linkType,
+        sectionId,
         link,
         description,
         buttonText
@@ -230,9 +241,16 @@ export const homepageQuery = `
       mainContent,
       detailsHeading,
       detailsList,
+      payBillButton {
+        showButton,
+        text,
+        link
+      },
       callToAction {
         heading,
         highlightedTexts,
+        linkType,
+        sectionId,
         link,
         description,
         buttonText
@@ -562,6 +580,11 @@ export async function getHomePageById(id: string) {
         mainContent,
         detailsHeading,
         detailsList,
+        payBillButton {
+          showButton,
+          text,
+          link
+        },
         callToAction {
           heading,
           link,
@@ -582,6 +605,11 @@ export async function getHomePageById(id: string) {
         mainContent,
         detailsHeading,
         detailsList,
+        payBillButton {
+          showButton,
+          text,
+          link
+        },
         callToAction {
           heading,
           link,

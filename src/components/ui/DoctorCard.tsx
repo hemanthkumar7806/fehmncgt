@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, Phone, MapPin, Stethoscope, Award, ExternalLink } from 'lucide-react'
+import { Calendar, MapPin, Stethoscope, Award, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 
 interface Doctor {
@@ -117,12 +117,7 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
           {doctor.contactInfo && (
             <div className="mb-4">
               <div className="text-xs text-gray-600 space-y-2">
-                {doctor.contactInfo.phone && (
-                  <a href={`tel:${doctor.contactInfo.phone}`} className="flex items-center gap-2 hover:text-secondary transition-colors cursor-pointer">
-                    <Phone size={14} className="text-secondary flex-shrink-0" />
-                    <span>{doctor.contactInfo.phone}</span>
-                  </a>
-                )}
+                {/* Phone number hidden per client request */}
                 {doctor.contactInfo.addressLine1 && (
                   <div className="flex items-start gap-2">
                     <MapPin size={14} className="text-secondary flex-shrink-0 mt-0.5" />

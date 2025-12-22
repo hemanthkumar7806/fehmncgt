@@ -13,10 +13,17 @@ export interface Topic {
   mainContent?: any[];
   detailsHeading?: string;
   detailsList?: any[];
+  payBillButton?: {
+    showButton?: boolean;
+    text?: string;
+    link?: string;
+  };
   callToAction?: {
     heading?: string;
     highlightedTexts?: string[];
     link?: string;
+    linkType?: 'link' | 'scroll';
+    sectionId?: string;
     description?: any[];
     buttonText?: string;
   };
@@ -127,17 +134,16 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                     />
                   )}
                   
-                  {/* Pay Your Bill Button - Show only for Insurance & Billing section */}
-                  {(topic.detailsHeading?.toLowerCase().includes("billing") || 
-                    topic.title?.toLowerCase().includes("insurance")) && (
+                  {/* Pay Your Bill Button - Configurable from Sanity */}
+                  {topic.payBillButton?.showButton && topic.payBillButton.link && (
                     <div className="mt-6">
                       <a
-                        href="https://www.holyname.org/patients-visitors/pay-your-bill"
+                        href={topic.payBillButton.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 bg-secondary text-white px-6 py-3 rounded-xl font-semibold hover:bg-secondary/90 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
                       >
-                        <span>Pay your bill</span>
+                        <span>{topic.payBillButton.text || "Pay your bill"}</span>
                         <ArrowRight className="w-4 h-4" />
                       </a>
                     </div>
@@ -176,19 +182,28 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                       />
                     )}
                   </div>
-                  {topic.callToAction.link && (
+                  {((topic.callToAction.linkType === 'scroll' && topic.callToAction.sectionId) || 
+                    (topic.callToAction.linkType === 'link' && topic.callToAction.link) ||
+                    (!topic.callToAction.linkType && topic.callToAction.link)) && (
                     <a
-                      href={topic.callToAction.link}
+                      href={
+                        topic.callToAction.linkType === 'scroll' && topic.callToAction.sectionId
+                          ? `#${topic.callToAction.sectionId}`
+                          : topic.callToAction.link || '#'
+                      }
                       className="inline-flex items-center gap-3 bg-white text-primary px-8 py-4 rounded-2xl font-semibold hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                      {...(topic.callToAction.link?.startsWith("http")
+                      {...(topic.callToAction.linkType === 'link' && 
+                           topic.callToAction.link?.startsWith("http")
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      onClick={(e) =>
-                        handleSmoothScroll(
-                          topic.callToAction?.link || "",
-                          e
-                        )
-                      }
+                      onClick={(e) => {
+                        if (topic.callToAction?.linkType === 'scroll' && topic.callToAction.sectionId) {
+                          e.preventDefault();
+                          handleSmoothScroll(`#${topic.callToAction.sectionId}`, e);
+                        } else if (topic.callToAction?.link && !topic.callToAction.link.startsWith("http")) {
+                          handleSmoothScroll(topic.callToAction.link, e);
+                        }
+                      }}
                     >
                       <span>
                         {topic.callToAction.buttonText ||
