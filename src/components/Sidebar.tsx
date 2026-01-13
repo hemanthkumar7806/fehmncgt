@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import * as LucideIcons from 'lucide-react'
+import { X, Phone, Mail, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import fallbackData from '@/constants/fallbackData.sidebar.json'
@@ -98,6 +99,16 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
+        {/* Close Button - Inside sidebar, aligned with top */}
+        {isOpen && (
+          <button
+            onClick={onToggle}
+            className="absolute right-4 top-2 z-50 p-2 hover:bg-gray-100 rounded-lg transition-colors hidden lg:block"
+          >
+            <X size={20} className="text-primary" />
+          </button>
+        )}
+        
         <div className="p-6">
           {/* Logo */}
           <div className="mb-8 text-center">
@@ -141,19 +152,19 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
               <div className="space-y-2 text-sm text-hnmc-gray-600">
                 {contactInfo.phone && (
                   <a href={`tel:${contactInfo.phone}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
-                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <Phone size={16} className="text-secondary flex-shrink-0" />
                     <span>{contactInfo.phone}</span>
                   </a>
                 )}
                 {contactInfo.email && (
                   <a href={`mailto:${contactInfo.email}`} className="flex items-center space-x-2 hover:text-secondary transition-colors cursor-pointer">
-                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <Mail size={16} className="text-secondary flex-shrink-0" />
                     <span>{contactInfo.email}</span>
                   </a>
                 )}
                 {contactInfo.address && (
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <MapPin size={16} className="text-secondary flex-shrink-0" />
                     <span>{contactInfo.address}</span>
                   </div>
                 )}

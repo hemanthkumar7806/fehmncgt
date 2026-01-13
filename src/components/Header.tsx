@@ -1,4 +1,4 @@
-import { Menu, X, Phone, Calendar, Clock } from 'lucide-react'
+import { Menu, Phone, Calendar, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import fallbackDataNavbar from '@/constants/fallbackData.navbar.json'
@@ -50,12 +50,12 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Left Section - Hamburger + Logo */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Hamburger Button */}
+            {/* Hamburger Button - Only show menu icon (close button is in sidebar) */}
             <button
               onClick={onToggle}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              {isOpen ? <X size={20} className="text-primary sm:w-6 sm:h-6" /> : <Menu size={20} className="text-primary sm:w-6 sm:h-6" />}
+              {!isOpen && <Menu size={20} className="text-primary sm:w-6 sm:h-6" />}
             </button>
             
             {/* Logo - Desktop (hide both logo and tagline when sidebar is open) */}
