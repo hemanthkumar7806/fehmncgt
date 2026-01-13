@@ -55,12 +55,15 @@ export default function AppointmentConfirmation({
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Date:</span>
             <span className="font-medium">
-                {new Date(selectedDate).toLocaleDateString('en-US', { 
-                  weekday: 'long', 
-                  month: 'long', 
-                  day: 'numeric',
-                  timeZone: 'America/New_York'
-                })}
+                {(() => {
+                  const [year, month, day] = selectedDate.split('-').map(Number)
+                  const localDate = new Date(year, month - 1, day)
+                  return localDate.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    month: 'long', 
+                    day: 'numeric'
+                  })
+                })()}
             </span>
           </div>
           <div className="flex justify-between text-sm">

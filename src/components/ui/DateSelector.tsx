@@ -97,12 +97,15 @@ export default function DateSelector({ availableDates, onDateSelect, loading = f
               <div className="flex justify-between items-center">
                 <div>
                   <div className="font-semibold text-gray-900 group-hover:text-secondary">
-                    {new Date(dateInfo.date).toLocaleDateString('en-US', { 
-                      weekday: 'long', 
-                      month: 'short', 
-                      day: 'numeric',
-                      timeZone: 'America/New_York'
-                    })}
+                    {(() => {
+                      const [year, month, day] = dateInfo.date.split('-').map(Number)
+                      const localDate = new Date(year, month - 1, day)
+                      return localDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        month: 'short', 
+                        day: 'numeric'
+                      })
+                    })()}
                   </div>
                   <div className="text-sm text-gray-500">
                     {dateInfo.slotsCount} available slot{dateInfo.slotsCount !== 1 ? 's' : ''}

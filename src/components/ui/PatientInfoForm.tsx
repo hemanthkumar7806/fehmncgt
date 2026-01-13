@@ -107,11 +107,14 @@ export default function PatientInfoForm({
         <div>
           <h4 className="text-lg font-semibold text-gray-900">Your Information</h4>
           <p className="text-sm text-gray-600">
-              {new Date(selectedDate).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric',
-                timeZone: 'America/New_York'
-              })} at {selectedSlot?.time}
+              {(() => {
+                const [year, month, day] = selectedDate.split('-').map(Number)
+                const localDate = new Date(year, month - 1, day)
+                return localDate.toLocaleDateString('en-US', { 
+                  month: 'short', 
+                  day: 'numeric'
+                })
+              })()} at {selectedSlot?.time}
           </p>
         </div>
       </div>

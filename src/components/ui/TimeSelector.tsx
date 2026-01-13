@@ -41,12 +41,15 @@ export default function TimeSelector({
         <div>
           <h4 className="text-lg font-semibold text-gray-900">Select Time</h4>
           <p className="text-sm text-gray-600">
-            {new Date(selectedDate).toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              month: 'long', 
-              day: 'numeric',
-              timeZone: 'America/New_York'
-            })}
+            {(() => {
+              const [year, month, day] = selectedDate.split('-').map(Number)
+              const localDate = new Date(year, month - 1, day)
+              return localDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric'
+              })
+            })()}
           </p>
         </div>
       </div>
