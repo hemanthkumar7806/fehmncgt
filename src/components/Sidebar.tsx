@@ -103,7 +103,7 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
         {isOpen && (
           <button
             onClick={onToggle}
-            className="absolute right-4 top-2 z-50 p-2  bg-gray-100 rounded-lg transition-colors hidden lg:block"
+            className="absolute right-4 top-2 z-50 p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
           >
             <X size={20} className="text-primary" />
           </button>
