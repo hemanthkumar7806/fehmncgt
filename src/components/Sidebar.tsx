@@ -103,15 +103,15 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
         {isOpen && (
           <button
             onClick={onToggle}
-            className="absolute right-4 top-2 z-50 p-2 hover:bg-gray-100 rounded-lg transition-colors hidden lg:block"
+            className="absolute right-4 top-2 z-50 p-2  bg-gray-100 rounded-lg transition-colors hidden lg:block"
           >
             <X size={20} className="text-primary" />
           </button>
         )}
         
-        <div className="p-6">
+        <div className="px-6  pt-14">
           {/* Logo */}
-          <div className="mb-8 text-center">
+          <div className="mb-2 text-center">
             <Image 
               src={logo} 
               alt="Holy Name Medical Center Logo" 

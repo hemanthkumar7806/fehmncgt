@@ -133,6 +133,7 @@ interface HomePageData {
     backgroundImage?: {
       asset?: any;
     };
+    showImage?: boolean;
     heroLayout?: 'separate' | 'overlay';
     showSection?: boolean;
   };

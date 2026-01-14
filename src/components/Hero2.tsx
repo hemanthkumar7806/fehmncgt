@@ -44,6 +44,7 @@ interface HeroProps {
     backgroundImage?: {
       asset?: any
     }
+    showImage?: boolean
   }
 }
 
@@ -86,14 +87,15 @@ export default function Hero2({ hero }: HeroProps) {
   const rightContent = hero?.rightContent
   const floatingCards = hero?.floatingCards || []
   const backgroundImage = hero?.backgroundImage
+  const showImage = hero?.showImage !== false // Default to true if not specified
 
   return (
     <section 
       id="home" 
-      className="relative bg-primary xl:h-[calc(100vh-64px)] xl:max-h-[1000px] flex items-center"
+      className={`relative ${showImage && backgroundImage?.asset ? 'bg-primary' : ''} xl:h-[calc(100vh-64px)] xl:max-h-[1000px] flex items-center`}
     >
       {/* Background Image */}
-      {backgroundImage?.asset && (
+      {showImage && backgroundImage?.asset && (
         <div className="absolute inset-0 z-0">
           <Image
             src={urlFor(backgroundImage.asset).url()}

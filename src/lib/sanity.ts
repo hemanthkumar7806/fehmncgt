@@ -194,6 +194,7 @@ export const homepageQuery = `
           url
         }
       },
+      showImage,
       heroLayout,
       showSection
     },
@@ -564,6 +565,7 @@ export async function getHomePageById(id: string) {
             url
           }
         },
+        showImage,
         heroLayout,
         showSection
       },

@@ -10,6 +10,7 @@ import { renderTextWithHighlights } from '@/lib/textUtils'
 interface HeroProps {
   hero?: {
     backgroundImage?: { asset?: any }
+    showImage?: boolean
     heroLayout?: 'separate' | 'overlay'
     headline?: string
     subheadline?: any[]
@@ -161,14 +162,15 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
 export default function Hero({ hero }: HeroProps) {
   const layout = hero?.heroLayout || 'separate'
   const backgroundImage = hero?.backgroundImage
+  const showImage = hero?.showImage !== false // Default to true if not specified
 
   if (layout === 'overlay') {
     return (
       <section
         id="home"
-        className="relative bg-primary flex items-center min-h-[400px] md:min-h-[500px] lg:min-h-[700px] py-16"
+        className={`relative ${showImage && backgroundImage?.asset ? 'bg-primary' : ''} flex items-center min-h-[400px] md:min-h-[500px] lg:min-h-[700px] py-16`}
       >
-        {backgroundImage?.asset && (
+        {showImage && backgroundImage?.asset && (
           <>
             <div className="absolute inset-0 z-0">
               <Image
@@ -180,22 +182,22 @@ export default function Hero({ hero }: HeroProps) {
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-black/5 z-10" />
-            <div className="relative z-20 w-full">
-              <HeroContent hero={hero} isOverlay={true} />
-            </div>
           </>
         )}
+        <div className="relative z-20 w-full">
+          <HeroContent hero={hero} isOverlay={showImage && backgroundImage?.asset} />
+        </div>
       </section>
     )
   }
 
   return (
     <>
-      <section
-        id="home"
-        className="relative bg-primary flex items-center min-h-[400px] md:min-h-[500px] lg:min-h-[700px]"
-      >
-        {backgroundImage?.asset && (
+      {showImage && backgroundImage?.asset && (
+        <section
+          id="home"
+          className="relative bg-primary flex items-center min-h-[400px] md:min-h-[500px] lg:min-h-[700px]"
+        >
           <div className="absolute inset-0 z-0">
             <Image
               src={urlFor(backgroundImage.asset).url()}
@@ -205,8 +207,8 @@ export default function Hero({ hero }: HeroProps) {
               priority
             />
           </div>
-        )}
-      </section>
+        </section>
+      )}
       <section id="hero-content" className="py-16 px-6 bg-hnmc-gray">
         <HeroContent hero={hero} isOverlay={false} />
       </section>

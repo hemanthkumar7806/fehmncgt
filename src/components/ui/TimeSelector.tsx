@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, Calendar, RefreshCw } from 'lucide-react'
 
@@ -7,6 +8,8 @@ interface TimeSlot {
   time: string
   available: boolean
   type: 'consultation' | 'follow-up'
+  startTime?: string
+  endTime?: string
 }
 
 interface TimeSelectorProps {
@@ -24,6 +27,31 @@ export default function TimeSelector({
   onSlotSelect, 
   onBack 
 }: TimeSelectorProps) {
+  // Filter out past slots if the selected date is today
+  const filteredSlots = useMemo(() => {
+    const now = new Date()
+    // Get today's date in local timezone (YYYY-MM-DD format)
+    const todayYear = now.getFullYear()
+    const todayMonth = String(now.getMonth() + 1).padStart(2, '0')
+    const todayDay = String(now.getDate()).padStart(2, '0')
+    const todayDateString = `${todayYear}-${todayMonth}-${todayDay}`
+    
+    // If selected date is not today, return all slots
+    if (selectedDate !== todayDateString) {
+      return availableSlots
+    }
+    
+    // If selected date is today, filter out past slots
+    return availableSlots.filter(slot => {
+      // If slot has startTime, compare with current time
+      if (slot.startTime) {
+        const slotTime = new Date(slot.startTime)
+        return slotTime > now
+      }
+      // If no startTime, keep the slot (fallback for backward compatibility)
+      return true
+    })
+  }, [availableSlots, selectedDate])
   return (
     <motion.div
       key="select-time"
@@ -59,9 +87,9 @@ export default function TimeSelector({
           <RefreshCw className="w-6 h-6 animate-spin text-secondary" />
           <span className="ml-2 text-gray-600">Loading available slots...</span>
         </div>
-      ) : availableSlots.length > 0 ? (
+      ) : filteredSlots.length > 0 ? (
         <div className="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-          {availableSlots.map(slot => (
+          {filteredSlots.map(slot => (
             <button
               key={slot.time}
               onClick={() => slot.available && onSlotSelect(slot)}
