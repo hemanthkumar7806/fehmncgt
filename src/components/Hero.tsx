@@ -181,7 +181,7 @@ export default function Hero({ hero }: HeroProps) {
                 priority
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-black/5 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-black/15 z-10" />
           </>
         )}
         <div className="relative z-20 w-full">
