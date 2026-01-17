@@ -192,24 +192,25 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden"
+              className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Content - Horizontal Layout */}
-              <div className="flex h-full max-h-[85vh]">
+              {/* Modal Content - Responsive Layout */}
+              <div className="flex flex-col md:flex-row h-full max-h-[85vh]">
                 {/* Left Side - Doctor Image & Key Info */}
-                <div className="w-96 bg-gradient-to-br from-primary to-primary/80 flex flex-col relative">
+                <div className="w-full md:w-96 bg-gradient-to-br from-primary to-primary/80 flex flex-col relative">
+                  {/* Close Button - Top Right */}
                   <button
                     onClick={() => setShowBioModal(false)}
-                    className="absolute right-4 top-4 p-2 hover:bg-white/20 rounded-lg transition-colors text-white z-10"
+                    className="absolute right-4 top-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-white z-10"
                   >
-                    <X size={24} />
+                    <X size={20} className="text-white" />
                   </button>
                   
                   {/* Scrollable Content */}
-                  <div className="flex-1 overflow-y-auto p-6">
-                    {/* Doctor Image */}
-                    <div className="text-center mb-6">
+                  <div className="flex-1 overflow-y-auto p-6 pt-16 md:pt-6">
+                    {/* Doctor Image - Moved below close button area */}
+                    <div className="text-center mb-6 mt-4 md:mt-0">
                       {doctor.photo ? (
                         <div className="w-48 h-48 rounded-3xl overflow-hidden border-4 border-white/30 shadow-2xl mx-auto">
                           <Image
@@ -298,9 +299,9 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                 </div>
 
                 {/* Right Side - Content */}
-                <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col min-h-0">
                   {/* Content Area */}
-                  <div className="flex-1 p-8 overflow-y-auto max-h-[70vh]">
+                  <div className="flex-1 p-6 md:p-8 overflow-y-auto">
                 {/* About Section */}
                 {doctor.about && (
                   <div className="mb-6">
@@ -319,13 +320,13 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                   </div>
 
                   {/* Modal Footer */}
-                  <div className="p-8 bg-gray-50 border-t">
+                  <div className="p-6 md:p-8 bg-gray-50 border-t flex-shrink-0">
                     <button
                       onClick={() => {
                         setShowBioModal(false)
                         onBookAppointment(doctor)
                       }}
-                      className="w-full bg-secondary hover:bg-secondary/90 text-white py-4 px-6 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-3 text-lg"
+                      className="w-full bg-secondary hover:bg-secondary/90 text-white py-4 px-6 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-3 text-base md:text-lg"
                     >
                       <Calendar size={20} />
                       <span>Book Appointment with {doctor.name?.split(' ')[1]}</span>
