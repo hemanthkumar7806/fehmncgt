@@ -196,23 +196,23 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Content - Responsive Layout */}
-              <div className="flex flex-col md:flex-row h-full max-h-[85vh]">
+              <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
                 {/* Left Side - Doctor Image & Key Info */}
                 <div className="w-full md:w-96 bg-gradient-to-br from-primary to-primary/80 flex flex-col relative">
                   {/* Close Button - Top Right */}
                   <button
                     onClick={() => setShowBioModal(false)}
-                    className="absolute right-4 top-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-white z-10"
+                    className="absolute right-3 top-3 md:right-4 md:top-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-white z-10"
                   >
-                    <X size={20} className="text-white" />
+                    <X size={18} className="text-white" />
                   </button>
                   
                   {/* Scrollable Content */}
-                  <div className="flex-1 overflow-y-auto p-6 pt-16 md:pt-6">
-                    {/* Doctor Image - Moved below close button area */}
-                    <div className="text-center mb-6 mt-4 md:mt-0">
+                  <div className="flex-1 overflow-y-auto p-4 md:p-6 pt-12 md:pt-6">
+                    {/* Doctor Image - Compact on mobile */}
+                    <div className="text-center mb-4 md:mb-6">
                       {doctor.photo ? (
-                        <div className="w-48 h-48 rounded-3xl overflow-hidden border-4 border-white/30 shadow-2xl mx-auto">
+                        <div className="w-32 h-32 md:w-48 md:h-48 rounded-2xl md:rounded-3xl overflow-hidden border-4 border-white/30 shadow-2xl mx-auto">
                           <Image
                             src={typeof doctor.photo === 'string' ? doctor.photo : doctor.photo.asset?.url || ''}
                             alt={doctor.name || 'Doctor'}
@@ -222,8 +222,8 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                           />
                         </div>
                       ) : (
-                        <div className="w-48 h-48 bg-white/20 rounded-3xl flex items-center justify-center border-4 border-white/30 mx-auto">
-                          <span className="text-6xl font-bold text-white">
+                        <div className="w-32 h-32 md:w-48 md:h-48 bg-white/20 rounded-2xl md:rounded-3xl flex items-center justify-center border-4 border-white/30 mx-auto">
+                          <span className="text-4xl md:text-6xl font-bold text-white">
                             {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('') : 'DR'}
                           </span>
                         </div>
@@ -231,26 +231,26 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                     </div>
                     
                     {/* Doctor Basic Info */}
-                    <div className="text-white mb-6 text-center">
-                      <h2 className="text-xl font-bold mb-2">{doctor.name}</h2>
-                      <p className="text-white/90 mb-1">{doctor.title}</p>
-                      <p className="text-white/80 text-sm">{doctor.credentials}</p>
+                    <div className="text-white mb-4 md:mb-6 text-center">
+                      <h2 className="text-lg md:text-xl font-bold mb-1 md:mb-2">{doctor.name}</h2>
+                      <p className="text-white/90 text-sm md:text-base mb-1">{doctor.title}</p>
+                      <p className="text-white/80 text-xs md:text-sm">{doctor.credentials}</p>
                       {doctor.experience && (
-                        <div className="mt-3 flex items-center justify-center text-white/90 gap-2">
-                          <Award size={16} className="flex-shrink-0" />
-                          <span className="text-sm">{doctor.experience}</span>
+                        <div className="mt-2 md:mt-3 flex items-center justify-center text-white/90 gap-2">
+                          <Award size={14} className="flex-shrink-0 md:w-4 md:h-4" />
+                          <span className="text-xs md:text-sm">{doctor.experience}</span>
                         </div>
                       )}
                     </div>
 
-                    {/* Specialties Section - Left Side */}
+                    {/* Specialties Section */}
                     {doctor.specialties && doctor.specialties.length > 0 && (
-                      <div className="mb-6">
-                        <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-                          <Stethoscope size={16} className="text-white/80" />
+                      <div className="mb-4 md:mb-6">
+                        <h3 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3 flex items-center gap-2">
+                          <Stethoscope size={14} className="text-white/80 md:w-4 md:h-4" />
                           Specialties
                         </h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5 md:gap-2">
                           {doctor.specialties.map((specialty, index) => (
                             <span key={index} className="px-2 py-1 bg-white/20 text-white rounded-full text-xs font-medium border border-white/30">
                               {specialty}
@@ -260,14 +260,14 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                       </div>
                     )}
 
-                    {/* Education Section - Left Side */}
+                    {/* Education Section */}
                     {doctor.education && (
                       <div className="mb-4">
-                        <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-                          <GraduationCap size={16} className="text-white/80" />
+                        <h3 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3 flex items-center gap-2">
+                          <GraduationCap size={14} className="text-white/80 md:w-4 md:h-4" />
                           Education & Training
                         </h3>
-                        <div className="space-y-2 text-white/90 text-xs">
+                        <div className="space-y-1.5 md:space-y-2 text-white/90 text-xs">
                           {doctor.education.medicalSchool && (
                             <div>
                               <span className="font-medium text-white text-xs">Medical School:</span>
@@ -295,38 +295,51 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                         </div>
                       </div>
                     )}
+
+                    {/* Book Appointment Button - Mobile Only */}
+                    <div className="md:hidden mt-auto pt-4">
+                      <button
+                        onClick={() => {
+                          setShowBioModal(false)
+                          onBookAppointment(doctor)
+                        }}
+                        className="w-full bg-secondary hover:bg-secondary/90 text-white py-3 px-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 text-sm"
+                      >
+                        <Calendar size={18} />
+                        <span>Book Appointment</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                {/* Right Side - Content */}
-                <div className="flex-1 flex flex-col min-h-0">
+                {/* Right Side - Content (Desktop Only) */}
+                <div className="hidden md:flex flex-1 flex-col min-h-0">
                   {/* Content Area */}
-                  <div className="flex-1 p-6 md:p-8 overflow-y-auto">
-                {/* About Section */}
-                {doctor.about && (
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <User size={18} className="text-secondary" />
-                      About Dr. {doctor.name?.split(' ').pop()}
-                    </h3>
-                    <div className="text-gray-600 leading-relaxed space-y-3">
-                      {doctor.about.split('\n\n').map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
+                  <div className="flex-1 p-8 overflow-y-auto">
+                    {/* About Section */}
+                    {doctor.about && (
+                      <div className="mb-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                          <User size={18} className="text-secondary" />
+                          About Dr. {doctor.name?.split(' ').pop()}
+                        </h3>
+                        <div className="text-gray-600 leading-relaxed space-y-3">
+                          {doctor.about.split('\n\n').map((paragraph, index) => (
+                            <p key={index}>{paragraph}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Modal Footer */}
-                  <div className="p-6 md:p-8 bg-gray-50 border-t flex-shrink-0">
+                  <div className="p-8 bg-gray-50 border-t flex-shrink-0">
                     <button
                       onClick={() => {
                         setShowBioModal(false)
                         onBookAppointment(doctor)
                       }}
-                      className="w-full bg-secondary hover:bg-secondary/90 text-white py-4 px-6 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-3 text-base md:text-lg"
+                      className="w-full bg-secondary hover:bg-secondary/90 text-white py-4 px-6 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-3 text-lg"
                     >
                       <Calendar size={20} />
                       <span>Book Appointment with {doctor.name?.split(' ')[1]}</span>
