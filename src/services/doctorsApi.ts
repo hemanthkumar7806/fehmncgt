@@ -12,6 +12,14 @@ export interface Doctor {
   photo?: any
   profileLink?: string | null
   npi?: string
+  description?: string
+  about?: string
+  education?: {
+    medicalSchool?: string
+    internship?: string
+    residency?: string
+    fellowship?: string
+  }
   contactInfo?: {
     phone?: string
     email?: string

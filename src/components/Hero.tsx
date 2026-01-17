@@ -12,6 +12,7 @@ interface HeroProps {
     backgroundImage?: { asset?: any }
     showImage?: boolean
     heroLayout?: 'separate' | 'overlay'
+    variant?: 'default' | 'centered-blue'
     headline?: string
     subheadline?: any[]
     highlightedTexts?: string[]
@@ -34,7 +35,7 @@ const handleSmoothScroll = (link: string, e: React.MouseEvent) => {
   }
 }
 
-const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: boolean }) => {
+const HeroContent = ({ hero, isOverlay = false, isCenteredBlue = false }: HeroProps & { isOverlay?: boolean; isCenteredBlue?: boolean }) => {
   const { headline, highlightedTexts = [], subheadline = [], badge, ctaButton, secondaryButton } = hero || {}
   
   return (
@@ -42,8 +43,8 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
       <div className={`max-w-4xl ${isOverlay ? 'ml-0 text-left' : 'mx-auto text-center'}`}>
         {badge?.showBadge && (
           <motion.div
-            className={`${isOverlay ? 'inline-flex' : 'inline-flex'} items-center px-4 py-2 rounded-full text-sm font-medium mb-8 ${
-              isOverlay 
+            className={`${isOverlay || isCenteredBlue ? 'inline-flex' : 'inline-flex'} items-center px-4 py-2 rounded-full text-sm font-medium mb-8 ${
+              isCenteredBlue || isOverlay 
                 ? 'bg-white/20 backdrop-blur-sm text-white' 
                 : 'bg-hnmc-teal/10 text-hnmc-teal'
             }`}
@@ -59,7 +60,7 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
         {headline && (
           <motion.h1
             className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 ${
-              isOverlay ? 'text-white' : 'text-primary'
+              isCenteredBlue || isOverlay ? 'text-white' : 'text-primary'
             }`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +74,7 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
         {subheadline.length > 0 && (
           <motion.div
             className={`text-lg md:text-xl leading-relaxed mb-12 font-body ${
-              isOverlay ? 'text-white' : 'text-hnmc-gray-600'
+              isCenteredBlue || isOverlay ? 'text-white' : 'text-hnmc-gray-600'
             }`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -83,7 +84,7 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
             <RichTextRenderer
               content={subheadline}
               className={`[&_p]:text-lg md:[&_p]:text-xl [&_p]:leading-relaxed [&_p]:mb-0 ${
-                isOverlay ? '[&_p]:text-white' : '[&_p]:text-hnmc-gray-600'
+                isCenteredBlue || isOverlay ? '[&_p]:text-white' : '[&_p]:text-hnmc-gray-600'
               }`}
             />
           </motion.div>
@@ -161,8 +162,23 @@ const HeroContent = ({ hero, isOverlay = false }: HeroProps & { isOverlay?: bool
 
 export default function Hero({ hero }: HeroProps) {
   const layout = hero?.heroLayout || 'separate'
+  const variant = hero?.variant || 'default'
   const backgroundImage = hero?.backgroundImage
   const showImage = hero?.showImage !== false // Default to true if not specified
+
+  // New centered blue variant
+  if (variant === 'centered-blue') {
+    return (
+      <section
+        id="home"
+        className="relative bg-primary flex items-center h-[50vh] py-16"
+      >
+        <div className="relative z-20 w-full">
+          <HeroContent hero={hero} isOverlay={false} isCenteredBlue={true} />
+        </div>
+      </section>
+    )
+  }
 
   if (layout === 'overlay') {
     return (
@@ -181,11 +197,11 @@ export default function Hero({ hero }: HeroProps) {
                 priority
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-black/15 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-black/5 z-10" />
           </>
         )}
         <div className="relative z-20 w-full">
-          <HeroContent hero={hero} isOverlay={showImage && backgroundImage?.asset} />
+          <HeroContent hero={hero} isOverlay={showImage && backgroundImage?.asset} isCenteredBlue={false} />
         </div>
       </section>
     )
@@ -210,7 +226,7 @@ export default function Hero({ hero }: HeroProps) {
         </section>
       )}
       <section id="hero-content" className="py-16 px-6 bg-hnmc-gray">
-        <HeroContent hero={hero} isOverlay={false} />
+        <HeroContent hero={hero} isOverlay={false} isCenteredBlue={false} />
       </section>
     </>
   )

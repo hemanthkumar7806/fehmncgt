@@ -99,6 +99,16 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
+               {/* Logo */}
+        <div className="my-2 text-left ml-5">
+            <Image 
+              src={logo} 
+              alt="Holy Name Medical Center Logo" 
+              width={150} 
+              height={100}
+              className="object-contain"
+            />
+          </div>
         {/* Close Button - Inside sidebar, aligned with top */}
         {isOpen && (
           <button
@@ -109,17 +119,8 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
           </button>
         )}
         
-        <div className="px-6  pt-14">
-          {/* Logo */}
-          <div className="mb-2 text-center">
-            <Image 
-              src={logo} 
-              alt="Holy Name Medical Center Logo" 
-              width={200} 
-              height={100}
-              className="object-contain mx-auto"
-            />
-          </div>
+        <div className="px-6  pt-2">
+   
 
           {/* Navigation Menu */}
           <nav className="space-y-2">

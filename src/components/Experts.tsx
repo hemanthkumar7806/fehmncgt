@@ -47,7 +47,10 @@ interface ExpertsProps {
 }
 
 export default function Experts({ title, highlightedTexts, subtitle, specialityCode }: ExpertsProps) {
-  const { doctors, isLoading, error, refetch } = useDoctors(specialityCode)
+  const { doctors: allDoctors, isLoading, error, refetch } = useDoctors(specialityCode)
+  
+  // Limit to 1 doctor for display
+  const doctors = allDoctors.slice(0, 1)
   
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
   const [showAppointmentModal, setShowAppointmentModal] = useState(false)
@@ -146,15 +149,15 @@ export default function Experts({ title, highlightedTexts, subtitle, specialityC
           ) : (
             <>
               {doctors.length <= 4 ? (
-                // Static grid for 1-4 cards (centered)
+                // Static grid for 1-4 cards (centered) - increased width more
                 <div className={`grid gap-6 ${
                   doctors.length === 1 
-                    ? 'grid-cols-1 max-w-sm mx-auto' 
+                    ? 'grid-cols-1 max-w-lg mx-auto' 
                     : doctors.length === 2 
-                    ? 'grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto' 
+                    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
                     : doctors.length === 3 
-                    ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto' 
-                    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                    ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto' 
+                    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto'
                 }`}>
                   {doctors.map((doctor, index) => (
                     <DoctorCard 

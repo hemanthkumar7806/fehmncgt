@@ -4,23 +4,31 @@ import { Doctor, AvailableDate } from '@/services/doctorsApi'
 export const mockDoctors: Doctor[] = [
   {
     _id: "mock-1",
-    name: "Dr. Sarah Johnson",
+    name: "Dr. Eric Liberman",
     title: "Interventional Radiologist",
-    credentials: "MD, FSIR",
+    credentials: "DO, FSIR",
     specialties: ["Uterine Fibroid Embolization", "Interventional Radiology", "Women's Health"],
     experience: "15+ years",
+    description: "Dr. Eric Liberman is board-certified in Obstetrics and Gynecology and fellowship-trained in Minimally Invasive Gynecologic Surgery (MIGS). He obtained a Focused Practice Designation in MIGS and is the Director of Minimally Invasive Gynecologic Surgery at Holy Name.",
+    about: "Dr. Eric Liberman is board-certified in Obstetrics and Gynecology and fellowship-trained in Minimally Invasive Gynecologic Surgery (MIGS). He obtained a Focused Practice Designation in MIGS and is the Director of Minimally Invasive Gynecologic Surgery at Holy Name.\n\nDr. Liberman provides patient-centered care tailored to each person and values a teams-based approach to treatment. He's proud to be at Holy Name, where the commitment to compassionate, comprehensive care reflects his own philosophy of a patient-centered approach. The most rewarding part of his work, he says, is hearing how his patients' quality of life has improved after treatment.\n\nDr. Liberman's special interests include abnormal uterine bleeding, fibroids, endometrial polyps, adenomyosis, ovarian cysts, endometriosis, and pelvic pain. His expertise includes Da Vinci robotic-assisted surgery, laparoscopic surgery, and hysteroscopy.\n\nDr. Liberman attended medical school at the New York College of Osteopathic Medicine and completed his internship and residency at Saint Barnabas Medical Center in Livingston, NJ. He then further subspecialized by completing a fellowship in Minimally Invasive Gynecologic Surgery at Montefiore Medical Center, Albert Einstein College of Medicine in Bronx, NY, where he also held academic appointments. Over the past six years Dr. Liberman has served as the Director of Minimally Invasive Gynecologic Surgery at other institutions in New Jersey, including Morristown Medical Center and Cooperman Barnabas Medical Center.\n\nDr. Liberman has published research on topics such as post-operative pain management and robotic-assisted surgery. His work has been published in esteemed medical journals and presented across North America. Dr. Liberman also serves as faculty at national conferences.",
+    education: {
+      medicalSchool: "New York College of Osteopathic Medicine",
+      internship: "Saint Barnabas Medical Center",
+      residency: "Saint Barnabas Medical Center",
+      fellowship: "Montefiore Medical Center"
+    },
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Eric Liberman, DO - 2.jpg"
       }
     },
     npi: "1234567890",
     contactInfo: {
-      phone: "(555) 123-4567",
-      email: "sarah.johnson@hnmc.com",
-      addressLine1: "123 Medical Center Dr",
-      city: "New York",
-      state: "NY"
+      phone: "201-833-7212",
+      email: "eric.liberman@hnmc.com",
+      addressLine1: "222 Cedar Lane, Suite 303 Teaneck",
+      city: "Teaneck",
+      state: "NJ"
     },
     organization: {
       organizationId: "org-001",
@@ -29,20 +37,20 @@ export const mockDoctors: Doctor[] = [
   },
   {
     _id: "mock-2",
-    name: "Dr. Michael Chen",
+    name: "Dr. Diana Hearn",
     title: "Gynecologist",
     credentials: "MD, FACOG",
     specialties: ["Minimally Invasive Surgery", "Fibroid Treatment", "Reproductive Health"],
     experience: "12+ years",
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Diana Hearn, MD - 5.jpg"
       }
     },
     npi: "1234567891",
     contactInfo: {
       phone: "(555) 123-4568",
-      email: "michael.chen@hnmc.com",
+      email: "diana.hearn@hnmc.com",
       addressLine1: "123 Medical Center Dr",
       city: "New York",
       state: "NY"
@@ -54,20 +62,20 @@ export const mockDoctors: Doctor[] = [
   },
   {
     _id: "mock-3",
-    name: "Dr. Emily Rodriguez",
+    name: "Dr. Jason Kanos",
     title: "Reproductive Endocrinologist",
     credentials: "MD, PhD, REI",
     specialties: ["Fertility Treatment", "Fibroid Impact on Fertility", "Hormonal Health"],
     experience: "10+ years",
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Jason Kanos MD 03.JPG"
       }
     },
     npi: "1234567892",
     contactInfo: {
       phone: "(555) 123-4569",
-      email: "emily.rodriguez@hnmc.com",
+      email: "jason.kanos@hnmc.com",
       addressLine1: "123 Medical Center Dr",
       city: "New York",
       state: "NY"
@@ -79,20 +87,20 @@ export const mockDoctors: Doctor[] = [
   },
   {
     _id: "mock-4",
-    name: "Dr. David Williams",
+    name: "Dr. Payal Shah",
     title: "Interventional Radiologist",
     credentials: "MD, FSIR, FACR",
     specialties: ["UFE Procedures", "Image-Guided Therapy", "Pain Management"],
     experience: "18+ years",
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Payal Shah, MD - 7.jpg"
       }
     },
     npi: "1234567893",
     contactInfo: {
       phone: "(555) 123-4570",
-      email: "david.williams@hnmc.com",
+      email: "payal.shah@hnmc.com",
       addressLine1: "123 Medical Center Dr",
       city: "New York",
       state: "NY"
@@ -111,7 +119,7 @@ export const mockDoctors: Doctor[] = [
     experience: "14+ years",
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Eric Liberman, DO - 2.jpg"
       }
     },
     npi: "1234567894",
@@ -136,7 +144,7 @@ export const mockDoctors: Doctor[] = [
     experience: "20+ years",
     photo: {
       asset: {
-        url: "/dr_eric_liberman.webp"
+        url: "/Diana Hearn, MD - 5.jpg"
       }
     },
     npi: "1234567895",

@@ -367,7 +367,7 @@ export default function ClientHomePage() {
             }`}
           >
             {homePageData?.hero?.showSection !== false && (
-              <Hero hero={homePageData?.hero} />
+              <Hero hero={{...homePageData?.hero, variant: 'centered-blue'}} />
             )}
 
             {homePageData?.doctorsSpeciality?.showSection !== false && (
