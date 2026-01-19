@@ -62,7 +62,7 @@ export default function About({ about }: AboutProps) {
   };
 
   return (
-    <section className="py-20 bg-hnmc-gray-50">
+    <section className="py-10 bg-hnmc-gray-50">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-16 items-start">
           {/* Content */}

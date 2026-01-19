@@ -65,7 +65,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
   };
 
   return (
-    <section className="container mx-auto px-6 lg:px-8 py-20">
+    <section className="container mx-auto px-6 lg:px-8 py-10">
       {/* Section Header */}
       <motion.div
         className="text-center mb-10"
@@ -100,7 +100,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
               <div className="max-w-5xl mx-auto">
                 <RichTextRenderer 
                   content={topic.mainContent} 
-                  className="text-hnmc-gray-700 leading-relaxed text-md lg:text-xl"
+                  className="text-hnmc-gray-700 leading-1 text-md lg:text-xl"
                 />
               </div>
             </motion.div>
@@ -130,7 +130,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                   {topic.detailsList && (
                     <RichTextRenderer 
                       content={topic.detailsList}
-                      className="text-hnmc-gray-700 text-sm md:text-lg leading-relaxed"
+                      className="text-hnmc-gray-700 text-sm md:text-lg leading-1"
                     />
                   )}
                   
@@ -174,7 +174,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                     </h3>
                   </div>
 
-                  <div className="text-white mb-8 leading-relaxed text-sm md:text-lg">
+                  <div className="text-white mb-8 leading-1 text-sm md:text-lg">
                     {topic.callToAction.description && (
                       <RichTextRenderer 
                         content={topic.callToAction.description} 
@@ -257,7 +257,7 @@ export default function UnderstandTopic({ topic }: { topic?: Topic }) {
                   {card.description && card.description.length > 0 ? (
                     <RichTextRenderer 
                       content={card.description} 
-                      className="text-hnmc-gray-600 leading-relaxed [&_p]:mb-0 text-sm md:text-lg"
+                      className="text-hnmc-gray-600 leading-1 [&_p]:mb-0 text-sm md:text-lg"
                     />
                   ) : null}
                 </div>

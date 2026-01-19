@@ -54,7 +54,7 @@ export default function Testimonials({
   };
 
   return (
-    <section className="py-20 px-6 md:px-12">
+    <section className="py-10 px-6 md:px-12">
       <div className="w-[90%] mx-auto">
         {/* Header Section */}
         <motion.div 
@@ -91,32 +91,55 @@ export default function Testimonials({
             >
               
               <div className="relative z-1 flex flex-col h-full">
-                {/* Quote Icon */}
-                <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300">
-                  <Quote className="w-8 h-8 text-white" />
+                {/* User Info at Top */}
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                    {testimonial.profilePhoto?.asset?.url ? (
+                      <Image
+                        src={urlFor(testimonial.profilePhoto.asset).url()}
+                        alt={testimonial.author || "Profile"}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-left flex-1">
+                    <p className="font-bold text-gray-900 text-lg">
+                      {testimonial.author}
+                    </p>
+                    {testimonial.authorTitle && (
+                      <p className="text-sm text-secondary font-medium mb-2">
+                        {testimonial.authorTitle}
+                      </p>
+                    )}
+                    {/* Rating below name */}
+                    {testimonial.rating && (
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-4 h-4 transition-colors duration-300 ${
+                              i < (testimonial.rating || 0)
+                                ? "text-amber-400 fill-amber-400"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                        <span className="ml-2 text-xs font-medium text-gray-600">
+                          {testimonial.rating}/5
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* Rating */}
-                {testimonial.rating && (
-                  <div className="flex items-center gap-1 mb-6">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-5 h-5 transition-colors duration-300 ${
-                          i < (testimonial.rating || 0)
-                            ? "text-amber-400 fill-amber-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                    <span className="ml-2 text-sm font-medium text-gray-600">
-                      {testimonial.rating}/5
-                    </span>
-                  </div>
-                )}
-
                 {/* Quote */}
-                <blockquote className="text-gray-700 leading-relaxed mb-8 text-lg relative flex-1">
+                <blockquote className="text-gray-700 leading-relaxed  text-lg relative flex-1">
                   <span className="text-4xl text-secondary/30 absolute -top-2 -left-2">&quot;</span>
                   <div className="relative z-10">
                     {testimonial.quote && (
@@ -134,37 +157,6 @@ export default function Testimonials({
                   <span className="text-4xl text-secondary/30 absolute -bottom-4 -right-2">&quot;</span>
                 </blockquote>
 
-                <div className="mt-auto">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      {testimonial.profilePhoto?.asset?.url ? (
-                        <Image
-                          src={urlFor(testimonial.profilePhoto.asset).url()}
-                          alt={testimonial.author || "Profile"}
-                          width={48}
-                          height={48}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center">
-                          <User className="w-6 h-6 text-white" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-left flex-1">
-                      <p className="font-bold text-gray-900 text-lg">
-                        {testimonial.author}
-                      </p>
-                      {testimonial.authorTitle && (
-                        <p className="text-sm text-secondary font-medium">
-                          {testimonial.authorTitle}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  
-                   
-                </div>
 
               </div>
             </motion.div>

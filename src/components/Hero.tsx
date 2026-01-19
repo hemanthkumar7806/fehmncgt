@@ -171,7 +171,7 @@ export default function Hero({ hero }: HeroProps) {
     return (
       <section
         id="home"
-        className="relative bg-primary flex items-center min-h-[60vh] sm:min-h-[55vh] md:min-h-[50vh] py-12 sm:py-16 pb-20 sm:pb-16"
+        className="relative bg-primary flex items-center min-h-[60vh] sm:min-h-[55vh] md:min-h-[40vh] py-12 sm:py-16 pb-20 sm:pb-16"
       >
         <div className="relative z-20 w-full">
           <HeroContent hero={hero} isOverlay={false} isCenteredBlue={true} />
@@ -225,7 +225,7 @@ export default function Hero({ hero }: HeroProps) {
           </div>
         </section>
       )}
-      <section id="hero-content" className="py-16 px-6 bg-hnmc-gray">
+      <section id="hero-content" className="py-4 px-6 bg-hnmc-gray">
         <HeroContent hero={hero} isOverlay={false} isCenteredBlue={false} />
       </section>
     </>

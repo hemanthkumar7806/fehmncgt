@@ -39,7 +39,7 @@ export default function CTA({ cta }: CTAProps) {
   }
 
   return (
-    <section className="py-16 px-6">
+    <section className="py-10 px-6">
       <div className="container mx-auto">
         <motion.div 
           className="bg-secondary rounded-3xl p-8 md:p-12 text-white max-w-4xl mx-auto text-center"

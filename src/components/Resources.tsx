@@ -64,7 +64,7 @@ export default function Resources({ resources }: ResourcesProps) {
   const filteredResources = resourcesList.filter(resource => resource.showCard !== false);
 
   return (
-    <section className="py-20 bg-hnmc-gray-50 relative overflow-hidden">
+    <section className="py-10 bg-hnmc-gray-50 relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-8 relative z-1">
         {/* Section Header */}
         <motion.div
