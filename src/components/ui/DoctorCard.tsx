@@ -55,7 +55,10 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
     >
       <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden transition-all duration-300 h-full flex flex-col">
         {/* Doctor Header - Horizontal Layout */}
-        <div className="relative bg-primary p-4">
+        <div 
+          className="relative bg-primary p-4 cursor-pointer hover:bg-primary/90 transition-colors"
+          onClick={doctor.profileLink ? undefined : () => setShowBioModal(true)}
+        >
           <div className="flex items-center gap-5">
             {/* Large Square Doctor Image - Left Side */}
             <div className="w-28 h-28 bg-primary rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0 shadow-lg">
@@ -81,21 +84,19 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                   href={doctor.profileLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg font-bold text-white mb-1 hover:text-white/90 transition-colors flex items-center gap-2 cursor-pointer"
+                  className="text-xl font-bold text-white mb-1 hover:text-white/90 transition-colors flex items-center gap-2 cursor-pointer"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <span>{doctor.name || ''}</span>
                   <ExternalLink size={16} className="flex-shrink-0" />
                 </a>
               ) : (
-                <button
-                  onClick={() => setShowBioModal(true)}
-                  className="text-lg font-bold text-white mb-1 hover:text-white/90 transition-colors cursor-pointer text-left"
-                >
+                <h3 className="text-lg font-bold text-white mb-1">
                   {doctor.name || ''}
-                </button>
+                </h3>
               )}
-              {doctor.title && <p className="text-white/90 text-sm mb-1">{doctor.title}</p>}
-              {doctor.credentials && <p className="text-white/80 text-xs">{doctor.credentials}</p>}
+              {doctor.title && <p className="text-white/90 text-lg mb-1">{doctor.title}</p>}
+              {doctor.credentials && <p className="text-white/80 text-lg">{doctor.credentials}</p>}
             </div>
           </div>
         </div>
@@ -196,19 +197,20 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Content - Responsive Layout */}
-              <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
+              <div className="flex flex-col md:flex-row h-full max-h-[90vh] relative">
+                {/* Close Button - Mobile only on left side, Desktop on right side */}
+                <button
+                  onClick={() => setShowBioModal(false)}
+                  className="absolute right-3 top-3 md:right-4 md:top-4 p-2 bg-white/20 md:bg-gray-200 hover:bg-white/30 md:hover:bg-gray-300 rounded-lg transition-colors text-white md:text-gray-600 z-20"
+                >
+                  <X size={18} />
+                </button>
+
                 {/* Left Side - Doctor Image & Key Info */}
                 <div className="w-full md:w-96 bg-gradient-to-br from-primary to-primary/80 flex flex-col relative">
-                  {/* Close Button - Top Right */}
-                  <button
-                    onClick={() => setShowBioModal(false)}
-                    className="absolute right-3 top-3 md:right-4 md:top-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-white z-10"
-                  >
-                    <X size={18} className="text-white" />
-                  </button>
                   
                   {/* Scrollable Content */}
-                  <div className="flex-1 overflow-y-auto p-4 md:p-6 pt-12 md:pt-6">
+                  <div className="flex-1 overflow-y-auto p-4 md:p-6 pt-12">
                     {/* Doctor Image - Compact on mobile */}
                     <div className="text-center mb-4 md:mb-6">
                       {doctor.photo ? (
