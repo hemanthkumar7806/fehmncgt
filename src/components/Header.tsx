@@ -28,9 +28,10 @@ interface HeaderProps {
   isOpen: boolean
   onToggle: () => void
   navbarData?: NavbarData | null
+  onBookAppointment?: () => void
 }
 
-export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
+export default function Header({ isOpen, onToggle, navbarData, onBookAppointment }: HeaderProps) {
   const data = navbarData || fallbackDataNavbar
   
   const desktopLogo = data?.logo?.asset ? urlFor(data.logo.asset).url() : '/holy_name_logo.jpg'
@@ -107,6 +108,16 @@ export default function Header({ isOpen, onToggle, navbarData }: HeaderProps) {
                 href="#experts"
                 onClick={(e) => {
                   e.preventDefault()
+                  
+                  // Check if this is a book appointment action
+                  if (ctaText?.toLowerCase().includes('book') || ctaText?.toLowerCase().includes('appointment')) {
+                    if (onBookAppointment) {
+                      onBookAppointment()
+                      return
+                    }
+                  }
+                  
+                  // Default behavior - scroll to experts section
                   const element = document.getElementById('experts')
                   if (element) {
                     const headerHeight = 100

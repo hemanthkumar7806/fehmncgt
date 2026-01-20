@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, forwardRef, useImperativeHandle } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -46,41 +46,51 @@ interface ExpertsProps {
   specialityCode?: string
 }
 
-export default function Experts({ title, highlightedTexts, subtitle, specialityCode }: ExpertsProps) {
-  const { doctors: allDoctors, isLoading, error, refetch } = useDoctors(specialityCode)
-  
-  // Limit to 1 doctor for display
-  const doctors = allDoctors.slice(0, 1)
-  
-  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
-  const [showAppointmentModal, setShowAppointmentModal] = useState(false)
-  const [swiper, setSwiper] = useState<SwiperType | null>(null)
-  const [isBeginning, setIsBeginning] = useState(true)
-  const [isEnd, setIsEnd] = useState(false)
+const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>(
+  ({ title, highlightedTexts, subtitle, specialityCode }, ref) => {
+    const { doctors: allDoctors, isLoading, error, refetch } = useDoctors(specialityCode)
+    
+    // Limit to 1 doctor for display
+    const doctors = allDoctors.slice(0, 1)
+    
+    const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
+    const [showAppointmentModal, setShowAppointmentModal] = useState(false)
+    const [swiper, setSwiper] = useState<SwiperType | null>(null)
+    const [isBeginning, setIsBeginning] = useState(true)
+    const [isEnd, setIsEnd] = useState(false)
 
-  // Check if navigation controls should be shown
-  // Only show navigation for Swiper (5+ cards)
-  const shouldShowNavigation = doctors.length > 4
-  
-  // If no doctors available and not loading, don't render the section
-  if (!isLoading && doctors.length === 0 && !error) {
-    return null
-  }
+    // Check if navigation controls should be shown
+    // Only show navigation for Swiper (5+ cards)
+    const shouldShowNavigation = doctors.length > 4
+    
+    // Expose triggerBookAppointment method to parent
+    useImperativeHandle(ref, () => ({
+      triggerBookAppointment: () => {
+        if (doctors.length > 0) {
+          handleBookAppointment(doctors[0])
+        }
+      }
+    }))
+    
+    // If no doctors available and not loading, don't render the section
+    if (!isLoading && doctors.length === 0 && !error) {
+      return null
+    }
 
-  const handleSlideChange = (swiper: SwiperType) => {
-    setIsBeginning(swiper.isBeginning)
-    setIsEnd(swiper.isEnd)
-  }
+    const handleSlideChange = (swiper: SwiperType) => {
+      setIsBeginning(swiper.isBeginning)
+      setIsEnd(swiper.isEnd)
+    }
 
-  const handleBookAppointment = (doctor: Doctor) => {
-    setSelectedDoctor(doctor)
-    setShowAppointmentModal(true)
-  }
+    const handleBookAppointment = (doctor: Doctor) => {
+      setSelectedDoctor(doctor)
+      setShowAppointmentModal(true)
+    }
 
-  const handleCloseModal = () => {
-    setShowAppointmentModal(false)
-    setSelectedDoctor(null)
-  }
+    const handleCloseModal = () => {
+      setShowAppointmentModal(false)
+      setSelectedDoctor(null)
+    }
 
   return (
     <section id="experts" className="py-10">
@@ -243,4 +253,8 @@ export default function Experts({ title, highlightedTexts, subtitle, specialityC
       `}</style>
     </section>
   )
-}
+})
+
+Experts.displayName = 'Experts'
+
+export default Experts

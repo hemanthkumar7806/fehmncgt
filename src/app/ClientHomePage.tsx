@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
@@ -288,6 +288,16 @@ export default function ClientHomePage() {
   const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  // Ref to access the Experts component's book appointment function
+  const expertsRef = useRef<{ triggerBookAppointment: () => void } | null>(null);
+  
+  // Handler to trigger book appointment for first doctor
+  const handleBookAppointment = () => {
+    if (expertsRef.current) {
+      expertsRef.current.triggerBookAppointment();
+    }
+  };
 
   useEffect(() => {
     let isMounted = true; // Prevent setting state if component unmounts
@@ -353,12 +363,14 @@ export default function ClientHomePage() {
             isOpen={isSidebarOpen}
             onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
             navbarData={navbarData}
+            onBookAppointment={handleBookAppointment}
           />
 
           <Sidebar
             isOpen={isSidebarOpen}
             onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
             sidebarData={sidebarData}
+            onBookAppointment={handleBookAppointment}
           />
 
           <main
@@ -373,6 +385,7 @@ export default function ClientHomePage() {
             {homePageData?.doctorsSpeciality?.showSection !== false && (
               <section id="dr-liberman">
                 <Experts
+                  ref={expertsRef}
                   title={homePageData?.doctorsSpeciality?.title}
                   highlightedTexts={homePageData?.doctorsSpeciality?.highlightedTexts}
                   subtitle={homePageData?.doctorsSpeciality?.subtitle}

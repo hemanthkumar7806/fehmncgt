@@ -121,7 +121,6 @@ const HeroContent = ({ hero, isOverlay = false, isCenteredBlue = false }: HeroPr
                   }
                 }}
               >
-                <Calendar size={20} className="mr-2" />
                 <span>{ctaButton.text}</span>
               </a>
             )}

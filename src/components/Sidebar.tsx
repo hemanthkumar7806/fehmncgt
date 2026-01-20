@@ -29,9 +29,10 @@ interface SidebarProps {
   isOpen: boolean
   onToggle: () => void
   sidebarData?: SidebarData | null
+  onBookAppointment?: () => void
 }
 
-export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps) {
+export default function Sidebar({ isOpen, onToggle, sidebarData, onBookAppointment }: SidebarProps) {
   const [activeIndex, setActiveIndex] = useState<number>(0)
 
   // Function to get Lucide icon by name
@@ -58,6 +59,22 @@ export default function Sidebar({ isOpen, onToggle, sidebarData }: SidebarProps)
   const handleLinkClick = (item: any, index: number) => {
     setActiveIndex(index)
     if (item.linkType === 'internal' && item.internalSection) {
+      // Check if this is a book appointment section
+      if (item.internalSection?.toLowerCase().includes('book') || 
+          item.internalSection?.toLowerCase().includes('appointment') ||
+          item.text?.toLowerCase().includes('book') ||
+          item.text?.toLowerCase().includes('appointment')) {
+        if (onBookAppointment) {
+          onBookAppointment()
+          // Only close sidebar on mobile
+          if (window.innerWidth < 1024) {
+            onToggle()
+          }
+          return
+        }
+      }
+      
+      // Default behavior - scroll to section
       const element = document.getElementById(item.internalSection)
       if (element) {
         // Get header height and add some padding
