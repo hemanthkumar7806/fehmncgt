@@ -319,14 +319,14 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                   {/* Content Area */}
                   <div className="flex-1 p-8 overflow-y-auto">
                     {/* About Section */}
-                    {doctor.about && (
+                    {doctor.description && (
                       <div className="mb-6">
                         <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
                           <User size={18} className="text-secondary" />
                           About Dr. {doctor.name?.split(' ').pop()}
                         </h3>
                         <div className="text-gray-600 leading-relaxed space-y-3">
-                          {doctor.about.split('\n\n').map((paragraph, index) => (
+                          {doctor.description.split('\n\n').map((paragraph, index) => (
                             <p key={index}>{paragraph}</p>
                           ))}
                         </div>
