@@ -7,6 +7,7 @@ import InsuranceAndContactSection from '@/components/InsuranceAndContactSection'
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import Footer from '@/components/Footer';
+import FloatingChatWidgetWrapper from '@/app/FloatingChatWidgetWrapper';
 import { DoctorProvider } from '@/contexts/DoctorContext';
 import { getHomePageData, getNavbarData, getFooterData, getSidebarData } from '@/lib/sanity';
 import { generateMetadataFromSanity, renderStructuredData } from '@/lib/seo';
@@ -253,6 +254,8 @@ export default async function Home() {
         <NewsletterSection data={homeData?.newsletter} />
         <Footer data={footerData ?? undefined} />
       </main>
+      {/* Demo only – not for production */}
+      <FloatingChatWidgetWrapper />
     </DoctorProvider>
   );
 }

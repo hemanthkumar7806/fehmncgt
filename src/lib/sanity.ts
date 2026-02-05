@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client'
-import { createImageUrlBuilder } from '@sanity/image-url'
+import imageUrlBuilder from '@sanity/image-url'
 
 // Only log environment variables once in development
 if (process.env.NODE_ENV === 'development' && typeof window === 'undefined') {
@@ -52,7 +52,7 @@ export async function testSanityConnection() {
   }
 }
 
-const builder = createImageUrlBuilder(client)
+const builder = imageUrlBuilder(client)
 
 export function urlFor(source: any) {
   return builder.image(source)

@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: blob: https: http:",
     "media-src 'self' https: http:",
-    "connect-src 'self' https://s1kzcjfe.api.sanity.io https://cdn.sanity.io https://www.googletagmanager.com https://analytics.google.com https://www.google-analytics.com https://uatmakto.hnhad.holyname.org",
+    "connect-src 'self' http://localhost:8000 https://s1kzcjfe.api.sanity.io https://cdn.sanity.io https://www.googletagmanager.com https://analytics.google.com https://www.google-analytics.com https://uatmakto.hnhad.holyname.org",
     "frame-src 'self' https:",
     "object-src 'none'",
     "base-uri 'self'",
