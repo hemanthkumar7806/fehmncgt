@@ -7,8 +7,14 @@ import InsuranceAndContactSection from '@/components/InsuranceAndContactSection'
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import Footer from '@/components/Footer';
-import FloatingChatWidgetWrapper from '@/app/FloatingChatWidgetWrapper';
+import dynamic from 'next/dynamic';
 import { DoctorProvider } from '@/contexts/DoctorContext';
+
+// Only load chat widget when enabled (demo). Omitting on Vercel avoids SDK build error (useEffectEvent).
+const FloatingChatWidgetWrapper =
+  process.env.NEXT_PUBLIC_ENABLE_CHAT_WIDGET === 'true'
+    ? dynamic(() => import('@/app/FloatingChatWidgetWrapper'), { ssr: false })
+    : () => null;
 import { getHomePageData, getNavbarData, getFooterData, getSidebarData } from '@/lib/sanity';
 import { generateMetadataFromSanity, renderStructuredData } from '@/lib/seo';
 import type { HomePageData, NavbarData, FooterData, NavLinkItem } from '@/types/cms';
