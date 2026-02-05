@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { ArrowRight, Calendar } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { urlFor } from '@/lib/sanity'
 import RichTextRenderer from '@/components/ui/RichTextRenderer'

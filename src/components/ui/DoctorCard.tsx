@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MapPin, Stethoscope, Award, ExternalLink, User, X, GraduationCap } from 'lucide-react'
+import { Calendar, MapPin, Stethoscope, Award, User, X, GraduationCap } from 'lucide-react'
 import Image from 'next/image'
 
 interface Doctor {

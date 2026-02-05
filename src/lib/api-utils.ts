@@ -246,7 +246,7 @@ export async function makeHarmonyRequest(
       console.warn(`[Harmony API] 401 Unauthorized, attempting token refresh (retry ${retryCount + 1}/${maxRetries})...`)
       
       // Force refresh the token and retry
-      const { token: newToken, error: refreshError } = await getAccessToken(true)
+      const { error: refreshError } = await getAccessToken(true)
       
       if (refreshError) {
         return { error: refreshError }

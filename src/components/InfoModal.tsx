@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable react/no-unescaped-entities */
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, Stethoscope, Award, GraduationCap, Calendar } from 'lucide-react';

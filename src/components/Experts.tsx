@@ -48,7 +48,7 @@ interface ExpertsProps {
 
 const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>(
   ({ title, highlightedTexts, subtitle, specialityCode }, ref) => {
-    const { doctors: allDoctors, isLoading, error, refetch } = useDoctors(specialityCode)
+    const { doctors: allDoctors, isApiResolved, error, refetch } = useDoctors(specialityCode)
     
     // Limit to 1 doctor for display
     const doctors = allDoctors.slice(0, 1)
@@ -72,8 +72,8 @@ const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>
       }
     }))
     
-    // If no doctors available and not loading, don't render the section
-    if (!isLoading && doctors.length === 0 && !error) {
+    // If no doctors available (and API has been checked), don't render the section
+    if (doctors.length === 0 && !error) {
       return null
     }
 
@@ -105,7 +105,7 @@ const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>
         >
           <div className="flex items-center justify-center gap-4 mb-6">
             {title && <h2 className="text-4xl lg:text-5xl font-bold text-primary tracking-tight">{renderTextWithHighlights(title, highlightedTexts)}</h2>}
-            {isLoading && (
+            {!isApiResolved && (
               <RefreshCw className="w-8 h-8 text-secondary animate-spin" />
             )}
           </div>
@@ -122,7 +122,7 @@ const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>
 
         {/* Doctors Slider */}
         <div className="relative">
-          {isLoading ? (
+          {!isApiResolved ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[...Array(4)].map((_, index) => (
                 <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">

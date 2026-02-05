@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Star, Quote, User } from "lucide-react";
+import { Star, User } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity";

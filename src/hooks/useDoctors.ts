@@ -43,6 +43,7 @@ export function useDoctors(specialityCode?: string) {
 
   useEffect(() => {
     fetchDoctors()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchDoctors is stable; specialityCode is the only dependency needed
   }, [specialityCode])
 
   const refetch = () => {

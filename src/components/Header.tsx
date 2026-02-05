@@ -79,7 +79,6 @@ export default function Header({ data, navLinks }: { data?: NavbarData | null; n
   };
 
   const logoUrl = data?.logo?.asset?.url ?? DEFAULT_LOGO;
-  const mobileLogoUrl = data?.mobileLogo?.asset?.url ?? logoUrl;
   const alt = data?.logoAlt ?? DEFAULT_ALT;
   const tagline = data?.tagline ?? DEFAULT_TAGLINE;
   const showContact = data?.contactInfo?.showContactInfo !== false;
