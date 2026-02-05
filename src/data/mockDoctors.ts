@@ -19,7 +19,7 @@ export const mockDoctors: Doctor[] = [
     },
     photo: {
       asset: {
-        url: "/Eric Liberman, DO - 2.jpg"
+        url: "/Eric-Liberman.jpg"
       }
     },
     npi: "1234567890",
@@ -119,7 +119,7 @@ export const mockDoctors: Doctor[] = [
     experience: "14+ years",
     photo: {
       asset: {
-        url: "/Eric Liberman, DO - 2.jpg"
+        url: "/Eric-Liberman.jpg"
       }
     },
     npi: "1234567894",
@@ -251,4 +251,3 @@ export const mockAvailableDates: AvailableDate[] = [
     ]
   }
 ]
-

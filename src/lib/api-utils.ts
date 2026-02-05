@@ -133,9 +133,30 @@ export async function validateApiRequest(request: NextRequest) {
   return { clientIP }
 }
 
-// Get access token (centralized authentication)
-export async function getAccessToken(): Promise<{ token?: string; error?: NextResponse }> {
+// Token cache to avoid fetching a new token on every request
+let cachedToken: string | null = null
+let tokenExpiresAt: number = 0
+
+// Utility function to clear token cache (useful for testing or manual refresh)
+export function clearTokenCache() {
+  console.log('[Auth] Manually clearing token cache')
+  cachedToken = null
+  tokenExpiresAt = 0
+}
+
+// Get access token (centralized authentication with caching)
+export async function getAccessToken(forceRefresh: boolean = false): Promise<{ token?: string; error?: NextResponse }> {
+  // Return cached token if it's still valid (with 5 minute buffer before actual expiration)
+  const now = Date.now()
+  const bufferMs = 5 * 60 * 1000 // 5 minutes buffer
+  
+  if (!forceRefresh && cachedToken && now < (tokenExpiresAt - bufferMs)) {
+    console.log('[Auth] Using cached token (expires in', Math.round((tokenExpiresAt - now) / 1000 / 60), 'minutes)')
+    return { token: cachedToken ?? undefined }
+  }
+
   try {
+    console.log('[Auth] Fetching new access token from Harmony API...')
     const credentials = Buffer.from(`${authConfig.harmony.clientId}:${authConfig.harmony.clientKey}`).toString('base64')
     
     const tokenResponse = await fetch(`${authConfig.harmony.baseUrl}/Account/oauth2/access_token`, {
@@ -151,7 +172,11 @@ export async function getAccessToken(): Promise<{ token?: string; error?: NextRe
 
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text()
-      console.error(`Token API error: ${tokenResponse.status} - ${errorText}`)
+      console.error(`[Auth] Token API error: ${tokenResponse.status} - ${errorText}`)
+      
+      // Clear cached token on error
+      cachedToken = null
+      tokenExpiresAt = 0
       
       return {
         error: createErrorResponse(
@@ -164,10 +189,23 @@ export async function getAccessToken(): Promise<{ token?: string; error?: NextRe
     }
 
     const tokenData = await tokenResponse.json()
-    return { token: tokenData.access_token }
+    
+    // Cache the token with expiration (default to 1 hour if not provided)
+    cachedToken = tokenData.access_token
+    const expiresInSeconds = tokenData.expires_in || 3600 // Default to 1 hour
+    tokenExpiresAt = Date.now() + (expiresInSeconds * 1000)
+    
+    console.log(`[Auth] New token obtained, expires in ${expiresInSeconds} seconds (${Math.round(expiresInSeconds / 60)} minutes)`)
+    
+    return { token: cachedToken ?? undefined }
 
   } catch (error) {
-    console.error('Access token error:', error)
+    console.error('[Auth] Access token error:', error)
+    
+    // Clear cached token on error
+    cachedToken = null
+    tokenExpiresAt = 0
+    
     return {
       error: createErrorResponse(
         'Internal server error during authentication',
@@ -179,11 +217,14 @@ export async function getAccessToken(): Promise<{ token?: string; error?: NextRe
   }
 }
 
-// Make authenticated request to Harmony API
+// Make authenticated request to Harmony API with automatic token refresh on 401
 export async function makeHarmonyRequest(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retryCount: number = 0
 ): Promise<{ data?: any; error?: NextResponse }> {
+  const maxRetries = 1 // Only retry once on 401
+  
   const { token, error } = await getAccessToken()
   
   if (error) {
@@ -200,10 +241,24 @@ export async function makeHarmonyRequest(
       },
     })
 
-    console.log('Harmony API response:', response)
+    // Handle 401 Unauthorized - token might have expired
+    if (response.status === 401 && retryCount < maxRetries) {
+      console.warn(`[Harmony API] 401 Unauthorized, attempting token refresh (retry ${retryCount + 1}/${maxRetries})...`)
+      
+      // Force refresh the token and retry
+      const { token: newToken, error: refreshError } = await getAccessToken(true)
+      
+      if (refreshError) {
+        return { error: refreshError }
+      }
+      
+      // Retry the request with the new token
+      return makeHarmonyRequest(endpoint, options, retryCount + 1)
+    }
+
     if (!response.ok) {
       const errorText = await response.text()
-      console.error(`Harmony API error: ${response.status} - ${errorText}`)
+      console.error(`[Harmony API] Error: ${response.status} - ${errorText}`)
       
       return {
         error: createErrorResponse(
@@ -219,7 +274,7 @@ export async function makeHarmonyRequest(
     return { data }
 
   } catch (error) {
-    console.error('Harmony request error:', error)
+    console.error('[Harmony API] Request error:', error)
     return {
       error: createErrorResponse(
         'Internal server error during API request',

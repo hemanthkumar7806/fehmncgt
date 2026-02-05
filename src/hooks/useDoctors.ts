@@ -1,114 +1,58 @@
-import { useState, useEffect, useCallback } from 'react'
-import { doctorsApi, type Doctor } from '@/services/doctorsApi'
-import { devUtils, getDevelopmentMode } from '@/config/development'
+'use client'
 
-export interface UseDoctorsReturn {
-  doctors: Doctor[]
-  isLoading: boolean
-  error: string | null
-  refetch: () => Promise<void>
-  count: number
-}
+import { useState, useEffect } from 'react'
+import { doctorsApi, Doctor } from '@/services/doctorsApi'
+import { mockDoctors } from '@/data/mockDoctors'
 
-/**
- * React hook for fetching doctors data from Harmony EHR API
- */
-export function useDoctors(specialityCode?: string): UseDoctorsReturn {
-  const [doctors, setDoctors] = useState<Doctor[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+export function useDoctors(specialityCode?: string) {
+  // Start with mock data immediately (no loading state)
+  const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors)
+  const [isApiResolved, setIsApiResolved] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [count, setCount] = useState(0)
 
-  const fetchDoctors = useCallback(async () => {
-    const devMode = getDevelopmentMode()
-    devUtils.log('Fetching doctors', { useMockData: devMode.useMockData, specialityCode })
-    
-    setIsLoading(true)
-    setError(null)
-
+  const fetchDoctors = async () => {
     try {
-      const data = await doctorsApi.getDoctors(specialityCode)
-      setDoctors(data)
-      setCount(data.length)
+      setError(null)
       
-      devUtils.log(`Successfully loaded ${data.length} doctors`, { 
-        mockMode: devMode.useMockData,
-        count: data.length 
+      console.log('[useDoctors] Starting fetchDoctors with specialityCode:', specialityCode)
+      console.log('[useDoctors] Environment:', {
+        NEXT_PUBLIC_USE_MOCK_DATA: process.env.NEXT_PUBLIC_USE_MOCK_DATA,
+        NODE_ENV: process.env.NODE_ENV,
       })
+      
+      // Always use the API service which handles mock data logic internally
+      // The API service will respect NEXT_PUBLIC_USE_MOCK_DATA environment variable
+      const data = await doctorsApi.getDoctors(specialityCode)
+      console.log('[useDoctors] Received data:', { count: data.length, isMock: data.length > 0 && data[0]?._id === mockDoctors[0]?._id })
+      
+      // Only update if we got real data from API (not mock)
+      if (data.length > 0 && data[0]?._id !== mockDoctors[0]?._id) {
+        setDoctors(data)
+        setIsApiResolved(true)
+      } else {
+        // If API returned mock data or empty, keep showing mock but don't enable booking
+        setIsApiResolved(false)
+      }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch doctors'
-      setError(errorMessage)
-      devUtils.error('useDoctors error:', err)
-      console.error('useDoctors error:', err)
-    } finally {
-      setIsLoading(false)
+      console.error('Error fetching doctors:', err)
+      setError(err instanceof Error ? err.message : 'Failed to fetch doctors')
+      setIsApiResolved(false)
+      // Keep showing mock data on error
     }
-  }, [specialityCode])
+  }
 
-  // Auto-fetch on mount
   useEffect(() => {
     fetchDoctors()
-  }, [fetchDoctors])
+  }, [specialityCode])
+
+  const refetch = () => {
+    fetchDoctors()
+  }
 
   return {
     doctors,
-    isLoading,
+    isApiResolved, // New: indicates if real API data is loaded
     error,
-    refetch: fetchDoctors,
-    count,
-  }
-}
-
-/**
- * Hook for fetching a single doctor by ID
- */
-export function useDoctor(doctorId: string): {
-  doctor: Doctor | null
-  isLoading: boolean
-  error: string | null
-  refetch: () => Promise<void>
-} {
-  const [doctor, setDoctor] = useState<Doctor | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const fetchDoctor = useCallback(async () => {
-    if (!doctorId) return
-
-    const devMode = getDevelopmentMode()
-    devUtils.log('Fetching single doctor', { doctorId, useMockData: devMode.useMockData })
-
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      const data = await doctorsApi.getDoctors()
-      const foundDoctor = data.find(d => d._id === doctorId)
-      setDoctor(foundDoctor || null)
-      
-      devUtils.log('Doctor fetch result', { 
-        doctorId, 
-        found: !!foundDoctor, 
-        mockMode: devMode.useMockData 
-      })
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch doctor'
-      setError(errorMessage)
-      devUtils.error('useDoctor error:', err)
-      console.error('useDoctor error:', err)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [doctorId])
-
-  useEffect(() => {
-    fetchDoctor()
-  }, [fetchDoctor])
-
-  return {
-    doctor,
-    isLoading,
-    error,
-    refetch: fetchDoctor,
+    refetch
   }
 }

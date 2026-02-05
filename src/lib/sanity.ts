@@ -1,6 +1,5 @@
 import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
-import fallbackDataHome from '@/constants/fallbackData.home.json'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
 // Only log environment variables once in development
 if (process.env.NODE_ENV === 'development' && typeof window === 'undefined') {
@@ -53,7 +52,7 @@ export async function testSanityConnection() {
   }
 }
 
-const builder = imageUrlBuilder(client)
+const builder = createImageUrlBuilder(client)
 
 export function urlFor(source: any) {
   return builder.image(source)
@@ -96,7 +95,7 @@ export const navbarQuery = `
   }
 `
 
-// Query to fetch sidebar data
+// Query to fetch sidebar data (Navigation / top bar menu — menuItems only)
 export const sidebarQuery = `
   *[_type == "sidebar"][0] {
     logo {
@@ -109,13 +108,7 @@ export const sidebarQuery = `
       internalSection,
       externalUrl,
       openInNewTab
-    },
-    contactInfo {
-      phone,
-      email,
-      address,
-      showContactInfo
-    },
+    }
   }
 `
 
@@ -147,230 +140,117 @@ export const footerQuery = `
   }
 `
 
-// Query to fetch homepage data based on your Sanity schema
+// Home page query — matches current homePage schema (Hero, Symptoms, Why choose, Doctor, Insurance, Testimonials, Newsletter)
 export const homepageQuery = `
   *[_type == "homePage"][0] {
     hero {
+      showSection,
+      badgeText,
+      badgeTextMobile,
       headline,
       highlightedTexts,
       subheadline,
-      badge {
-        text,
-        showBadge
+      primaryCtaText,
+      secondaryCtaText,
+      secondaryCtaUrl,
+      image {
+        asset-> { _id, url },
+        alt
       },
-      ctaButton {
-        text,
-        linkType,
-        sectionId,
-        link
-      },
-      secondaryButton {
-        text,
-        linkType,
-        sectionId,
-        link,
-        showButton
-      },
-      stats[] {
-        number,
-        label
-      },
-      rightContent {
-        title,
-        description,
-        achievements[] {
-          text
-        }
-      },
-      floatingCards[] {
-        title,
-        subtitle,
-        position,
-        showCard
-      },
-      backgroundImage {
-        asset-> {
-          _id,
-          url
-        }
-      },
-      showImage,
-      heroLayout,
-      showSection
+      stats[] { value, label }
+    },
+    symptoms {
+      showSection,
+      sectionTitle,
+      symptomsList,
+      symptomsInfo,
+      ctaText
+    },
+    whyChoose {
+      showSection,
+      sectionTitle,
+      features[] { icon, title, description },
+      approachInfo,
+      ctaText
     },
     doctorsSpeciality {
+      showSection,
       title,
       highlightedTexts,
       subtitle,
-      specialityCode,
-      showSection
-    },
-    topic {
-      title,
-      highlightedTexts,
-      subtitle,
-      mainContent,
-      detailsHeading,
-      detailsList,
-      payBillButton {
-        showButton,
-        text,
-        link
-      },
-      callToAction {
-        heading,
-        highlightedTexts,
-        linkType,
-        sectionId,
-        link,
-        description,
-        buttonText
-      },
-      infoCards[] {
-        title,
-        highlightedTexts,
-        description,
-        icon,
-        showCard
-      },
-      showSection
+      specialityCode
     },
     insurance {
-      title,
-      highlightedTexts,
-      subtitle,
-      mainContent,
-      detailsHeading,
-      detailsList,
-      payBillButton {
-        showButton,
-        text,
-        link
-      },
-      callToAction {
-        heading,
-        highlightedTexts,
-        linkType,
-        sectionId,
-        link,
+      showSection,
+      sectionTitle,
+      insuranceProviders,
+      careCompassPortal {
+        title,
         description,
+        registrationUrl,
         buttonText
       },
-      infoCards[] {
+      visitInfo {
         title,
-        highlightedTexts,
-        description,
-        icon,
-        showCard
-      },
-      showSection
-    },
-    about {
-      title,
-      highlightedTexts,
-      subtitle,
-      description,
-      mediaType,
-      image {
-        asset-> {
-          _id,
-          url
-        }
-      },
-      video {
-        asset-> {
-          _id,
-          url
-        }
-      },
-      stats[] {
-        number,
-        label,
-        icon
-      },
-      storyButton {
-        text,
-        link,
-        showButton
-      },
-      showSection
-    },
-    services {
-      title,
-      highlightedTexts,
-      subtitle,
-      servicesList[] {
-        title,
-        highlightedTexts,
-        description,
-        icon,
-        link
-      },
-      ctaButton {
-        text,
-        link,
-        showButton
-      },
-      showSection
+        addressLine1,
+        city,
+        state,
+        zipCode,
+        phone,
+        directionsUrl,
+        directionsText
+      }
     },
     testimonials {
+      showSection,
       title,
-      highlightedTexts,
-      testimonialsList[] {
-        quote,
-        author,
-        authorTitle,
-        profilePhoto {
-          asset-> {
-            _id,
-            url
-          }
-        },
-        rating,
-      },
-      showSection
+      testimonialsList[] { text, author, date }
     },
-    resources {
+    newsletter {
+      showSection,
       title,
-      highlightedTexts,
-      subtitle,
-      resourcesList[] {
-        title,
-        highlightedTexts,
-        icon,
-        description,
-        link,
-        showCard
-      },
-      showSection
-    },
-    cta {
-      title,
-      highlightedTexts,
       description,
-      button {
-        text,
-        link
+      emailPlaceholder,
+      buttonText
     },
-      showSection
+    seo {
+      title,
+      description,
+      keywords,
+      ogImage {
+        asset-> { _id, url }
+      },
+      ogTitle,
+      ogDescription,
+      twitterTitle,
+      twitterDescription,
+      twitterImage {
+        asset-> { _id, url }
+      },
+      canonicalUrl,
+      noIndex,
+      noFollow,
+      structuredData[] {
+        _key,
+        name,
+        jsonld
+      }
     }
   }
 `
 
-// Simple cache to prevent multiple identical calls
+// Simple cache to prevent multiple identical calls (disabled in development for fresh Sanity edits)
 let homepageDataCache: any = null
 let navbarDataCache: any = null
 let sidebarDataCache: any = null
 let footerDataCache: any = null
 let cacheTimestamp: number = 0
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+const CACHE_DURATION = process.env.NODE_ENV === 'development' ? 0 : 5 * 60 * 1000 // 0 in dev, 5 min in prod
 
 // Function to fetch navbar data
 export async function getNavbarData() {
-  // Check cache first
   const now = Date.now()
-  if (navbarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
-    console.log('📦 Returning cached navbar data')
+  if (CACHE_DURATION > 0 && navbarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
     return navbarDataCache
   }
 
@@ -384,22 +264,14 @@ export async function getNavbarData() {
     return data
   } catch (error) {
     console.error('❌ Error fetching navbar data:', error)
-    // Return fallback data from JSON file
-    try {
-      const fallbackData = await import('@/constants/fallbackData.navbar.json')
-      return fallbackData.default || fallbackData
-    } catch (error) {
-      console.error('❌ Error loading fallback data:', error)
-      return null
-    }
+    return null
   }
 }
 
 // Function to fetch sidebar data
 export async function getSidebarData() {
-  // Check cache first
   const now = Date.now()
-  if (sidebarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
+  if (CACHE_DURATION > 0 && sidebarDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
     return sidebarDataCache
   }
 
@@ -409,22 +281,15 @@ export async function getSidebarData() {
     cacheTimestamp = now
     return data
   } catch (error) {
-    try {
-      console.log(error);
-      const fallbackData = await import('@/constants/fallbackData.sidebar.json')
-      return fallbackData
-    } catch (error) {
-      console.log(error);
-      return null
-    }
+    console.error('❌ Error fetching sidebar data:', error)
+    return null
   }
 }
 
 // Function to fetch footer data
 export async function getFooterData() {
-  // Check cache first
   const now = Date.now()
-  if (footerDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
+  if (CACHE_DURATION > 0 && footerDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
     return footerDataCache
   }
 
@@ -434,23 +299,15 @@ export async function getFooterData() {
     cacheTimestamp = now
     return data
   } catch (error) {
-    try {
-      console.error('❌ Error fetching footer data:', error)
-      const fallbackData = await import('@/constants/fallbackData.footer.json')
-      return fallbackData.default || fallbackData
-    } catch (error) {
-      console.error('❌ Error loading fallback data:', error)
-      return null
-    }
+    console.error('❌ Error fetching footer data:', error)
+    return null
   }
 }
 
 // Function to fetch homepage data
 export async function getHomePageData() {
-  // Check cache first
   const now = Date.now()
-  if (homepageDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
-    console.log('📦 Returning cached homepage data')
+  if (CACHE_DURATION > 0 && homepageDataCache && (now - cacheTimestamp) < CACHE_DURATION) {
     return homepageDataCache
   }
 
@@ -708,6 +565,6 @@ export async function getHomePageById(id: string) {
     return data
   } catch (error) {
     console.error('❌ Error fetching homepage data by ID:', error)
-    return fallbackDataHome
+    return null
   }
 }

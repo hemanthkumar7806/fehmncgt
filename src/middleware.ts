@@ -5,6 +5,30 @@ export function middleware(request: NextRequest) {
   // Get the response
   const response = NextResponse.next()
 
+  // Content Security Policy
+  const csp = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://analytics.google.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: blob: https: http:",
+    "media-src 'self' https: http:",
+    "connect-src 'self' https://s1kzcjfe.api.sanity.io https://cdn.sanity.io https://www.googletagmanager.com https://analytics.google.com https://www.google-analytics.com https://uatmakto.hnhad.holyname.org",
+    "frame-src 'self' https:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    "upgrade-insecure-requests"
+  ].join('; ')
+
+  // Add security headers
+  response.headers.set('Content-Security-Policy', csp)
+  response.headers.set('X-Frame-Options', 'SAMEORIGIN')
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+
   // Add CORS headers
   response.headers.set('Access-Control-Allow-Origin', '*')
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')

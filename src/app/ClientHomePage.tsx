@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
 import Experts from "@/components/Experts";
 import Services from "@/components/Services";
@@ -20,6 +19,7 @@ import {
 import Resources from "@/components/Resources";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import type { NavLinkItem } from "@/types/cms";
 import fallbackDataHome from "@/constants/fallbackData.home.json";
 import fallbackDataNavbar from "@/constants/fallbackData.navbar.json";
 import fallbackDataSidebar from "@/constants/fallbackData.sidebar.json";
@@ -276,28 +276,11 @@ interface HomePageData {
 }
 
 export default function ClientHomePage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
-    typeof window !== "undefined"
-      ? window.innerWidth < 600
-        ? false
-        : true
-      : false
-  );
   const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
   const [navbarData, setNavbarData] = useState<NavbarData | null>(null);
   const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [loading, setLoading] = useState(true);
-  
-  // Ref to access the Experts component's book appointment function
-  const expertsRef = useRef<{ triggerBookAppointment: () => void } | null>(null);
-  
-  // Handler to trigger book appointment for first doctor
-  const handleBookAppointment = () => {
-    if (expertsRef.current) {
-      expertsRef.current.triggerBookAppointment();
-    }
-  };
 
   useEffect(() => {
     let isMounted = true; // Prevent setting state if component unmounts
@@ -360,24 +343,11 @@ export default function ClientHomePage() {
       {!loading && (
         <div className="min-h-screen bg-hnmc-gray">
           <Header
-            isOpen={isSidebarOpen}
-            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-            navbarData={navbarData}
-            onBookAppointment={handleBookAppointment}
+            data={navbarData}
+            navLinks={(sidebarData?.menuItems as NavLinkItem[] | undefined) ?? undefined}
           />
 
-          <Sidebar
-            isOpen={isSidebarOpen}
-            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-            sidebarData={sidebarData}
-            onBookAppointment={handleBookAppointment}
-          />
-
-          <main
-            className={`pt-16 transition-all duration-300 ${
-              isSidebarOpen ? "lg:ml-64" : "lg:ml-0"
-            }`}
-          >
+          <main className="pt-16">
             {homePageData?.hero?.showSection !== false && (
               <Hero hero={{...homePageData?.hero, variant: 'centered-blue'}} />
             )}
@@ -385,7 +355,6 @@ export default function ClientHomePage() {
             {homePageData?.doctorsSpeciality?.showSection !== false && (
               <section id="dr-liberman">
                 <Experts
-                  ref={expertsRef}
                   title={homePageData?.doctorsSpeciality?.title}
                   highlightedTexts={homePageData?.doctorsSpeciality?.highlightedTexts}
                   subtitle={homePageData?.doctorsSpeciality?.subtitle}
@@ -445,7 +414,7 @@ export default function ClientHomePage() {
               {/* Appointment section - can be added later */}
             </section>
 
-            <Footer footer={footerData} />
+            <Footer data={footerData} />
           </main>
         </div>
       )}

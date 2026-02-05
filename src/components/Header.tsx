@@ -1,145 +1,182 @@
-import { Menu, Phone, Calendar, Clock } from 'lucide-react'
-import Image from 'next/image'
-import { urlFor } from '@/lib/sanity'
-import fallbackDataNavbar from '@/constants/fallbackData.navbar.json'
+'use client';
 
-interface NavbarData {
-  logoAlt?: string
-  logo?: {
-    asset?: any
-  }
-  mobileLogo?: {
-    asset?: any
-  }
-  tagline?: string
-  contactInfo?: {
-    phone?: string
-    emergencyText?: string
-    showContactInfo?: boolean
-  }
-  ctaButton?: {
-    text?: string
-    mobileText?: string
-    showButton?: boolean
-  }
-}
+import Image from 'next/image';
+import { Phone } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import AppointmentModal from './ui/AppointmentModal';
+import { useDoctorContext } from '@/contexts/DoctorContext';
+import type { NavbarData, NavLinkItem } from '@/types/cms';
 
-interface HeaderProps {
-  isOpen: boolean
-  onToggle: () => void
-  navbarData?: NavbarData | null
-  onBookAppointment?: () => void
-}
+const DEFAULT_LOGO = '/Holy-Name-100-Anniversary.png';
+const DEFAULT_ALT = 'Holy Name Medical Center';
+const DEFAULT_TAGLINE = 'Fibroid Center';
+const DEFAULT_PHONE = '201-833-7212';
+const DEFAULT_CTA = 'Book Appointment';
+const DEFAULT_CTA_MOBILE = 'Book';
 
-export default function Header({ isOpen, onToggle, navbarData, onBookAppointment }: HeaderProps) {
-  const data = navbarData || fallbackDataNavbar
-  
-  const desktopLogo = data?.logo?.asset ? urlFor(data.logo.asset).url() : '/holy_name_logo.jpg'
-  const mobileLogo = data?.mobileLogo?.asset ? urlFor(data.mobileLogo.asset).url() : (data?.logo?.asset ? urlFor(data.logo.asset).url() : '/holy_name_logo.jpg')
-  const logoAlt = data?.logoAlt || 'Holy Name Medical Center Logo'
-  const tagline = data?.tagline || 'Fibroid Care Specialists'
-  const phone = data?.contactInfo?.phone || ''
-  const emergencyText = data?.contactInfo?.emergencyText || '24/7 Emergency'
-  const showContactInfo = data?.contactInfo?.showContactInfo !== false
-  const ctaText = data?.ctaButton?.text || 'Book Appointment'
-  const ctaMobileText = data?.ctaButton?.mobileText || 'Book'
-  const showCtaButton = data?.ctaButton?.showButton !== false
+/** Map Sanity internalSection to page section ids (#...) */
+const SECTION_TO_HASH: Record<string, string> = {
+  home: 'home',
+  'about-fibroids': 'symptoms',
+  'dr-liberman': 'doctor',
+  services: 'services',
+  testimonials: 'services',
+  insurance: 'insurance',
+  appointment: 'doctor',
+  resources: 'symptoms',
+  about: 'symptoms',
+  cta: 'home',
+};
+
+const DEFAULT_NAV_LINKS: { href: string; label: string; active?: boolean }[] = [
+  { href: '#home', label: 'Home', active: true },
+  { href: '#symptoms', label: 'About Fibroids' },
+  { href: '#doctor', label: 'Dr. Liberman' },
+  { href: '#services', label: 'Services' },
+  { href: '#insurance', label: 'Insurance' },
+];
+
+export default function Header({ data, navLinks }: { data?: NavbarData | null; navLinks?: NavLinkItem[] | null }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const { doctors, isApiResolved } = useDoctorContext();
+  const firstDoctor = doctors[0] || null;
+
+  // Track active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'symptoms', 'doctor', 'services', 'insurance'];
+      const scrollPosition = window.scrollY + 150; // Offset for header height
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    // Set initial active section based on hash or scroll position
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      setActiveSection(hash);
+    }
+
+    handleScroll(); // Check on mount
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Update active section when clicking on nav links
+  const handleNavClick = (href: string) => {
+    const hash = href.replace('#', '');
+    setActiveSection(hash);
+  };
+
+  const handleBookAppointment = () => {
+    if (isApiResolved && firstDoctor) setIsModalOpen(true);
+  };
+
+  const logoUrl = data?.logo?.asset?.url ?? DEFAULT_LOGO;
+  const mobileLogoUrl = data?.mobileLogo?.asset?.url ?? logoUrl;
+  const alt = data?.logoAlt ?? DEFAULT_ALT;
+  const tagline = data?.tagline ?? DEFAULT_TAGLINE;
+  const showContact = data?.contactInfo?.showContactInfo !== false;
+  const phone = data?.contactInfo?.phone ?? DEFAULT_PHONE;
+  const showCta = data?.ctaButton?.showButton !== false;
+  const ctaText = data?.ctaButton?.text ?? DEFAULT_CTA;
+  const ctaMobile = data?.ctaButton?.mobileText ?? DEFAULT_CTA_MOBILE;
+
+  const links =
+    navLinks && navLinks.length > 0
+      ? navLinks
+          .filter((item) => item.label)
+          .map((item) => {
+            if (item.linkType === 'external' && item.externalUrl)
+              return { href: item.externalUrl, label: item.label!, external: true, openInNewTab: item.openInNewTab };
+            const section = item.internalSection ?? 'home';
+            const hash = SECTION_TO_HASH[section] ?? section;
+            return { href: `#${hash}`, label: item.label!, external: false };
+          })
+      : DEFAULT_NAV_LINKS.map((l) => ({ href: l.href, label: l.label, external: false }));
 
   return (
-    <header className={`fixed top-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm transition-all duration-300 ${isOpen ? 'lg:left-64' : 'lg:left-0'} left-0`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Left Section - Hamburger + Logo */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Hamburger Button - Only show menu icon (close button is in sidebar) */}
-            <button
-              onClick={onToggle}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              {!isOpen && <Menu size={20} className="text-primary sm:w-6 sm:h-6" />}
-            </button>
-            
-            {/* Logo - Desktop (hide both logo and tagline when sidebar is open) */}
-            <div className={`hidden sm:flex items-center space-x-3 transition-all duration-300 ${isOpen ? 'lg:opacity-0 lg:pointer-events-none' : 'lg:opacity-100'}`}>
-              <Image 
-                src={desktopLogo} 
-                alt={logoAlt} 
-                width={200} 
-                height={100}
-                className="object-contain"
-                priority
-              />
-              <p className="text-lg text-hnmc-gray-600 mt-1">{tagline}</p>
-            </div>
-
-            <div className="flex sm:hidden items-center space-x-2 flex-1 min-w-0">
-              <div className="relative w-10 h-10 flex-shrink-0">
-                <Image 
-                  src={mobileLogo} 
-                  alt={logoAlt} 
+    <>
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="px-2 sm:px-8 lg:px-12">
+          <div className="flex justify-between items-center h-14 sm:h-20 gap-1 sm:gap-0">
+            <div className="flex items-center min-w-0 flex-shrink">
+              <div className="relative w-[110px] h-[20px] sm:w-[200px] sm:h-[35px] lg:w-[300px] lg:h-[50px] flex-shrink-0">
+                <Image
+                  src={logoUrl}
+                  alt={alt}
                   fill
-                  className="object-contain"
-                  priority
+                  className="object-contain object-left"
+                  sizes="(max-width: 640px) 110px, (max-width: 1024px) 200px, 300px"
+                  unoptimized={logoUrl.startsWith('http')}
                 />
               </div>
-              <p className="text-xs text-hnmc-gray-600 font-medium truncate">{tagline}</p>
+              {tagline && (
+                <span className="ml-1 sm:ml-3 text-xs sm:text-base lg:text-lg font-heading font-bold text-primary whitespace-nowrap">
+                  {tagline}
+                </span>
+              )}
+            </div>
+            <nav className="hidden 2xl:flex space-x-8">
+              {links.map((link, i) =>
+                'external' in link && link.external ? (
+                  <a
+                    key={i}
+                    href={link.href}
+                    target={'openInNewTab' in link && link.openInNewTab ? '_blank' : undefined}
+                    rel={'openInNewTab' in link && link.openInNewTab ? 'noopener noreferrer' : undefined}
+                    className="text-gray-700 hover:text-primary transition"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <a
+                    key={i}
+                    href={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    className={
+                      activeSection === link.href.replace('#', '')
+                        ? 'text-secondary font-medium border-b-2 border-secondary pb-1'
+                        : 'text-gray-700 hover:text-primary transition'
+                    }
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
+            </nav>
+            <div className="flex items-center space-x-1.5 sm:space-x-3 lg:space-x-4 flex-shrink-0">
+              {showContact && phone && (
+                <a href={`tel:${phone}`} className="flex items-center text-primary font-medium">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="hidden lg:inline ml-2">{phone}</span>
+                </a>
+              )}
+              {showCta && (
+                <button
+                  onClick={handleBookAppointment}
+                  disabled={!isApiResolved}
+                  className={`px-2 py-1.5 sm:px-4 sm:py-2.5 lg:px-6 rounded transition font-medium text-xs sm:text-sm lg:text-base whitespace-nowrap flex items-center gap-2 ${
+                    isApiResolved
+                      ? 'bg-secondary text-white hover:bg-opacity-90 cursor-pointer'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                >
+                  <span className="hidden sm:inline">{ctaText}</span>
+                  <span className="sm:hidden">{ctaMobile}</span>
+                </button>
+              )}
             </div>
           </div>
-
-          {/* Right Section - Contact Info + CTA */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Contact Info (hidden on mobile) */}
-            {showContactInfo && (
-              <div className="hidden lg:flex items-center space-x-6">
-                <a href={`tel:${phone}`} className="flex items-center space-x-2 text-sm hover:text-secondary transition-colors cursor-pointer">
-                  <Phone size={16} className="text-secondary" />
-                  <span className="text-hnmc-gray-700">{phone}</span>
-                </a>
-                <div className="flex items-center space-x-2 text-sm">
-                  <Clock size={16} className="text-secondary" />
-                  <span className="text-hnmc-gray-700">{emergencyText}</span>
-                </div>
-              </div>
-            )}
-
-            {/* CTA Button */}
-            {showCtaButton && (
-              <a
-                href="#experts"
-                onClick={(e) => {
-                  e.preventDefault()
-                  
-                  // Check if this is a book appointment action
-                  if (ctaText?.toLowerCase().includes('book') || ctaText?.toLowerCase().includes('appointment')) {
-                    if (onBookAppointment) {
-                      onBookAppointment()
-                      return
-                    }
-                  }
-                  
-                  // Default behavior - scroll to experts section
-                  const element = document.getElementById('experts')
-                  if (element) {
-                    const headerHeight = 100
-                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-                    const offsetPosition = elementPosition - headerHeight
-                    
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth'
-                    })
-                  }
-                }}
-                className="inline-flex items-center space-x-1 sm:space-x-2 bg-secondary hover:bg-secondary-light text-white px-3 py-2 sm:px-4 rounded-lg font-medium transition-all duration-300 text-xs sm:text-sm"
-              >
-                <Calendar size={14} className="sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">{ctaText}</span>
-                <span className="sm:hidden">{ctaMobileText}</span>
-              </a>
-            )}
-          </div>
         </div>
-      </div>
-    </header>
-  )
+      </header>
+      <AppointmentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} selectedDoctor={firstDoctor} />
+    </>
+  );
 }

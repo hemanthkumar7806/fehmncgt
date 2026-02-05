@@ -1,0 +1,12 @@
+{
+  "doctor": {
+    "_id": "fallback-1",
+    "name": "Dr. Eric Liberman",
+    "title": "Interventional Radiologist",
+    "credentials": "DO, FSIR",
+    "specialties": ["Uterine Fibroid Embolization", "Interventional Radiology", "Women's Health"],
+    "experience": "15+ years",
+    "description": "Dr. Eric Liberman is board-certified in Obstetrics and Gynecology and fellowship-trained in Minimally Invasive Gynecologic Surgery (MIGS). He obtained a Focused Practice Designation in MIGS and is the Director of Minimally Invasive Gynecologic Surgery at Holy Name.",
+    "photo": "/Eric Liberman, DO - 2.jpg"
+  }
+}

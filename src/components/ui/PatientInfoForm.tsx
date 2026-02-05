@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, AlertCircle } from 'lucide-react'
 import { doctorsApi, type VisitReason } from '@/services/doctorsApi'
 
 interface TimeSlot {
@@ -34,6 +34,16 @@ interface PatientInfoFormProps {
   onClearError?: () => void
 }
 
+interface ValidationErrors {
+  firstName?: string
+  lastName?: string
+  email?: string
+  phone?: string
+  dateOfBirth?: string
+  gender?: string
+  reasonId?: string
+}
+
 export default function PatientInfoForm({
   selectedDate,
   selectedSlot,
@@ -47,6 +57,8 @@ export default function PatientInfoForm({
 }: PatientInfoFormProps) {
   const [visitReasons, setVisitReasons] = useState<VisitReason[]>([])
   const [loadingReasons, setLoadingReasons] = useState(true)
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   
   // Fetch visit reasons on component mount
   useEffect(() => {
@@ -72,11 +84,147 @@ export default function PatientInfoForm({
     fetchVisitReasons()
   }, [])
   
+  // Character limits: names 50; email 128 (standard); phone 15 (E.164)
+  const LIMITS = {
+    firstName: 50,
+    lastName: 50,
+    email: 128,
+    phone: 15,
+  } as const
+
+  // Validation functions
+  const validateName = (name: string, fieldName: string): string | undefined => {
+    if (!name.trim()) {
+      return `${fieldName} is required`
+    }
+    if (name.trim().length < 2) {
+      return `${fieldName} must be at least 2 characters`
+    }
+    if (!/^[a-zA-Z\s'-]+$/.test(name)) {
+      return `${fieldName} can only contain letters, spaces, hyphens, and apostrophes`
+    }
+    return undefined
+  }
+
+  const validateEmail = (email: string): string | undefined => {
+    if (!email.trim()) {
+      return 'Email is required'
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address'
+    }
+    return undefined
+  }
+
+  const validatePhone = (phone: string): string | undefined => {
+    if (!phone.trim()) {
+      return 'Phone number is required'
+    }
+    const cleanPhone = phone.replace(/\D/g, '')
+    if (cleanPhone.length < 10) {
+      return 'Phone number must be at least 10 digits'
+    }
+    if (cleanPhone.length > 15) {
+      return 'Phone number cannot exceed 15 digits'
+    }
+    return undefined
+  }
+
+  const validateDateOfBirth = (dob: string): string | undefined => {
+    if (!dob) {
+      return 'Date of birth is required'
+    }
+    const birthDate = new Date(dob)
+    const today = new Date()
+    const age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+    
+    if (birthDate > today) {
+      return 'Date of birth cannot be in the future'
+    }
+    
+    // Check if person is at least 18 years old
+    if (age < 18 || (age === 18 && monthDiff < 0)) {
+      return 'You must be at least 18 years old'
+    }
+    
+    // Check if person is not older than 120 years
+    if (age > 120) {
+      return 'Please enter a valid date of birth'
+    }
+    
+    return undefined
+  }
+
+  const validateGender = (gender: string): string | undefined => {
+    if (!gender) {
+      return 'Gender is required'
+    }
+    return undefined
+  }
+
+  const validateReasonId = (reasonId: string): string | undefined => {
+    if (!reasonId) {
+      return 'Reason for visit is required'
+    }
+    return undefined
+  }
+
+  // Validate all fields
+  const validateField = (field: keyof PatientInfo, value: string): string | undefined => {
+    switch (field) {
+      case 'firstName':
+        return validateName(value, 'First name')
+      case 'lastName':
+        return validateName(value, 'Last name')
+      case 'email':
+        return validateEmail(value)
+      case 'phone':
+        return validatePhone(value)
+      case 'dateOfBirth':
+        return validateDateOfBirth(value)
+      case 'gender':
+        return validateGender(value)
+      case 'reasonId':
+        return validateReasonId(value)
+      default:
+        return undefined
+    }
+  }
+
   const handleInputChange = (field: keyof PatientInfo, value: string) => {
+    let finalValue = value
+    if (field === 'phone') {
+      // Allow digits only (no letters or symbols)
+      finalValue = value.replace(/\D/g, '').slice(0, LIMITS.phone)
+    } else {
+      const limit = LIMITS[field as keyof typeof LIMITS]
+      finalValue = limit != null ? value.slice(0, limit) : value
+    }
+    
     onPatientInfoChange({
       ...patientInfo,
-      [field]: value
+      [field]: finalValue
     })
+
+    // Validate field if it has been touched
+    if (touched[field]) {
+      const error = validateField(field, finalValue)
+      setValidationErrors(prev => ({
+        ...prev,
+        [field]: error
+      }))
+    }
+  }
+
+  const handleBlur = (field: keyof PatientInfo) => {
+    setTouched(prev => ({ ...prev, [field]: true }))
+    const error = validateField(field, patientInfo[field])
+    setValidationErrors(prev => ({
+      ...prev,
+      [field]: error
+    }))
   }
 
   const handleReasonChange = (reasonId: string) => {
@@ -86,9 +234,41 @@ export default function PatientInfoForm({
       reasonId: reasonId,
       reason: selectedReason?.visit_reason || ''
     })
+
+    if (touched.reasonId) {
+      const error = validateReasonId(reasonId)
+      setValidationErrors(prev => ({
+        ...prev,
+        reasonId: error
+      }))
+    }
   }
 
-  const isFormValid = patientInfo.firstName && patientInfo.lastName && patientInfo.email && patientInfo.phone && patientInfo.dateOfBirth && patientInfo.gender && patientInfo.reasonId
+  const handleSubmit = () => {
+    // Touch all fields
+    const allFields: (keyof ValidationErrors)[] = ['firstName', 'lastName', 'email', 'phone', 'dateOfBirth', 'gender', 'reasonId']
+    const newTouched: Record<string, boolean> = {}
+    const newErrors: ValidationErrors = {}
+
+    allFields.forEach(field => {
+      newTouched[field] = true
+      const error = validateField(field as keyof PatientInfo, patientInfo[field as keyof PatientInfo])
+      if (error) {
+        newErrors[field] = error
+      }
+    })
+
+    setTouched(newTouched)
+    setValidationErrors(newErrors)
+
+    // Only submit if there are no errors
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit()
+    }
+  }
+
+  const hasErrors = Object.values(validationErrors).some(error => error !== undefined)
+  const isFormValid = patientInfo.firstName && patientInfo.lastName && patientInfo.email && patientInfo.phone && patientInfo.dateOfBirth && patientInfo.gender && patientInfo.reasonId && !hasErrors
 
   return (
     <motion.div
@@ -127,9 +307,19 @@ export default function PatientInfoForm({
               type="text"
               value={patientInfo.firstName}
               onChange={(e) => handleInputChange('firstName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+              onBlur={() => handleBlur('firstName')}
+              maxLength={LIMITS.firstName}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+                touched.firstName && validationErrors.firstName ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="Enter your first name"
             />
+            {touched.firstName && validationErrors.firstName && (
+              <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+                <AlertCircle size={14} />
+                <span>{validationErrors.firstName}</span>
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
@@ -137,9 +327,19 @@ export default function PatientInfoForm({
               type="text"
               value={patientInfo.lastName}
               onChange={(e) => handleInputChange('lastName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+              onBlur={() => handleBlur('lastName')}
+              maxLength={LIMITS.lastName}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+                touched.lastName && validationErrors.lastName ? 'border-red-500' : 'border-gray-300'
+              }`}
               placeholder="Enter your last name"
             />
+            {touched.lastName && validationErrors.lastName && (
+              <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+                <AlertCircle size={14} />
+                <span>{validationErrors.lastName}</span>
+              </div>
+            )}
           </div>
         </div>
         <div>
@@ -148,19 +348,43 @@ export default function PatientInfoForm({
             type="email"
             value={patientInfo.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+            onBlur={() => handleBlur('email')}
+            maxLength={LIMITS.email}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+              touched.email && validationErrors.email ? 'border-red-500' : 'border-gray-300'
+            }`}
             placeholder="Enter your email"
           />
+          {touched.email && validationErrors.email && (
+            <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+              <AlertCircle size={14} />
+              <span>{validationErrors.email}</span>
+            </div>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
           <input
             type="tel"
+            inputMode="numeric"
+            autoComplete="tel"
             value={patientInfo.phone}
             onChange={(e) => handleInputChange('phone', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
-            placeholder="(555) 123-4567"
+            onBlur={() => handleBlur('phone')}
+            maxLength={LIMITS.phone}
+            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+              touched.phone && validationErrors.phone ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="5551234567"
+            pattern="[0-9]*"
+            title="Digits only"
           />
+          {touched.phone && validationErrors.phone && (
+            <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+              <AlertCircle size={14} />
+              <span>{validationErrors.phone}</span>
+            </div>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -169,20 +393,42 @@ export default function PatientInfoForm({
               type="date"
               value={patientInfo.dateOfBirth}
               onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+              onBlur={() => handleBlur('dateOfBirth')}
+              max={new Date().toISOString().split('T')[0]}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+                touched.dateOfBirth && validationErrors.dateOfBirth ? 'border-red-500' : 'border-gray-300'
+              }`}
             />
+            {touched.dateOfBirth && validationErrors.dateOfBirth && (
+              <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+                <AlertCircle size={14} />
+                <span>{validationErrors.dateOfBirth}</span>
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Gender *</label>
             <select
               value={patientInfo.gender}
               onChange={(e) => handleInputChange('gender', e.target.value as 'M' | 'F')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+              onBlur={() => handleBlur('gender')}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+                touched.gender && validationErrors.gender ? 'border-red-500' : 'border-gray-300'
+              }`}
+              required
             >
-              <option value="">Select gender</option>
+              <option value="" disabled hidden>
+                Select gender
+              </option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
+            {touched.gender && validationErrors.gender && (
+              <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+                <AlertCircle size={14} />
+                <span>{validationErrors.gender}</span>
+              </div>
+            )}
           </div>
         </div>
         
@@ -196,19 +442,33 @@ export default function PatientInfoForm({
               </div>
             </div>
           ) : (
-            <select
-              value={patientInfo.reasonId || ''}
-              onChange={(e) => handleReasonChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
-            >
-              <option value="">Select reason for visit</option>
-              {visitReasons.map((reason) => (
-                <option key={reason.visit_reason_id} value={reason.visit_reason_id}>
-                  {reason.visit_reason}
-                  {reason.description && ` - ${reason.description}`}
+            <>
+              <select
+                value={patientInfo.reasonId || ''}
+                onChange={(e) => handleReasonChange(e.target.value)}
+                onBlur={() => handleBlur('reasonId')}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent ${
+                  touched.reasonId && validationErrors.reasonId ? 'border-red-500' : 'border-gray-300'
+                }`}
+                required
+              >
+                <option value="" disabled hidden>
+                  Select reason for visit
                 </option>
-              ))}
-            </select>
+                {visitReasons.map((reason) => (
+                  <option key={reason.visit_reason_id} value={reason.visit_reason_id}>
+                    {reason.visit_reason}
+                    {reason.description && ` - ${reason.description}`}
+                  </option>
+                ))}
+              </select>
+              {touched.reasonId && validationErrors.reasonId && (
+                <div className="flex items-center gap-1 mt-1 text-red-600 text-sm">
+                  <AlertCircle size={14} />
+                  <span>{validationErrors.reasonId}</span>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -244,7 +504,7 @@ export default function PatientInfoForm({
           Back
         </button>
         <button
-          onClick={onSubmit}
+          onClick={handleSubmit}
           disabled={!isFormValid || isSubmitting}
           className="flex-1 px-4 py-2 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >

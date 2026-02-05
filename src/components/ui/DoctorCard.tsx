@@ -57,7 +57,7 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
         {/* Doctor Header - Horizontal Layout */}
         <div 
           className="relative bg-primary p-4 cursor-pointer hover:bg-primary/90 transition-colors"
-          onClick={doctor.profileLink ? undefined : () => setShowBioModal(true)}
+          onClick={() => setShowBioModal(true)}
         >
           <div className="flex items-center gap-5">
             {/* Large Square Doctor Image - Left Side */}
@@ -79,22 +79,11 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
             
             {/* Doctor Details - Right Side */}
             <div className="flex-1 text-left">
-              {doctor.profileLink ? (
-                <a 
-                  href={doctor.profileLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl font-bold text-white mb-1 hover:text-white/90 transition-colors flex items-center gap-2 cursor-pointer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <span>{doctor.name || ''}</span>
-                  <ExternalLink size={16} className="flex-shrink-0" />
-                </a>
-              ) : (
+             
                 <h3 className="text-lg font-bold text-white mb-1">
                   {doctor.name || ''}
                 </h3>
-              )}
+          
               {doctor.title && <p className="text-white/90 text-lg mb-1">{doctor.title}</p>}
               {doctor.credentials && <p className="text-white/80 text-lg">{doctor.credentials}</p>}
             </div>
@@ -326,7 +315,7 @@ export default function DoctorCard({ doctor, index, onBookAppointment }: DoctorC
                           About Dr. {doctor.name?.split(' ').pop()}
                         </h3>
                         <div className="text-gray-600 leading-relaxed space-y-3">
-                          {doctor.description.split('\n\n').map((paragraph, index) => (
+                          {doctor.description?.split('\n\n').map((paragraph, index) => (
                             <p key={index}>{paragraph}</p>
                           ))}
                         </div>

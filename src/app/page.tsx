@@ -1,182 +1,258 @@
-import type { Metadata } from "next";
-import { getSeoData, urlFor } from "@/lib/sanity";
-import ClientHomePage from "./ClientHomePage";
+import Header from '@/components/Header';
+import HeroSection from '@/components/HeroSection';
+import SymptomsSection from '@/components/SymptomsSection';
+import WhyChooseSection from '@/components/WhyChooseSection';
+import DoctorSection from '@/components/DoctorSection';
+import InsuranceAndContactSection from '@/components/InsuranceAndContactSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import NewsletterSection from '@/components/NewsletterSection';
+import Footer from '@/components/Footer';
+import { DoctorProvider } from '@/contexts/DoctorContext';
+import { getHomePageData, getNavbarData, getFooterData, getSidebarData } from '@/lib/sanity';
+import { generateMetadataFromSanity, renderStructuredData } from '@/lib/seo';
+import type { HomePageData, NavbarData, FooterData, NavLinkItem } from '@/types/cms';
+import type { Metadata } from 'next';
 
-// Force dynamic rendering - this prevents static generation and caching
+// Always server-render so Sanity content updates show on every request
 export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Disable caching completely
 
+// Generate dynamic metadata from Sanity
 export async function generateMetadata(): Promise<Metadata> {
-  try {
-    const seoData = await getSeoData();
-    
-    const title = seoData?.title || "Fibroid Care at Holy Name";;
-    const description = seoData?.description || "Leading fibroid treatment center offering expert care and minimally invasive procedures.";;
-    const keywords = seoData?.keywords || ["fibroid treatment", "uterine fibroids", "women's health", "gynecology"];
-    const canonicalUrl = seoData?.canonicalUrl || process.env.NEXT_PUBLIC_SITE_URL || 'https://hnmchealthcare.com';
-    
-    const ogImageUrl = seoData?.ogImage?.asset?.url 
-      ? urlFor(seoData.ogImage.asset).width(1200).height(630).url()
-      : "/Holy-Name-100-Anniversary.png";
-
-    // Default structured data for healthcare organization
-    const defaultStructuredData = {
-      "@context": "https://schema.org",
-      "@type": "MedicalOrganization",
-      "name": "HNMC - Fibroid Center",
-      "alternateName": "Holy Name Medical Center Fibroid Center",
-      "description": description,
-      "url": canonicalUrl,
-      "logo": ogImageUrl,
-      "image": ogImageUrl,
-      "telephone": "+1-555-0123",
-      "email": "info@hnmchealthcare.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "123 Healthcare Drive",
-        "addressLocality": "City",
-        "addressRegion": "State",
-        "postalCode": "12345",
-        "addressCountry": "US"
-      },
-      "medicalSpecialty": "Gynecology",
-      "areaServed": {
-        "@type": "State",
-        "name": "New Jersey"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Fibroid Treatment Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "MedicalProcedure",
-              "name": "Fibroid Removal Surgery",
-              "description": "Surgical removal of uterine fibroids"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "MedicalProcedure",
-              "name": "Minimally Invasive Fibroid Treatment",
-              "description": "Non-surgical treatment options for fibroids"
-            }
-          }
-        ]
-      }
-    };
-
-    let structuredData = defaultStructuredData;
-    if (seoData?.structuredData) {
-      try {
-        structuredData = JSON.parse(seoData?.structuredData);
-      } catch (e) {
-        console.error("Error parsing structured data from Sanity CMS:", e);
-        console.error("Invalid JSON received:", seoData?.structuredData?.substring(0, 200) + "...");
-        console.log("Using default structured data instead");
-        structuredData = defaultStructuredData;
-      }
-    }
-
-    return {
-      // Core SEO
-      title,
-      description,
-      keywords,
-      authors: [{ name: "HNMC Healthcare" }],
-      creator: "HNMC Healthcare",
-      publisher: "HNMC Healthcare",
-
-      // Open Graph
-      openGraph: {
-        type: "website",
-        locale: "en_US",
-        siteName: "HNMC Healthcare",
-        title: seoData?.ogTitle || title,
-        description: seoData?.ogDescription || description,
-        url: canonicalUrl,
-        images: [
-          {
-            url: ogImageUrl,
-            width: 1200,
-            height: 630,
-            alt: seoData?.ogTitle || title,
-          },
-        ],
-      },
-      
-      twitter: {
-        title: seoData?.ogTitle || title,
-        description: seoData?.ogDescription || description,
-        card: "summary_large_image",
-        images: [
-          {
-            url: ogImageUrl,
-            width: 1200,
-            height: 630,
-            alt: seoData?.ogTitle || title,
-          },
-        ],
-        site: "HNMC Healthcare",
-        creator: "HNMC Healthcare",
-      },
-      
-      // Robots
-      robots: {
-        index: !seoData?.noIndex,
-        follow: !seoData?.noFollow,
-        googleBot: {
-          index: !seoData?.noIndex,
-          follow: !seoData?.noFollow,
-          "max-video-preview": -1,
-          "max-image-preview": "large",
-          "max-snippet": -1,
-        },
-      },
-      
-      // Technical metadata
-      metadataBase: new URL(canonicalUrl),
-      alternates: {
-        canonical: '/',
-      },
-      applicationName: 'HNMC Healthcare',
-      
-      appleWebApp: {
-        capable: true,
-        statusBarStyle: 'default',
-        title: 'HNMC Healthcare',
-      },
-      other: {
-        'language': 'English',
-        'revisit-after': '7 days',
-        'distribution': 'global',
-        'rating': 'general',
-        'medical-specialty': 'Gynecology',
-        'treatment-type': 'Fibroid Treatment',
-        'service-area': 'United States',
-        'mobile-web-app-capable': 'yes',
-        'msapplication-TileColor': '#1e40af',
-        'structured-data': JSON.stringify(structuredData),
-        'pdf-title': title,
-      },
-    };
-  } catch (error) {
-    console.error('Error generating metadata:', error);
+  const home = await getHomePageData();
+  const homeData = home as HomePageData | null | undefined;
   
-    return {
-      title: {
-        default: "Fibroid Care at Holy Name",
-        template: "%s | HNMC Healthcare"
-      },
-      description: "Leading fibroid treatment center offering expert care and minimally invasive procedures.",
-      keywords: ["fibroid treatment", "uterine fibroids", "women's health", "gynecology"],
-    };
-  }
+  return generateMetadataFromSanity(homeData?.seo);
 }
 
-// Server component that renders the client homepage
-export default function Home() {
-  return <ClientHomePage />;
+export default async function Home() {
+  const [home, nav, footer, sidebar] = await Promise.all([
+    getHomePageData(),
+    getNavbarData(),
+    getFooterData(),
+    getSidebarData(),
+  ]);
+
+  const homeData = home as HomePageData | null | undefined;
+  const navData = nav as NavbarData | null | undefined;
+  const footerData = footer as FooterData | null | undefined;
+  const navLinks = (sidebar as { menuItems?: NavLinkItem[] } | null)?.menuItems ?? undefined;
+
+  // Structured Data (JSON-LD) for SEO
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "@id": "https://hnmchealthcare.com/#organization",
+    "name": "Holy Name Medical Center Fibroid Center",
+    "url": "https://hnmchealthcare.com",
+    "logo": "https://hnmchealthcare.com/Holy-Name-100-Anniversary.png",
+    "description": "New Jersey's first designated Hysteroscopic Center of Excellence for minimally invasive fibroid treatment",
+    "telephone": "+1-201-833-7212",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "718 Teaneck Road",
+      "addressLocality": "Teaneck",
+      "addressRegion": "NJ",
+      "postalCode": "07666",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "40.8898",
+      "longitude": "-74.0084"
+    },
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": "40.8898",
+        "longitude": "-74.0084"
+      },
+      "geoRadius": "50000"
+    },
+    "medicalSpecialty": [
+      "Gynecology",
+      "Minimally Invasive Gynecologic Surgery",
+      "Reproductive Health"
+    ],
+    "availableService": [
+      {
+        "@type": "MedicalProcedure",
+        "name": "Hysteroscopic Fibroid Removal",
+        "description": "Minimally invasive fibroid treatment with fertility preservation"
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Laparoscopic Surgery",
+        "description": "Advanced minimally invasive gynecologic procedures"
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Da Vinci Robotic Surgery",
+        "description": "Robotic-assisted minimally invasive gynecologic surgery"
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "17:00"
+      }
+    ]
+  };
+
+  const physicianSchema = {
+    "@context": "https://schema.org",
+    "@type": "Physician",
+    "@id": "https://hnmchealthcare.com/#physician",
+    "name": "Dr. Eric Liberman",
+    "honorificPrefix": "Dr.",
+    "givenName": "Eric",
+    "familyName": "Liberman",
+    "jobTitle": "Director of Minimally Invasive Gynecologic Surgery",
+    "description": "Board-certified in Obstetrics and Gynecology and fellowship-trained in Minimally Invasive Gynecologic Surgery (MIGS)",
+    "medicalSpecialty": [
+      "Obstetrics and Gynecology",
+      "Minimally Invasive Gynecologic Surgery",
+      "Hysteroscopy"
+    ],
+    "knowsAbout": [
+      "Abnormal uterine bleeding",
+      "Fibroids",
+      "Endometrial polyps",
+      "Adenomyosis",
+      "Ovarian cysts",
+      "Endometriosis",
+      "Pelvic pain",
+      "Da Vinci robotic surgery",
+      "Laparoscopic surgery",
+      "Hysteroscopy"
+    ],
+    "worksFor": {
+      "@id": "https://hnmchealthcare.com/#organization"
+    },
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "New York College of Osteopathic Medicine"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Saint Barnabas Medical Center"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Montefiore Medical Center, Albert Einstein College of Medicine"
+      }
+    ]
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://hnmchealthcare.com"
+      }
+    ]
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "@id": "https://hnmchealthcare.com/#webpage",
+    "url": "https://hnmchealthcare.com",
+    "name": "Fibroid Center - Expert Fibroid Care in Bergen County",
+    "description": "New Jersey's first designated Hysteroscopic Center of Excellence for minimally invasive fibroid treatment",
+    "specialty": "Gynecology",
+    "about": {
+      "@type": "MedicalCondition",
+      "name": "Uterine Fibroids",
+      "alternateName": "Leiomyomas",
+      "description": "Non-cancerous growths in the uterus that can cause heavy bleeding, pelvic pain, and other symptoms"
+    },
+    "mainEntity": {
+      "@id": "https://hnmchealthcare.com/#organization"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Holy Name Medical Center",
+      "url": "https://www.holyname.org"
+    }
+  };
+
+  return (
+    <DoctorProvider specialityCode={homeData?.doctorsSpeciality?.specialityCode}>
+      {/* Render Structured Data from Sanity (if available) or use defaults */}
+      {homeData?.seo?.structuredData && homeData.seo.structuredData.length > 0 ? (
+        renderStructuredData(homeData.seo.structuredData)
+      ) : (
+        <>
+          {/* Default Structured Data (JSON-LD) for SEO */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationSchema)
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(physicianSchema)
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(breadcrumbSchema)
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(webPageSchema)
+            }}
+          />
+        </>
+      )}
+
+      <main className="min-h-screen bg-white">
+        <Header data={navData ?? undefined} navLinks={navLinks} />
+        <div id="home">
+          <HeroSection data={homeData?.hero} />
+        </div>
+
+        {/* Row 1: Common Symptoms + Why Choose Us */}
+        <section id="symptoms" className="py-16 bg-white scroll-mt-20" aria-label="Fibroid Symptoms and Treatment Benefits">
+          <div className="px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-8">
+              <SymptomsSection data={homeData?.symptoms} />
+              <WhyChooseSection data={homeData?.whyChoose} />
+            </div>
+          </div>
+        </section>
+
+        {/* Row 2: Doctor Section + Insurance/Contact Section */}
+        <section id="doctor" className="py-16 bg-hnmc-gray scroll-mt-20" aria-label="Our Specialist and Insurance Information">
+          <div className="px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+              <DoctorSection />
+              <div id="insurance">
+                <InsuranceAndContactSection data={homeData?.insurance} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="services">
+          <TestimonialsSection data={homeData?.testimonials} />
+        </div>
+        <NewsletterSection data={homeData?.newsletter} />
+        <Footer data={footerData ?? undefined} />
+      </main>
+    </DoctorProvider>
+  );
 }
