@@ -105,7 +105,8 @@ const Experts = forwardRef<{ triggerBookAppointment: () => void }, ExpertsProps>
         >
           <div className="flex items-center justify-center gap-4 mb-6">
             {title && <h2 className="text-4xl lg:text-5xl font-bold text-primary tracking-tight">{renderTextWithHighlights(title, highlightedTexts)}</h2>}
-            {!isApiResolved && (
+            {!isApiResolved &&
+            (
               <RefreshCw className="w-8 h-8 text-secondary animate-spin" />
             )}
           </div>
